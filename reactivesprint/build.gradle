@@ -23,5 +23,5 @@ dependencies {
     testCompile 'junit:junit:4.12'
     testCompile 'uk.co.ribot.assertj-rx:assertj-rx:0.1.0'
     compile 'io.reactivex:rxjava:1.1.2'
-    compile 'com.android.support:support-annotations:22.0.0'
+    compile 'com.android.support:support-annotations:23.2.1'
 }
