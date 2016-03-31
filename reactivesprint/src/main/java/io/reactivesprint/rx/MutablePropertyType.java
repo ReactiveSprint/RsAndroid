@@ -20,6 +20,8 @@ public interface MutablePropertyType<Value> extends PropertyType<Value> {
      * <p/>
      * The binding will automatically terminate when the receiver is finalized,
      * or when the {@code observable} completes.
+     *
+     * @see MutableProperty#bind(MutablePropertyType, Observable)
      */
     Subscription bind(Observable<Value> source);
 
@@ -27,6 +29,8 @@ public interface MutablePropertyType<Value> extends PropertyType<Value> {
      * Binds to the latest values of {@code source} to the receiver.
      * <p/>
      * The binding will automatically terminate when either the receiver or {@code source} is finalized.
+     *
+     * @see MutableProperty#bind(MutablePropertyType, PropertyType)
      */
     Subscription bind(PropertyType<Value> source);
 }

@@ -19,6 +19,16 @@ public class Property<Value> implements PropertyType<Value> {
         this.property = property;
     }
 
+    /**
+     * Constructs a property that first takes on {@code initialValue}, then each value
+     * sent by {@code observable.}
+     */
+    public Property(@NonNull Value initialValue, @NonNull Observable<Value> observable) {
+        MutableProperty<Value> property = new MutableProperty<>(initialValue);
+        property.bind(observable);
+        this.property = property;
+    }
+
     @Override
     public Value getValue() {
         return property.getValue();
