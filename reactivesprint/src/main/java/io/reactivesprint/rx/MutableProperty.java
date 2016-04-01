@@ -16,7 +16,7 @@ import rx.subjects.Subject;
  * A mutable property of type {@code Value} that allows observation of its changes.
  * Inspired by [ReactiveCocoa 4](https://github.com/ReactiveCocoa/ReactiveCocoa)
  */
-public class MutableProperty<Value> implements MutablePropertyType<Value> {
+public final class MutableProperty<Value> implements MutablePropertyType<Value> {
     //region Fields
 
     private Value value;

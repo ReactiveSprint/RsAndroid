@@ -10,7 +10,7 @@ import rx.Observable;
  * A read-only property that allows observation of its changes.
  * Inspired by [ReactiveCocoa 4](https://github.com/ReactiveCocoa/ReactiveCocoa)
  */
-public class Property<Value> implements PropertyType<Value> {
+public final class Property<Value> implements PropertyType<Value> {
     private final PropertyType<Value> property;
 
     /**
