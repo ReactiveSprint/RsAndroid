@@ -1,5 +1,8 @@
 package io.reactivesprint.rx;
 
+import android.support.annotation.NonNull;
+import android.support.annotation.Nullable;
+
 import rx.Observable;
 import rx.Subscription;
 
@@ -12,7 +15,7 @@ public interface MutablePropertyType<Value> extends PropertyType<Value> {
     /**
      * Sets value of the receiver.
      */
-    void setValue(Value value);
+    void setValue(@Nullable Value value);
 
     /**
      * Binds an {@link Observable} to the receiver, updating the receiver's value to the latest
@@ -23,7 +26,7 @@ public interface MutablePropertyType<Value> extends PropertyType<Value> {
      *
      * @see MutableProperty#bind(MutablePropertyType, Observable)
      */
-    Subscription bind(Observable<Value> source);
+    Subscription bind(@NonNull Observable<Value> source);
 
     /**
      * Binds to the latest values of {@code source} to the receiver.
@@ -32,5 +35,5 @@ public interface MutablePropertyType<Value> extends PropertyType<Value> {
      *
      * @see MutableProperty#bind(MutablePropertyType, PropertyType)
      */
-    Subscription bind(PropertyType<Value> source);
+    Subscription bind(@NonNull PropertyType<Value> source);
 }

@@ -1,6 +1,7 @@
 package io.reactivesprint.rx;
 
 import android.support.annotation.NonNull;
+import android.support.annotation.Nullable;
 
 import rx.Observable;
 
@@ -23,7 +24,7 @@ public class Property<Value> implements PropertyType<Value> {
      * Constructs a property that first takes on {@code initialValue}, then each value
      * sent by {@code observable.}
      */
-    public Property(@NonNull Value initialValue, @NonNull Observable<Value> observable) {
+    public Property(@Nullable Value initialValue, @NonNull Observable<Value> observable) {
         MutableProperty<Value> property = new MutableProperty<>(initialValue);
         property.bind(observable);
         this.property = property;
