@@ -3,22 +3,16 @@ package io.reactivesprint.rx;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 
-import java.util.ArrayList;
-import java.util.List;
-import java.util.Set;
+import java.util.Arrays;
 
 import rx.Notification;
 import rx.Observable;
 import rx.Scheduler;
 import rx.Subscriber;
 import rx.Subscription;
-import rx.functions.Action0;
 import rx.functions.Action1;
 import rx.functions.Func1;
 import rx.functions.Func2;
-import rx.internal.util.SubscriptionList;
-import rx.observables.ConnectableObservable;
-import rx.schedulers.Schedulers;
 import rx.subjects.PublishSubject;
 import rx.subjects.Subject;
 
@@ -116,9 +110,16 @@ public final class Command<Input, Output> {
      * <p/>
      * If Command is executing or not enabled,
      * an Observable with error {@link CommandNotEnabledException} is returned.
+     *
+     * @param inputs Must be either null, empty or contain exactly 1 object.
      */
-    public Observable<Output> apply(final Input input) {
+    @SafeVarargs
+    public final Observable<Output> apply(Input... inputs) {
+        if (inputs != null && inputs.length > 1) {
+            throw new IllegalStateException("Invalid value of inputs. It must be either null, empty or contain exactly 1 object. Received value is " + Arrays.toString(inputs));
+        }
 
+        final Input input = inputs != null && inputs.length > 0 ? inputs[0] : null;
         return Observable.create(new Observable.OnSubscribe<Output>() {
             @Override
             public void call(Subscriber<? super Output> subscriber) {
@@ -215,5 +216,4 @@ public final class Command<Input, Output> {
     }
 
     //endregion
-
 }
