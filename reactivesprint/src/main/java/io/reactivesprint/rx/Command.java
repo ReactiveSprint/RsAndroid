@@ -21,7 +21,7 @@ import rx.subjects.Subject;
  * Represents a Command or Action that will do some work when executed with {@code Input}
  * and returns {@code Output.}
  *
- * @see #apply(Object)
+ * @see #apply(Object[])
  */
 public final class Command<Input, Output> {
     //region Fields
