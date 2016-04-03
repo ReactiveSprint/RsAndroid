@@ -47,8 +47,17 @@ public final class Command<Input, Output> {
     /**
      * Creates a Command.
      *
+     * @param createObservable Function used to create an Observable each time {@link #apply(Object[])} is invoked.
+     */
+    public Command(@NonNull final Func1<Input, Observable<Output>> createObservable) {
+        this(null, new ConstantProperty<>(true), createObservable);
+    }
+
+    /**
+     * Creates a Command.
+     *
      * @param scheduler        Scheduler used to send all notifications in the receiver.
-     * @param createObservable Function used to create an Observable each time {@link #apply(Object)} is invoked.
+     * @param createObservable Function used to create an Observable each time {@link #apply(Object[])} is invoked.
      */
     public Command(@Nullable Scheduler scheduler, @NonNull final Func1<Input, Observable<Output>> createObservable) {
         this(scheduler, new ConstantProperty<>(true), createObservable);
@@ -57,9 +66,20 @@ public final class Command<Input, Output> {
     /**
      * Creates a Command.
      *
+     * @param enabled          Property whether or not this Command should be enabled.
+     * @param createObservable Function used to create an Observable each time {@link #apply(Object[])} is invoked.
+     */
+    public Command(@NonNull PropertyType<Boolean> enabled,
+                   @NonNull final Func1<Input, Observable<Output>> createObservable) {
+        this(null, enabled, createObservable);
+    }
+
+    /**
+     * Creates a Command.
+     *
      * @param scheduler        Scheduler used to send all notifications in the receiver.
      * @param enabled          Property whether or not this Command should be enabled.
-     * @param createObservable Function used to create an Observable each time {@link #apply(Object)} is invoked.
+     * @param createObservable Function used to create an Observable each time {@link #apply(Object[])} is invoked.
      */
     public Command(@Nullable Scheduler scheduler, @NonNull PropertyType<Boolean> enabled,
                    @NonNull final Func1<Input, Observable<Output>> createObservable) {
