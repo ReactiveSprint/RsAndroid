@@ -8,7 +8,6 @@ import java.util.List;
 import io.reactivesprint.rx.ConstantProperty;
 import io.reactivesprint.rx.MutableProperty;
 import io.reactivesprint.rx.MutablePropertyType;
-import io.reactivesprint.rx.Property;
 import io.reactivesprint.rx.PropertyType;
 
 /**
@@ -20,7 +19,7 @@ public class ArrayViewModel<Element extends ViewModelType> extends ViewModel imp
 
     private final PropertyType<Integer> count;
 
-    private final PropertyType<Boolean> isEmpty;
+    private final PropertyType<Boolean> empty;
 
     private final List<Element> viewModels;
 
@@ -36,7 +35,7 @@ public class ArrayViewModel<Element extends ViewModelType> extends ViewModel imp
     public ArrayViewModel(@NonNull List<Element> viewModels) {
         this.viewModels = new ArrayList<>(viewModels);
         count = new ConstantProperty<>(viewModels.size());
-        isEmpty = new ConstantProperty<>(viewModels.isEmpty());
+        empty = new ConstantProperty<>(viewModels.isEmpty());
     }
 
     //endregion
@@ -50,7 +49,7 @@ public class ArrayViewModel<Element extends ViewModelType> extends ViewModel imp
 
     @Override
     public PropertyType<Boolean> isEmpty() {
-        return isEmpty;
+        return empty;
     }
 
     @Override
