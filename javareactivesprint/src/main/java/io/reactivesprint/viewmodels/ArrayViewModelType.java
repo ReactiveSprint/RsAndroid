@@ -8,13 +8,13 @@ import io.reactivesprint.rx.IProperty;
  * Created by Ahmad Baraka on 3/29/16.
  * Represents an ViewModel which wraps an Array of ViewModels of type `Element`
  *
- * @param <Element> Type of each element in Array.
+ * @param <E> Type of each element in Array.
  */
-public interface ArrayViewModelType<Element extends ViewModelType> extends ViewModelType {
+public interface ArrayViewModelType<E extends ViewModelType> extends ViewModelType {
     /**
      * @return List of {@code Element}
      */
-    List<Element> getViewModels();
+    List<E> getViewModels();
 
     /**
      * @return Count of wrapped elements.
@@ -36,11 +36,11 @@ public interface ArrayViewModelType<Element extends ViewModelType> extends ViewM
      *
      * @param index Must be > 0 and < count.
      */
-    Element getViewModel(int index);
+    E getViewModel(int index);
 
     /**
      * @return the first index where {@code value} equals {@code element} or {@code null}
      * {@code element} is not found.
      */
-    int indexOf(Element element);
+    int indexOf(E element);
 }

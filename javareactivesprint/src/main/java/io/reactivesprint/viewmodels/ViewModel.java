@@ -76,7 +76,7 @@ public class ViewModel implements ViewModelType {
     }
 
     @Override
-    public <Input, Output> void bindCommand(ICommand<Input, Output> command) {
+    public <I, R> void bindCommand(ICommand<I, R> command) {
         bindLoading(command.isExecuting().getObservable());
 
         bindErrors(command.getErrors().flatMap(new Func1<Throwable, Observable<ErrorType>>() {

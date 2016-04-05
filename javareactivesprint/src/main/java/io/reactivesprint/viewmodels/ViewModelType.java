@@ -54,5 +54,5 @@ public interface ViewModelType {
      * <p/>
      * If command errors are not instanceof {@link ErrorType}, these errors will not be forward from the receiver.
      */
-    <Input, Output> void bindCommand(ICommand<Input, Output> command);
+    <I, R> void bindCommand(ICommand<I, R> command);
 }

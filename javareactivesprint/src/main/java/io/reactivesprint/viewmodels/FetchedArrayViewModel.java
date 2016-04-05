@@ -20,10 +20,10 @@ import rx.functions.Func1;
  * Created by Ahmad Baraka on 4/2/16.
  * An implementation of FetchedArrayViewModelType that fetches ViewModels by calling {@code fetchFunc}
  */
-public class FetchedArrayViewModel<Element extends ViewModel> extends ViewModel implements FetchedArrayViewModelType<Element, Integer, Void, List<Element>> {
+public class FetchedArrayViewModel<E extends ViewModel> extends ViewModel implements FetchedArrayViewModelType<E, Integer, Void, List<E>> {
     //region Fields
 
-    private MutableProperty<List<Element>> viewModels = new MutableProperty<>(Collections.<Element>emptyList());
+    private MutableProperty<List<E>> viewModels = new MutableProperty<>(Collections.<E>emptyList());
 
     private final IProperty<Integer> count;
     private final IProperty<Boolean> empty;
@@ -36,10 +36,10 @@ public class FetchedArrayViewModel<Element extends ViewModel> extends ViewModel 
 
     private Integer nextPage;
 
-    private final Func1<Integer, Observable<Pair<Integer, List<Element>>>> fetchFunc;
-    private final ICommand<Void, List<Element>> refreshCommand;
-    private final ICommand<Void, List<Element>> fetchCommand;
-    private final ICommand<Void, List<Element>> fetchIfNeededCommand;
+    private final Func1<Integer, Observable<Pair<Integer, List<E>>>> fetchFunc;
+    private final ICommand<Void, List<E>> refreshCommand;
+    private final ICommand<Void, List<E>> fetchCommand;
+    private final ICommand<Void, List<E>> fetchIfNeededCommand;
 
     //endregion
 
@@ -48,11 +48,11 @@ public class FetchedArrayViewModel<Element extends ViewModel> extends ViewModel 
     /**
      * Creates an instance with {@code viewModels}
      */
-    public FetchedArrayViewModel(Func1<Integer, Observable<Pair<Integer, List<Element>>>> fetchFunc) {
+    public FetchedArrayViewModel(Func1<Integer, Observable<Pair<Integer, List<E>>>> fetchFunc) {
         this.fetchFunc = fetchFunc;
-        count = new Property<>(0, viewModels.getObservable().map(new Func1<List<Element>, Integer>() {
+        count = new Property<>(0, viewModels.getObservable().map(new Func1<List<E>, Integer>() {
             @Override
-            public Integer call(List<Element> elements) {
+            public Integer call(List<E> elements) {
                 return elements.size();
             }
         }));
@@ -89,17 +89,17 @@ public class FetchedArrayViewModel<Element extends ViewModel> extends ViewModel 
     }
 
     @Override
-    public List<Element> getViewModels() {
+    public List<E> getViewModels() {
         return viewModels.getValue();
     }
 
     @Override
-    public int indexOf(Element element) {
+    public int indexOf(E element) {
         return viewModels.getValue().indexOf(element);
     }
 
     @Override
-    public Element getViewModel(int index) {
+    public E getViewModel(int index) {
         return viewModels.getValue().get(index);
     }
 
@@ -128,17 +128,17 @@ public class FetchedArrayViewModel<Element extends ViewModel> extends ViewModel 
     }
 
     @Override
-    public ICommand<Void, List<Element>> getRefreshCommand() {
+    public ICommand<Void, List<E>> getRefreshCommand() {
         return refreshCommand;
     }
 
     @Override
-    public ICommand<Void, List<Element>> getFetchCommand() {
+    public ICommand<Void, List<E>> getFetchCommand() {
         return fetchCommand;
     }
 
     @Override
-    public ICommand<Void, List<Element>> getFetchIfNeededCommand() {
+    public ICommand<Void, List<E>> getFetchIfNeededCommand() {
         return fetchIfNeededCommand;
     }
 
@@ -146,10 +146,10 @@ public class FetchedArrayViewModel<Element extends ViewModel> extends ViewModel 
 
     //region Create Commands
 
-    protected ICommand<Void, List<Element>> createRefreshCommand() {
-        Command<Void, List<Element>> command = new Command<>(getEnabled(), new Func1<Void, Observable<List<Element>>>() {
+    protected ICommand<Void, List<E>> createRefreshCommand() {
+        Command<Void, List<E>> command = new Command<>(getEnabled(), new Func1<Void, Observable<List<E>>>() {
             @Override
-            public Observable<List<Element>> call(Void aVoid) {
+            public Observable<List<E>> call(Void aVoid) {
                 refreshing.setValue(true);
                 return fetch(null);
             }
@@ -160,10 +160,10 @@ public class FetchedArrayViewModel<Element extends ViewModel> extends ViewModel 
         return command;
     }
 
-    protected ICommand<Void, List<Element>> createFetchCommand() {
-        Command<Void, List<Element>> command = new Command<>(getEnabled(), new Func1<Void, Observable<List<Element>>>() {
+    protected ICommand<Void, List<E>> createFetchCommand() {
+        Command<Void, List<E>> command = new Command<>(getEnabled(), new Func1<Void, Observable<List<E>>>() {
             @Override
-            public Observable<List<Element>> call(Void aVoid) {
+            public Observable<List<E>> call(Void aVoid) {
                 if (nextPage != null) {
                     fetchingNextPage.setValue(true);
                 } else {
@@ -178,11 +178,11 @@ public class FetchedArrayViewModel<Element extends ViewModel> extends ViewModel 
         return command;
     }
 
-    protected static <Element extends ViewModelType, Page, FetchInput, FetchOutput, FA extends FetchedArrayViewModelType<Element, Page, FetchInput, FetchOutput>> ICommand<FetchInput, FetchOutput>
-    createFetchIfNeededCommand(final FA fetchedArrayViewModelType) {
-        ICommand<FetchInput, FetchOutput> command = new Command<>(fetchedArrayViewModelType.getEnabled(), new Func1<FetchInput, Observable<FetchOutput>>() {
+    protected static <E extends ViewModelType, P, I, R> ICommand<I, R>
+    createFetchIfNeededCommand(final FetchedArrayViewModelType<E, P, I, R> fetchedArrayViewModelType) {
+        ICommand<I, R> command = new Command<>(fetchedArrayViewModelType.getEnabled(), new Func1<I, Observable<R>>() {
             @Override
-            public Observable<FetchOutput> call(FetchInput input) {
+            public Observable<R> call(I input) {
                 if (fetchedArrayViewModelType.getNextPage() != null && fetchedArrayViewModelType.hasNextPage().getValue()) {
                     return fetchedArrayViewModelType.getFetchCommand().apply(input);
                 }
@@ -196,12 +196,12 @@ public class FetchedArrayViewModel<Element extends ViewModel> extends ViewModel 
         return command;
     }
 
-    private Observable<List<Element>> fetch(final Integer nextPage) {
+    private Observable<List<E>> fetch(final Integer nextPage) {
         return fetchFunc.call(nextPage)
-                .doOnNext(new Action1<Pair<Integer, List<Element>>>() {
+                .doOnNext(new Action1<Pair<Integer, List<E>>>() {
                     @Override
-                    public void call(Pair<Integer, List<Element>> objects) {
-                        ArrayList<Element> newViewModels = new ArrayList<>();
+                    public void call(Pair<Integer, List<E>> objects) {
+                        ArrayList<E> newViewModels = new ArrayList<>();
                         if (!refreshing.getValue()) {
                             newViewModels.addAll(viewModels.getValue());
                         }
@@ -215,9 +215,9 @@ public class FetchedArrayViewModel<Element extends ViewModel> extends ViewModel 
                         FetchedArrayViewModel.this.nextPage = objects.getValue0();
                     }
                 })
-                .map(new Func1<Pair<Integer, List<Element>>, List<Element>>() {
+                .map(new Func1<Pair<Integer, List<E>>, List<E>>() {
                     @Override
-                    public List<Element> call(Pair<Integer, List<Element>> objects) {
+                    public List<E> call(Pair<Integer, List<E>> objects) {
                         return objects.getValue1();
                     }
                 });

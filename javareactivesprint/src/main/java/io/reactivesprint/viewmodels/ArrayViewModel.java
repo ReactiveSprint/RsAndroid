@@ -12,14 +12,14 @@ import io.reactivesprint.rx.IProperty;
  * Created by Ahmad Baraka on 4/1/16.
  * ArrayViewModelType implementation that has a constant {@code List<ViewModel>}
  */
-public class ArrayViewModel<Element extends ViewModelType> extends ViewModel implements ArrayViewModelType<Element> {
+public class ArrayViewModel<E extends ViewModelType> extends ViewModel implements ArrayViewModelType<E> {
     //region Fields
 
     private final IProperty<Integer> count;
 
     private final IProperty<Boolean> empty;
 
-    private final List<Element> viewModels;
+    private final List<E> viewModels;
 
     private final IMutableProperty<String> localizedEmptyMessage = new MutableProperty<>(null);
 
@@ -30,7 +30,7 @@ public class ArrayViewModel<Element extends ViewModelType> extends ViewModel imp
     /**
      * Creates an instance with {@code viewModels}
      */
-    public ArrayViewModel(List<Element> viewModels) {
+    public ArrayViewModel(List<E> viewModels) {
         this.viewModels = new ArrayList<>(viewModels);
         count = new ConstantProperty<>(viewModels.size());
         empty = new ConstantProperty<>(viewModels.isEmpty());
@@ -56,17 +56,17 @@ public class ArrayViewModel<Element extends ViewModelType> extends ViewModel imp
     }
 
     @Override
-    public List<Element> getViewModels() {
+    public List<E> getViewModels() {
         return viewModels;
     }
 
     @Override
-    public int indexOf(Element element) {
+    public int indexOf(E element) {
         return viewModels.indexOf(element);
     }
 
     @Override
-    public Element getViewModel(int index) {
+    public E getViewModel(int index) {
         return viewModels.get(index);
     }
 

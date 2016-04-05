@@ -5,16 +5,16 @@ import io.reactivesprint.models.ModelType;
 /**
  * Created by Ahmad Baraka on 4/1/16.
  */
-public class ModelViewModel<Model extends ModelType> extends ViewModel implements ModelViewModelType<Model> {
+public class ModelViewModel<M extends ModelType> extends ViewModel implements ModelViewModelType<M> {
 
-    private final Model model;
+    private final M model;
 
-    public ModelViewModel(Model model) {
+    public ModelViewModel(M model) {
         this.model = model;
     }
 
     @Override
-    public Model getModel() {
+    public M getModel() {
         return model;
     }
 }
