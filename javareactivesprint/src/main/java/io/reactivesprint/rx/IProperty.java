@@ -8,15 +8,15 @@ import rx.Observable;
  * <p/>
  * Inspired by [ReactiveCocoa 4](https://github.com/ReactiveCocoa/ReactiveCocoa)
  */
-public interface IProperty<Value> {
+public interface IProperty<V> {
     /**
      * @return Current value of the property.
      */
-    Value getValue();
+    V getValue();
 
     /**
      * @return An Observable that once subscribed, sends the current value
      * then will send property's changes over time.
      */
-    Observable<Value> getObservable();
+    Observable<V> getObservable();
 }

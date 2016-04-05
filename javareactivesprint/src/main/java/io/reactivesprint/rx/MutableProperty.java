@@ -13,13 +13,13 @@ import rx.subjects.Subject;
  * A mutable property of type {@code Value} that allows observation of its changes.
  * Inspired by [ReactiveCocoa 4](https://github.com/ReactiveCocoa/ReactiveCocoa)
  */
-public final class MutableProperty<Value> implements IMutableProperty<Value> {
+public final class MutableProperty<V> implements IMutableProperty<V> {
     //region Fields
 
-    private Value value;
+    private V value;
     private final Object lock = new Object();
-    private final Subject<Value, Value> valueSubject;
-    private final Observable<Value> valueObservable;
+    private final Subject<V, V> valueSubject;
+    private final Observable<V> valueObservable;
 
     //endregion
 
@@ -28,7 +28,7 @@ public final class MutableProperty<Value> implements IMutableProperty<Value> {
     /**
      * Initializes the property with {@code initialValue.}
      */
-    public MutableProperty(Value initialValue) {
+    public MutableProperty(V initialValue) {
         this.value = initialValue;
         valueSubject = BehaviorSubject.create(initialValue);
         valueObservable = valueSubject.asObservable();
@@ -39,14 +39,14 @@ public final class MutableProperty<Value> implements IMutableProperty<Value> {
     //region PropertyType
 
     @Override
-    public Value getValue() {
+    public V getValue() {
         synchronized (lock) {
             return value;
         }
     }
 
     @Override
-    public Observable<Value> getObservable() {
+    public Observable<V> getObservable() {
         return valueObservable;
     }
 
@@ -55,7 +55,7 @@ public final class MutableProperty<Value> implements IMutableProperty<Value> {
     //region Setter
 
     @Override
-    public void setValue(Value value) {
+    public void setValue(V value) {
         synchronized (lock) {
             this.value = value;
         }
@@ -106,17 +106,17 @@ public final class MutableProperty<Value> implements IMutableProperty<Value> {
         return subscriptionList;
     }
 
-    public static <Value> Subscription bind(/* this */ final IMutableProperty<Value> destination, IProperty<Value> source) {
+    public static <V> Subscription bind(/* this */ final IMutableProperty<V> destination, IProperty<V> source) {
         return destination.bind(source.getObservable());
     }
 
     @Override
-    public Subscription bind(Observable<Value> source) {
+    public Subscription bind(Observable<V> source) {
         return bind(this, source);
     }
 
     @Override
-    public Subscription bind(IProperty<Value> source) {
+    public Subscription bind(IProperty<V> source) {
         return bind(this, source);
     }
 

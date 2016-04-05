@@ -7,13 +7,13 @@ import rx.Observable;
  * A read-only property that allows observation of its changes.
  * Inspired by [ReactiveCocoa 4](https://github.com/ReactiveCocoa/ReactiveCocoa)
  */
-public final class Property<Value> implements IProperty<Value> {
-    private final IProperty<Value> property;
+public final class Property<V> implements IProperty<V> {
+    private final IProperty<V> property;
 
     /**
      * Constructs a property as a read-only view of {@code property.}
      */
-    public Property(IProperty<Value> property) {
+    public Property(IProperty<V> property) {
         this.property = property;
     }
 
@@ -21,19 +21,19 @@ public final class Property<Value> implements IProperty<Value> {
      * Constructs a property that first takes on {@code initialValue}, then each value
      * sent by {@code observable.}
      */
-    public Property(Value initialValue, Observable<Value> observable) {
-        MutableProperty<Value> property = new MutableProperty<>(initialValue);
+    public Property(V initialValue, Observable<V> observable) {
+        MutableProperty<V> property = new MutableProperty<>(initialValue);
         property.bind(observable);
         this.property = property;
     }
 
     @Override
-    public Value getValue() {
+    public V getValue() {
         return property.getValue();
     }
 
     @Override
-    public Observable<Value> getObservable() {
+    public Observable<V> getObservable() {
         return property.getObservable();
     }
 }
