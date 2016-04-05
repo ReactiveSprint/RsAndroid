@@ -1,6 +1,6 @@
 package io.reactivesprint.viewmodels;
 
-import io.reactivesprint.rx.Command;
+import io.reactivesprint.rx.ICommand;
 import io.reactivesprint.rx.IProperty;
 import rx.Observable;
 
@@ -38,16 +38,16 @@ public interface FetchedArrayViewModelType<Element extends ViewModelType, Page, 
     /**
      * @return Command which refreshes ViewModels.
      */
-    Command<FetchInput, FetchOutput> getRefreshCommand();
+    ICommand<FetchInput, FetchOutput> getRefreshCommand();
 
     /**
      * @return Command which fetches ViewModels.
      * If {@code nextPage} is null, this command will refresh, else this command should fetch next page.
      */
-    Command<FetchInput, FetchOutput> getFetchCommand();
+    ICommand<FetchInput, FetchOutput> getFetchCommand();
 
     /**
      * @return Applies {@link #getFetchCommand()} only if next page is non null or returns {@link Observable#empty()}
      */
-    Command<FetchInput, FetchOutput> getFetchIfNeededCommand();
+    ICommand<FetchInput, FetchOutput> getFetchIfNeededCommand();
 }

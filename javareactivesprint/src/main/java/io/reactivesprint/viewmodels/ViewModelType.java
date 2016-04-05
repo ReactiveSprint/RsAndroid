@@ -1,6 +1,6 @@
 package io.reactivesprint.viewmodels;
 
-import io.reactivesprint.rx.Command;
+import io.reactivesprint.rx.ICommand;
 import io.reactivesprint.rx.IMutableProperty;
 import io.reactivesprint.rx.IProperty;
 import rx.Observable;
@@ -54,5 +54,5 @@ public interface ViewModelType {
      * <p/>
      * If command errors are not instanceof {@link ErrorType}, these errors will not be forward from the receiver.
      */
-    <Input, Output> void bindCommand(Command<Input, Output> command);
+    <Input, Output> void bindCommand(ICommand<Input, Output> command);
 }

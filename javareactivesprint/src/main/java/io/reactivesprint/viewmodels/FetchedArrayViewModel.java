@@ -7,6 +7,7 @@ import java.util.Collections;
 import java.util.List;
 
 import io.reactivesprint.rx.Command;
+import io.reactivesprint.rx.ICommand;
 import io.reactivesprint.rx.MutableProperty;
 import io.reactivesprint.rx.IMutableProperty;
 import io.reactivesprint.rx.Property;
@@ -36,9 +37,9 @@ public class FetchedArrayViewModel<Element extends ViewModel> extends ViewModel 
     private Integer nextPage;
 
     private final Func1<Integer, Observable<Pair<Integer, List<Element>>>> fetchFunc;
-    private final Command<Void, List<Element>> refreshCommand;
-    private final Command<Void, List<Element>> fetchCommand;
-    private final Command<Void, List<Element>> fetchIfNeededCommand;
+    private final ICommand<Void, List<Element>> refreshCommand;
+    private final ICommand<Void, List<Element>> fetchCommand;
+    private final ICommand<Void, List<Element>> fetchIfNeededCommand;
 
     //endregion
 
@@ -127,17 +128,17 @@ public class FetchedArrayViewModel<Element extends ViewModel> extends ViewModel 
     }
 
     @Override
-    public Command<Void, List<Element>> getRefreshCommand() {
+    public ICommand<Void, List<Element>> getRefreshCommand() {
         return refreshCommand;
     }
 
     @Override
-    public Command<Void, List<Element>> getFetchCommand() {
+    public ICommand<Void, List<Element>> getFetchCommand() {
         return fetchCommand;
     }
 
     @Override
-    public Command<Void, List<Element>> getFetchIfNeededCommand() {
+    public ICommand<Void, List<Element>> getFetchIfNeededCommand() {
         return fetchIfNeededCommand;
     }
 
@@ -145,7 +146,7 @@ public class FetchedArrayViewModel<Element extends ViewModel> extends ViewModel 
 
     //region Create Commands
 
-    protected Command<Void, List<Element>> createRefreshCommand() {
+    protected ICommand<Void, List<Element>> createRefreshCommand() {
         Command<Void, List<Element>> command = new Command<>(getEnabled(), new Func1<Void, Observable<List<Element>>>() {
             @Override
             public Observable<List<Element>> call(Void aVoid) {
@@ -159,7 +160,7 @@ public class FetchedArrayViewModel<Element extends ViewModel> extends ViewModel 
         return command;
     }
 
-    protected Command<Void, List<Element>> createFetchCommand() {
+    protected ICommand<Void, List<Element>> createFetchCommand() {
         Command<Void, List<Element>> command = new Command<>(getEnabled(), new Func1<Void, Observable<List<Element>>>() {
             @Override
             public Observable<List<Element>> call(Void aVoid) {
@@ -177,9 +178,9 @@ public class FetchedArrayViewModel<Element extends ViewModel> extends ViewModel 
         return command;
     }
 
-    protected static <Element extends ViewModelType, Page, FetchInput, FetchOutput> Command<FetchInput, FetchOutput>
-    createFetchIfNeededCommand(final FetchedArrayViewModelType<Element, Page, FetchInput, FetchOutput> fetchedArrayViewModelType) {
-        Command<FetchInput, FetchOutput> command = new Command<>(fetchedArrayViewModelType.getEnabled(), new Func1<FetchInput, Observable<FetchOutput>>() {
+    protected static <Element extends ViewModelType, Page, FetchInput, FetchOutput, FA extends FetchedArrayViewModelType<Element, Page, FetchInput, FetchOutput>> ICommand<FetchInput, FetchOutput>
+    createFetchIfNeededCommand(final FA fetchedArrayViewModelType) {
+        ICommand<FetchInput, FetchOutput> command = new Command<>(fetchedArrayViewModelType.getEnabled(), new Func1<FetchInput, Observable<FetchOutput>>() {
             @Override
             public Observable<FetchOutput> call(FetchInput input) {
                 if (fetchedArrayViewModelType.getNextPage() != null && fetchedArrayViewModelType.hasNextPage().getValue()) {

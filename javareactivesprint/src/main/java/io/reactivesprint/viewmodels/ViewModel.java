@@ -1,10 +1,10 @@
 package io.reactivesprint.viewmodels;
 
-import io.reactivesprint.rx.Command;
-import io.reactivesprint.rx.MutableProperty;
+import io.reactivesprint.rx.ICommand;
 import io.reactivesprint.rx.IMutableProperty;
-import io.reactivesprint.rx.Property;
 import io.reactivesprint.rx.IProperty;
+import io.reactivesprint.rx.MutableProperty;
+import io.reactivesprint.rx.Property;
 import rx.Observable;
 import rx.functions.Func1;
 import rx.subjects.PublishSubject;
@@ -76,7 +76,7 @@ public class ViewModel implements ViewModelType {
     }
 
     @Override
-    public <Input, Output> void bindCommand(Command<Input, Output> command) {
+    public <Input, Output> void bindCommand(ICommand<Input, Output> command) {
         bindLoading(command.isExecuting().getObservable());
 
         bindErrors(command.getErrors().flatMap(new Func1<Throwable, Observable<ErrorType>>() {
