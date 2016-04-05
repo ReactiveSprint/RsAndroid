@@ -10,6 +10,7 @@
           <set>
             <option value="$PROJECT_DIR$" />
             <option value="$PROJECT_DIR$/glass" />
+            <option value="$PROJECT_DIR$/javareactivesprint" />
             <option value="$PROJECT_DIR$/mobile" />
             <option value="$PROJECT_DIR$/reactivesprint" />
             <option value="$PROJECT_DIR$/tv" />
@@ -20,6 +21,7 @@
           <set>
             <option value="$PROJECT_DIR$" />
             <option value="$PROJECT_DIR$/glass" />
+            <option value="$PROJECT_DIR$/javareactivesprint" />
             <option value="$PROJECT_DIR$/mobile" />
             <option value="$PROJECT_DIR$/reactivesprint" />
             <option value="$PROJECT_DIR$/tv" />
