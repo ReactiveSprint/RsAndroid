@@ -13,7 +13,7 @@ import rx.subjects.Subject;
  * A mutable property of type {@code Value} that allows observation of its changes.
  * Inspired by [ReactiveCocoa 4](https://github.com/ReactiveCocoa/ReactiveCocoa)
  */
-public final class MutableProperty<Value> implements MutablePropertyType<Value> {
+public final class MutableProperty<Value> implements IMutableProperty<Value> {
     //region Fields
 
     private Value value;
@@ -66,7 +66,7 @@ public final class MutableProperty<Value> implements MutablePropertyType<Value> 
 
     //region Binding
 
-    public static <Value> Subscription bind(/* this */ final MutablePropertyType<Value> destination, Observable<Value> source) {
+    public static <Value> Subscription bind(/* this */ final IMutableProperty<Value> destination, Observable<Value> source) {
         final SubscriptionList subscriptionList = new SubscriptionList();
 
         destination.getObservable().subscribe(new Observer<Value>() {
@@ -106,7 +106,7 @@ public final class MutableProperty<Value> implements MutablePropertyType<Value> 
         return subscriptionList;
     }
 
-    public static <Value> Subscription bind(/* this */ final MutablePropertyType<Value> destination, PropertyType<Value> source) {
+    public static <Value> Subscription bind(/* this */ final IMutableProperty<Value> destination, IProperty<Value> source) {
         return destination.bind(source.getObservable());
     }
 
@@ -116,7 +116,7 @@ public final class MutableProperty<Value> implements MutablePropertyType<Value> 
     }
 
     @Override
-    public Subscription bind(PropertyType<Value> source) {
+    public Subscription bind(IProperty<Value> source) {
         return bind(this, source);
     }
 

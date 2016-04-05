@@ -5,8 +5,8 @@ import java.util.List;
 
 import io.reactivesprint.rx.ConstantProperty;
 import io.reactivesprint.rx.MutableProperty;
-import io.reactivesprint.rx.MutablePropertyType;
-import io.reactivesprint.rx.PropertyType;
+import io.reactivesprint.rx.IMutableProperty;
+import io.reactivesprint.rx.IProperty;
 
 /**
  * Created by Ahmad Baraka on 4/1/16.
@@ -15,13 +15,13 @@ import io.reactivesprint.rx.PropertyType;
 public class ArrayViewModel<Element extends ViewModelType> extends ViewModel implements ArrayViewModelType<Element> {
     //region Fields
 
-    private final PropertyType<Integer> count;
+    private final IProperty<Integer> count;
 
-    private final PropertyType<Boolean> empty;
+    private final IProperty<Boolean> empty;
 
     private final List<Element> viewModels;
 
-    private final MutablePropertyType<String> localizedEmptyMessage = new MutableProperty<>(null);
+    private final IMutableProperty<String> localizedEmptyMessage = new MutableProperty<>(null);
 
     //endregion
 
@@ -41,17 +41,17 @@ public class ArrayViewModel<Element extends ViewModelType> extends ViewModel imp
     //region ArrayViewModelType
 
     @Override
-    public PropertyType<Integer> getCount() {
+    public IProperty<Integer> getCount() {
         return count;
     }
 
     @Override
-    public PropertyType<Boolean> isEmpty() {
+    public IProperty<Boolean> isEmpty() {
         return empty;
     }
 
     @Override
-    public MutablePropertyType<String> getLocalizedEmptyMessage() {
+    public IMutableProperty<String> getLocalizedEmptyMessage() {
         return localizedEmptyMessage;
     }
 

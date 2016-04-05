@@ -8,7 +8,7 @@ import rx.Subscription;
  * Represents an observable property that can be mutated directly.
  * Inspired by [ReactiveCocoa 4](https://github.com/ReactiveCocoa/ReactiveCocoa)
  */
-public interface MutablePropertyType<Value> extends PropertyType<Value> {
+public interface IMutableProperty<Value> extends IProperty<Value> {
     /**
      * Sets value of the receiver.
      */
@@ -21,7 +21,7 @@ public interface MutablePropertyType<Value> extends PropertyType<Value> {
      * The binding will automatically terminate when the receiver is finalized,
      * or when the {@code observable} completes.
      *
-     * @see MutableProperty#bind(MutablePropertyType, Observable)
+     * @see MutableProperty#bind(IMutableProperty, Observable)
      */
     Subscription bind(Observable<Value> source);
 
@@ -30,7 +30,7 @@ public interface MutablePropertyType<Value> extends PropertyType<Value> {
      * <p/>
      * The binding will automatically terminate when either the receiver or {@code source} is finalized.
      *
-     * @see MutableProperty#bind(MutablePropertyType, PropertyType)
+     * @see MutableProperty#bind(IMutableProperty, IProperty)
      */
-    Subscription bind(PropertyType<Value> source);
+    Subscription bind(IProperty<Value> source);
 }

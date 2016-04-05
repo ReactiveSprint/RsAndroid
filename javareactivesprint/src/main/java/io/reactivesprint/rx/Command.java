@@ -33,7 +33,7 @@ public final class Command<Input, Output> {
     private final Observable<Throwable> errors;
 
     private final MutableProperty<Boolean> executing = new MutableProperty<>(false);
-    private final PropertyType<Boolean> enabled;
+    private final IProperty<Boolean> enabled;
 
     private final Object lock = new Object();
 
@@ -66,7 +66,7 @@ public final class Command<Input, Output> {
      * @param enabled          Property whether or not this Command should be enabled.
      * @param createObservable Function used to create an Observable each time {@link #apply(Object[])} is invoked.
      */
-    public Command(PropertyType<Boolean> enabled,
+    public Command(IProperty<Boolean> enabled,
                    final Func1<Input, Observable<Output>> createObservable) {
         this(null, enabled, createObservable);
     }
@@ -78,7 +78,7 @@ public final class Command<Input, Output> {
      * @param enabled          Property whether or not this Command should be enabled.
      * @param createObservable Function used to create an Observable each time {@link #apply(Object[])} is invoked.
      */
-    public Command(Scheduler scheduler, PropertyType<Boolean> enabled,
+    public Command(Scheduler scheduler, IProperty<Boolean> enabled,
                    final Func1<Input, Observable<Output>> createObservable) {
         this.scheduler = scheduler;
         this.createObservable = createObservable;
@@ -187,14 +187,14 @@ public final class Command<Input, Output> {
     /**
      * Whether or not the receiever is enabled.
      */
-    public PropertyType<Boolean> isEnabled() {
+    public IProperty<Boolean> isEnabled() {
         return enabled;
     }
 
     /**
      * Whether or not the receiever is executing.
      */
-    public PropertyType<Boolean> isExecuting() {
+    public IProperty<Boolean> isExecuting() {
         if (scheduler == null) {
             return new Property<>(executing);
         } else {

@@ -2,7 +2,7 @@ package io.reactivesprint.viewmodels;
 
 import java.util.List;
 
-import io.reactivesprint.rx.PropertyType;
+import io.reactivesprint.rx.IProperty;
 
 /**
  * Created by Ahmad Baraka on 3/29/16.
@@ -19,17 +19,17 @@ public interface ArrayViewModelType<Element extends ViewModelType> extends ViewM
     /**
      * @return Count of wrapped elements.
      */
-    PropertyType<Integer> getCount();
+    IProperty<Integer> getCount();
 
     /**
      * @return true if Array is empty, false otherwise.
      */
-    PropertyType<Boolean> isEmpty();
+    IProperty<Boolean> isEmpty();
 
     /**
      * @return localized message to be used when the array is empty.
      */
-    PropertyType<String> getLocalizedEmptyMessage();
+    IProperty<String> getLocalizedEmptyMessage();
 
     /**
      * Access the indexth element.

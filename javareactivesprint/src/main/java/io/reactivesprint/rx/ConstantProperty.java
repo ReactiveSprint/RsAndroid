@@ -7,7 +7,7 @@ import rx.Observable;
  * A property that never changes.
  * Inspired by [ReactiveCocoa 4](https://github.com/ReactiveCocoa/ReactiveCocoa)
  */
-public final class ConstantProperty<Value> implements PropertyType<Value> {
+public final class ConstantProperty<Value> implements IProperty<Value> {
     private final Value value;
 
     /**

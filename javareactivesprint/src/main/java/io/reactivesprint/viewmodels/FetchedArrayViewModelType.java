@@ -1,7 +1,7 @@
 package io.reactivesprint.viewmodels;
 
 import io.reactivesprint.rx.Command;
-import io.reactivesprint.rx.PropertyType;
+import io.reactivesprint.rx.IProperty;
 import rx.Observable;
 
 /**
@@ -18,7 +18,7 @@ public interface FetchedArrayViewModelType<Element extends ViewModelType, Page, 
     /**
      * @return Whether the receiver is refreshing.
      */
-    PropertyType<Boolean> isRefreshing();
+    IProperty<Boolean> isRefreshing();
 
     /**
      * @return An object representing next page.
@@ -28,12 +28,12 @@ public interface FetchedArrayViewModelType<Element extends ViewModelType, Page, 
     /**
      * @return Whether the receiver is fetching next page.
      */
-    PropertyType<Boolean> isFetchingNextPage();
+    IProperty<Boolean> isFetchingNextPage();
 
     /**
      * @return Next Page
      */
-    PropertyType<Boolean> hasNextPage();
+    IProperty<Boolean> hasNextPage();
 
     /**
      * @return Command which refreshes ViewModels.

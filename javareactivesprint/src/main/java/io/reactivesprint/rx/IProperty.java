@@ -8,7 +8,7 @@ import rx.Observable;
  * <p/>
  * Inspired by [ReactiveCocoa 4](https://github.com/ReactiveCocoa/ReactiveCocoa)
  */
-public interface PropertyType<Value> {
+public interface IProperty<Value> {
     /**
      * @return Current value of the property.
      */

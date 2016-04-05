@@ -1,8 +1,8 @@
 package io.reactivesprint.viewmodels;
 
 import io.reactivesprint.rx.Command;
-import io.reactivesprint.rx.MutablePropertyType;
-import io.reactivesprint.rx.PropertyType;
+import io.reactivesprint.rx.IMutableProperty;
+import io.reactivesprint.rx.IProperty;
 import rx.Observable;
 
 /**
@@ -13,22 +13,22 @@ public interface ViewModelType {
     /**
      * @return Whether the receiver is active.
      */
-    MutablePropertyType<Boolean> getActive();
+    IMutableProperty<Boolean> getActive();
 
     /**
      * @return General title of the receiver.
      */
-    MutablePropertyType<String> getTitle();
+    IMutableProperty<String> getTitle();
 
     /**
      * @return Whether the receiver is loading.
      */
-    PropertyType<Boolean> getLoading();
+    IProperty<Boolean> getLoading();
 
     /**
      * @return Whether the receiver is enabled.
      */
-    PropertyType<Boolean> getEnabled();
+    IProperty<Boolean> getEnabled();
 
     /**
      * An Observable of all errors that occur in the receiver.

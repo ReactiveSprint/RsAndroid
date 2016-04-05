@@ -2,9 +2,9 @@ package io.reactivesprint.viewmodels;
 
 import io.reactivesprint.rx.Command;
 import io.reactivesprint.rx.MutableProperty;
-import io.reactivesprint.rx.MutablePropertyType;
+import io.reactivesprint.rx.IMutableProperty;
 import io.reactivesprint.rx.Property;
-import io.reactivesprint.rx.PropertyType;
+import io.reactivesprint.rx.IProperty;
 import rx.Observable;
 import rx.functions.Func1;
 import rx.subjects.PublishSubject;
@@ -17,12 +17,12 @@ import rx.subjects.Subject;
 public class ViewModel implements ViewModelType {
     //region Fields
 
-    private final MutablePropertyType<Boolean> active = new MutableProperty<>(false);
-    private final MutablePropertyType<String> title = new MutableProperty<>(null);
+    private final IMutableProperty<Boolean> active = new MutableProperty<>(false);
+    private final IMutableProperty<String> title = new MutableProperty<>(null);
 
     private final Subject<Observable<Boolean>, Observable<Boolean>> loadingSubject = PublishSubject.create();
-    private final PropertyType<Boolean> loading = new MutableProperty<>(false);
-    private final PropertyType<Boolean> enabled = new Property<>(false, loading.getObservable().map(new Func1<Boolean, Boolean>() {
+    private final IProperty<Boolean> loading = new MutableProperty<>(false);
+    private final IProperty<Boolean> enabled = new Property<>(false, loading.getObservable().map(new Func1<Boolean, Boolean>() {
         @Override
         public Boolean call(Boolean aBoolean) {
             return !aBoolean;
@@ -37,17 +37,17 @@ public class ViewModel implements ViewModelType {
     //region Properties
 
     @Override
-    public MutablePropertyType<Boolean> getActive() {
+    public IMutableProperty<Boolean> getActive() {
         return active;
     }
 
     @Override
-    public MutablePropertyType<String> getTitle() {
+    public IMutableProperty<String> getTitle() {
         return title;
     }
 
     @Override
-    public PropertyType<Boolean> getLoading() {
+    public IProperty<Boolean> getLoading() {
         return loading;
     }
 
@@ -57,7 +57,7 @@ public class ViewModel implements ViewModelType {
     }
 
     @Override
-    public PropertyType<Boolean> getEnabled() {
+    public IProperty<Boolean> getEnabled() {
         return enabled;
     }
 

@@ -8,9 +8,9 @@ import java.util.List;
 
 import io.reactivesprint.rx.Command;
 import io.reactivesprint.rx.MutableProperty;
-import io.reactivesprint.rx.MutablePropertyType;
+import io.reactivesprint.rx.IMutableProperty;
 import io.reactivesprint.rx.Property;
-import io.reactivesprint.rx.PropertyType;
+import io.reactivesprint.rx.IProperty;
 import rx.Observable;
 import rx.functions.Action1;
 import rx.functions.Func1;
@@ -24,10 +24,10 @@ public class FetchedArrayViewModel<Element extends ViewModel> extends ViewModel 
 
     private MutableProperty<List<Element>> viewModels = new MutableProperty<>(Collections.<Element>emptyList());
 
-    private final PropertyType<Integer> count;
-    private final PropertyType<Boolean> empty;
+    private final IProperty<Integer> count;
+    private final IProperty<Boolean> empty;
 
-    private final MutablePropertyType<String> localizedEmptyMessage = new MutableProperty<>(null);
+    private final IMutableProperty<String> localizedEmptyMessage = new MutableProperty<>(null);
 
     private final MutableProperty<Boolean> refreshing = new MutableProperty<>(false);
     private final MutableProperty<Boolean> fetchingNextPage = new MutableProperty<>(false);
@@ -73,17 +73,17 @@ public class FetchedArrayViewModel<Element extends ViewModel> extends ViewModel 
     //region ArrayViewModelType
 
     @Override
-    public PropertyType<Integer> getCount() {
+    public IProperty<Integer> getCount() {
         return count;
     }
 
     @Override
-    public PropertyType<Boolean> isEmpty() {
+    public IProperty<Boolean> isEmpty() {
         return empty;
     }
 
     @Override
-    public MutablePropertyType<String> getLocalizedEmptyMessage() {
+    public IMutableProperty<String> getLocalizedEmptyMessage() {
         return localizedEmptyMessage;
     }
 
@@ -107,7 +107,7 @@ public class FetchedArrayViewModel<Element extends ViewModel> extends ViewModel 
     //region FetchedArrayViewModelType
 
     @Override
-    public PropertyType<Boolean> isRefreshing() {
+    public IProperty<Boolean> isRefreshing() {
         return new Property<>(refreshing);
     }
 
@@ -117,12 +117,12 @@ public class FetchedArrayViewModel<Element extends ViewModel> extends ViewModel 
     }
 
     @Override
-    public PropertyType<Boolean> isFetchingNextPage() {
+    public IProperty<Boolean> isFetchingNextPage() {
         return new Property<>(fetchingNextPage);
     }
 
     @Override
-    public PropertyType<Boolean> hasNextPage() {
+    public IProperty<Boolean> hasNextPage() {
         return new Property<>(hasNextPage);
     }
 
