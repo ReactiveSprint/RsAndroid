@@ -20,7 +20,7 @@ import rx.subjects.Subject;
  *
  * @see #apply(Object[])
  */
-public final class Command<I, R> {
+public final class Command<I, R> implements ICommand<I, R> {
     //region Fields
 
     private final Scheduler scheduler;
@@ -217,19 +217,6 @@ public final class Command<I, R> {
     protected void finalize() throws Throwable {
         notifications.onCompleted();
         super.finalize();
-    }
-
-    //endregion
-
-    //region CommandNotEnabledException
-
-    /**
-     * An Exception which occurs when user attempts to apply a Command while is not enabled.
-     */
-    public static class CommandNotEnabledException extends RuntimeException {
-        public CommandNotEnabledException() {
-            super("Command is not enabled, and cannot be executed.");
-        }
     }
 
     //endregion
