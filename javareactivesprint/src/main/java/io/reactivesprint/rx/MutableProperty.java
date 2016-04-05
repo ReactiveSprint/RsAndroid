@@ -1,8 +1,5 @@
 package io.reactivesprint.rx;
 
-import android.support.annotation.NonNull;
-import android.support.annotation.Nullable;
-
 import rx.Observable;
 import rx.Observer;
 import rx.Subscriber;
@@ -31,7 +28,7 @@ public final class MutableProperty<Value> implements MutablePropertyType<Value> 
     /**
      * Initializes the property with {@code initialValue.}
      */
-    public MutableProperty(@Nullable Value initialValue) {
+    public MutableProperty(Value initialValue) {
         this.value = initialValue;
         valueSubject = BehaviorSubject.create(initialValue);
         valueObservable = valueSubject.asObservable();
@@ -58,7 +55,7 @@ public final class MutableProperty<Value> implements MutablePropertyType<Value> 
     //region Setter
 
     @Override
-    public void setValue(@Nullable Value value) {
+    public void setValue(Value value) {
         synchronized (lock) {
             this.value = value;
         }
@@ -69,7 +66,7 @@ public final class MutableProperty<Value> implements MutablePropertyType<Value> 
 
     //region Binding
 
-    public static <Value> Subscription bind(@NonNull /* this */ final MutablePropertyType<Value> destination, @NonNull Observable<Value> source) {
+    public static <Value> Subscription bind(/* this */ final MutablePropertyType<Value> destination, Observable<Value> source) {
         final SubscriptionList subscriptionList = new SubscriptionList();
 
         destination.getObservable().subscribe(new Observer<Value>() {
@@ -109,17 +106,17 @@ public final class MutableProperty<Value> implements MutablePropertyType<Value> 
         return subscriptionList;
     }
 
-    public static <Value> Subscription bind(@NonNull /* this */ final MutablePropertyType<Value> destination, @NonNull PropertyType<Value> source) {
+    public static <Value> Subscription bind(/* this */ final MutablePropertyType<Value> destination, PropertyType<Value> source) {
         return destination.bind(source.getObservable());
     }
 
     @Override
-    public Subscription bind(@NonNull Observable<Value> source) {
+    public Subscription bind(Observable<Value> source) {
         return bind(this, source);
     }
 
     @Override
-    public Subscription bind(@NonNull PropertyType<Value> source) {
+    public Subscription bind(PropertyType<Value> source) {
         return bind(this, source);
     }
 

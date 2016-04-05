@@ -1,7 +1,5 @@
 package io.reactivesprint.viewmodels;
 
-import android.support.annotation.NonNull;
-
 import io.reactivesprint.rx.Command;
 import io.reactivesprint.rx.MutableProperty;
 import io.reactivesprint.rx.MutablePropertyType;
@@ -68,17 +66,17 @@ public class ViewModel implements ViewModelType {
     //region Binding
 
     @Override
-    public void bindLoading(@NonNull Observable<Boolean> loadingObservable) {
+    public void bindLoading(Observable<Boolean> loadingObservable) {
         loadingSubject.onNext(loadingObservable.onErrorResumeNext(Observable.<Boolean>empty()));
     }
 
     @Override
-    public void bindErrors(@NonNull Observable<ErrorType> errorObservable) {
+    public void bindErrors(Observable<ErrorType> errorObservable) {
         errorsSubject.onNext(errorObservable.onErrorResumeNext(Observable.<ErrorType>empty()));
     }
 
     @Override
-    public <Input, Output> void bindCommand(@NonNull Command<Input, Output> command) {
+    public <Input, Output> void bindCommand(Command<Input, Output> command) {
         bindLoading(command.isExecuting().getObservable());
 
         bindErrors(command.getErrors().flatMap(new Func1<Throwable, Observable<ErrorType>>() {

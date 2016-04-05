@@ -1,7 +1,5 @@
 package io.reactivesprint.viewmodels;
 
-import android.support.annotation.NonNull;
-
 import io.reactivesprint.models.ModelType;
 
 /**
@@ -11,7 +9,7 @@ public class ModelViewModel<Model extends ModelType> extends ViewModel implement
 
     private final Model model;
 
-    public ModelViewModel(@NonNull Model model) {
+    public ModelViewModel(Model model) {
         this.model = model;
     }
 

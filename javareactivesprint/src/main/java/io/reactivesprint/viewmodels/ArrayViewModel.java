@@ -1,7 +1,5 @@
 package io.reactivesprint.viewmodels;
 
-import android.support.annotation.NonNull;
-
 import java.util.ArrayList;
 import java.util.List;
 
@@ -32,7 +30,7 @@ public class ArrayViewModel<Element extends ViewModelType> extends ViewModel imp
     /**
      * Creates an instance with {@code viewModels}
      */
-    public ArrayViewModel(@NonNull List<Element> viewModels) {
+    public ArrayViewModel(List<Element> viewModels) {
         this.viewModels = new ArrayList<>(viewModels);
         count = new ConstantProperty<>(viewModels.size());
         empty = new ConstantProperty<>(viewModels.isEmpty());

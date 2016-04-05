@@ -1,8 +1,5 @@
 package io.reactivesprint.viewmodels;
 
-import android.support.annotation.NonNull;
-import android.support.annotation.Nullable;
-
 import org.javatuples.Pair;
 
 import java.util.ArrayList;
@@ -50,7 +47,7 @@ public class FetchedArrayViewModel<Element extends ViewModel> extends ViewModel 
     /**
      * Creates an instance with {@code viewModels}
      */
-    public FetchedArrayViewModel(@NonNull Func1<Integer, Observable<Pair<Integer, List<Element>>>> fetchFunc) {
+    public FetchedArrayViewModel(Func1<Integer, Observable<Pair<Integer, List<Element>>>> fetchFunc) {
         this.fetchFunc = fetchFunc;
         count = new Property<>(0, viewModels.getObservable().map(new Func1<List<Element>, Integer>() {
             @Override
@@ -181,7 +178,7 @@ public class FetchedArrayViewModel<Element extends ViewModel> extends ViewModel 
     }
 
     protected static <Element extends ViewModelType, Page, FetchInput, FetchOutput> Command<FetchInput, FetchOutput>
-    createFetchIfNeededCommand(@NonNull final FetchedArrayViewModelType<Element, Page, FetchInput, FetchOutput> fetchedArrayViewModelType) {
+    createFetchIfNeededCommand(final FetchedArrayViewModelType<Element, Page, FetchInput, FetchOutput> fetchedArrayViewModelType) {
         Command<FetchInput, FetchOutput> command = new Command<>(fetchedArrayViewModelType.getEnabled(), new Func1<FetchInput, Observable<FetchOutput>>() {
             @Override
             public Observable<FetchOutput> call(FetchInput input) {
@@ -198,7 +195,7 @@ public class FetchedArrayViewModel<Element extends ViewModel> extends ViewModel 
         return command;
     }
 
-    private Observable<List<Element>> fetch(@Nullable final Integer nextPage) {
+    private Observable<List<Element>> fetch(final Integer nextPage) {
         return fetchFunc.call(nextPage)
                 .doOnNext(new Action1<Pair<Integer, List<Element>>>() {
                     @Override

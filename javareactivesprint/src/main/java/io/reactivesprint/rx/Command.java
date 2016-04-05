@@ -1,8 +1,5 @@
 package io.reactivesprint.rx;
 
-import android.support.annotation.NonNull;
-import android.support.annotation.Nullable;
-
 import java.util.Arrays;
 
 import rx.Notification;
@@ -49,7 +46,7 @@ public final class Command<Input, Output> {
      *
      * @param createObservable Function used to create an Observable each time {@link #apply(Object[])} is invoked.
      */
-    public Command(@NonNull final Func1<Input, Observable<Output>> createObservable) {
+    public Command(final Func1<Input, Observable<Output>> createObservable) {
         this(null, new ConstantProperty<>(true), createObservable);
     }
 
@@ -59,7 +56,7 @@ public final class Command<Input, Output> {
      * @param scheduler        Scheduler used to send all notifications in the receiver.
      * @param createObservable Function used to create an Observable each time {@link #apply(Object[])} is invoked.
      */
-    public Command(@Nullable Scheduler scheduler, @NonNull final Func1<Input, Observable<Output>> createObservable) {
+    public Command(Scheduler scheduler, final Func1<Input, Observable<Output>> createObservable) {
         this(scheduler, new ConstantProperty<>(true), createObservable);
     }
 
@@ -69,8 +66,8 @@ public final class Command<Input, Output> {
      * @param enabled          Property whether or not this Command should be enabled.
      * @param createObservable Function used to create an Observable each time {@link #apply(Object[])} is invoked.
      */
-    public Command(@NonNull PropertyType<Boolean> enabled,
-                   @NonNull final Func1<Input, Observable<Output>> createObservable) {
+    public Command(PropertyType<Boolean> enabled,
+                   final Func1<Input, Observable<Output>> createObservable) {
         this(null, enabled, createObservable);
     }
 
@@ -81,8 +78,8 @@ public final class Command<Input, Output> {
      * @param enabled          Property whether or not this Command should be enabled.
      * @param createObservable Function used to create an Observable each time {@link #apply(Object[])} is invoked.
      */
-    public Command(@Nullable Scheduler scheduler, @NonNull PropertyType<Boolean> enabled,
-                   @NonNull final Func1<Input, Observable<Output>> createObservable) {
+    public Command(Scheduler scheduler, PropertyType<Boolean> enabled,
+                   final Func1<Input, Observable<Output>> createObservable) {
         this.scheduler = scheduler;
         this.createObservable = createObservable;
 

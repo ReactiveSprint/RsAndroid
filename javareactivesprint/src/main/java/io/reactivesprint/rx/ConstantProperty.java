@@ -1,7 +1,5 @@
 package io.reactivesprint.rx;
 
-import android.support.annotation.Nullable;
-
 import rx.Observable;
 
 /**
@@ -15,7 +13,7 @@ public final class ConstantProperty<Value> implements PropertyType<Value> {
     /**
      * Constructs a property with {@code value}
      */
-    public ConstantProperty(@Nullable Value value) {
+    public ConstantProperty(Value value) {
         this.value = value;
     }
 
