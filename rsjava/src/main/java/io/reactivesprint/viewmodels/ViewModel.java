@@ -10,6 +10,8 @@ import rx.functions.Func1;
 import rx.subjects.PublishSubject;
 import rx.subjects.Subject;
 
+import static io.reactivesprint.internal.Preconditions.checkNotNull;
+
 /**
  * Created by Ahmad Baraka on 3/29/16.
  * Abstract implementation of a {@code ViewModel} used in MVVM.
@@ -67,16 +69,19 @@ public class ViewModel implements IViewModel {
 
     @Override
     public void bindLoading(Observable<Boolean> loadingObservable) {
+        checkNotNull(loadingObservable, "loadingObservable");
         loadingSubject.onNext(loadingObservable.onErrorResumeNext(Observable.<Boolean>empty()));
     }
 
     @Override
     public void bindErrors(Observable<IError> errorObservable) {
+        checkNotNull(errorObservable, "errorObservable");
         errorsSubject.onNext(errorObservable.onErrorResumeNext(Observable.<IError>empty()));
     }
 
     @Override
     public <I, R> void bindCommand(ICommand<I, R> command) {
+        checkNotNull(command, "command");
         bindLoading(command.isExecuting().getObservable());
 
         bindErrors(command.getErrors().flatMap(new Func1<Throwable, Observable<IError>>() {

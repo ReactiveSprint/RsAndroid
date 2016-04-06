@@ -8,6 +8,8 @@ import io.reactivesprint.rx.MutableProperty;
 import io.reactivesprint.rx.IMutableProperty;
 import io.reactivesprint.rx.IProperty;
 
+import static io.reactivesprint.internal.Preconditions.checkNotNull;
+
 /**
  * Created by Ahmad Baraka on 4/1/16.
  * {@link IArrayViewModel} implementation that has a constant {@code List<ViewModel>}
@@ -31,6 +33,7 @@ public class ArrayViewModel<E extends IViewModel> extends ViewModel implements I
      * Creates an instance with {@code viewModels}
      */
     public ArrayViewModel(List<E> viewModels) {
+        checkNotNull(viewModels, "viewModels");
         this.viewModels = new ArrayList<>(viewModels);
         count = new ConstantProperty<>(viewModels.size());
         empty = new ConstantProperty<>(viewModels.isEmpty());
@@ -62,6 +65,7 @@ public class ArrayViewModel<E extends IViewModel> extends ViewModel implements I
 
     @Override
     public int indexOf(E element) {
+        checkNotNull(element, "element");
         return viewModels.indexOf(element);
     }
 

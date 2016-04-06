@@ -16,6 +16,8 @@ import rx.Observable;
 import rx.functions.Action1;
 import rx.functions.Func1;
 
+import static io.reactivesprint.internal.Preconditions.checkNotNull;
+
 /**
  * Created by Ahmad Baraka on 4/2/16.
  * An implementation of {@link IFetchedArrayViewModel} that fetches ViewModels by calling {@code fetchFunc}
@@ -49,6 +51,7 @@ public class FetchedArrayViewModel<E extends ViewModel> extends ViewModel implem
      * Creates an instance with {@code viewModels}
      */
     public FetchedArrayViewModel(Func1<Integer, Observable<Pair<Integer, List<E>>>> fetchFunc) {
+        checkNotNull(fetchFunc, "fetchFunc");
         this.fetchFunc = fetchFunc;
         count = new Property<>(0, viewModels.getObservable().map(new Func1<List<E>, Integer>() {
             @Override
@@ -95,6 +98,7 @@ public class FetchedArrayViewModel<E extends ViewModel> extends ViewModel implem
 
     @Override
     public int indexOf(E element) {
+        checkNotNull(element, "element");
         return viewModels.getValue().indexOf(element);
     }
 
@@ -180,6 +184,8 @@ public class FetchedArrayViewModel<E extends ViewModel> extends ViewModel implem
 
     protected static <E extends IViewModel, P, I, R> ICommand<I, R>
     createFetchIfNeededCommand(final IFetchedArrayViewModel<E, P, I, R> fetchedArrayViewModel) {
+        checkNotNull(fetchedArrayViewModel, "fetchedArrayViewModel");
+
         ICommand<I, R> command = new Command<>(fetchedArrayViewModel.getEnabled(), new Func1<I, Observable<R>>() {
             @Override
             public Observable<R> call(I input) {
