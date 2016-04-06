@@ -11,5 +11,5 @@ import rx.Observable;
  * Represents an Android Fragment that implements {@link IViewController}
  */
 public interface IFragment<VM extends ViewModelType> extends IViewController<VM> {
-    Observable<FragmentEvent> getLifeCycle();
+    Observable<FragmentEvent> lifecycle();
 }

@@ -11,5 +11,5 @@ import rx.Observable;
  * Represents an {@link android.app.Activity} that implements {@link IViewController}
  */
 public interface IActivity<VM extends ViewModelType> extends IViewController<VM> {
-    Observable<ActivityEvent> getLifeCycle();
+    Observable<ActivityEvent> lifecycle();
 }

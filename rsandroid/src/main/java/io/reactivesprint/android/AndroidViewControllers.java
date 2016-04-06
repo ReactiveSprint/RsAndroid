@@ -33,7 +33,7 @@ public final class AndroidViewControllers {
     //region Activity
 
     public static <VM extends ViewModelType, T> void bind(final IActivity<VM> activity, Observable<T> observable, Action1<T> bindAction) {
-        observable.compose(RxLifecycle.<T>bindActivity(activity.getLifeCycle()))
+        observable.compose(RxLifecycle.<T>bindActivity(activity.lifecycle()))
                 .subscribe(bindAction);
     }
 
@@ -72,7 +72,7 @@ public final class AndroidViewControllers {
     //region Fragments
 
     public static <VM extends ViewModelType, T> void bind(final IFragment<VM> fragment, Observable<T> observable, Action1<T> bindAction) {
-        observable.compose(RxLifecycle.<T>bindFragment(fragment.getLifeCycle()))
+        observable.compose(RxLifecycle.<T>bindFragment(fragment.lifecycle()))
                 .subscribe(bindAction);
     }
 
