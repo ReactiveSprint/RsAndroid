@@ -36,7 +36,7 @@ public final class MutableProperty<V> implements IMutableProperty<V> {
 
     //endregion
 
-    //region PropertyType
+    //region IProperty
 
     @Override
     public V getValue() {

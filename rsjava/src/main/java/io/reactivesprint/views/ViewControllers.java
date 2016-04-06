@@ -1,6 +1,6 @@
 package io.reactivesprint.views;
 
-import io.reactivesprint.viewmodels.ErrorType;
+import io.reactivesprint.viewmodels.IError;
 import rx.functions.Action1;
 
 /**
@@ -46,17 +46,17 @@ public final class ViewControllers {
     }
 
     /**
-     * Create an action which invokes {@link IViewController#presentError(ErrorType)}
+     * Create an action which invokes {@link IViewController#presentError(IError)}
      * <p/>
      * <em>Note:</em>  The created action keeps a strong reference to {@code viewController},
      * so when this is used with {@link rx.Observable}, unsubscribe
      * to free this reference.
      */
-    public static Action1<ErrorType> presentError(final IViewController<?> viewController) {
-        return new Action1<ErrorType>() {
+    public static Action1<IError> presentError(final IViewController<?> viewController) {
+        return new Action1<IError>() {
             @Override
-            public void call(ErrorType errorType) {
-                viewController.presentError(errorType);
+            public void call(IError error) {
+                viewController.presentError(error);
             }
         };
     }

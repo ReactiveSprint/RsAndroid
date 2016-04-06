@@ -1,21 +1,21 @@
 package io.reactivesprint.views;
 
-import io.reactivesprint.viewmodels.ArrayViewModelType;
-import io.reactivesprint.viewmodels.ViewModelType;
+import io.reactivesprint.viewmodels.IArrayViewModel;
+import io.reactivesprint.viewmodels.IViewModel;
 
 /**
  * Created by Ahmad Baraka on 4/6/16.
- * Represents a View Controller that wraps {@link ArrayViewModelType}
+ * Represents a View Controller that wraps {@link IArrayViewModel}
  */
-public interface IArrayViewController<VM extends ViewModelType, AVM extends ArrayViewModelType> extends IViewController<VM> {
+public interface IArrayViewController<VM extends IViewModel, AVM extends IArrayViewModel> extends IViewController<VM> {
     /**
-     * @return a ViewModel used as {@code ArrayViewModelType}
+     * @return a ViewModel used as {@link IArrayViewModel}
      * This could return a different value than {@link #getViewModel()}
      */
     AVM getArrayViewModel();
 
     /**
-     * Binds {@link ArrayViewModelType#getCount()} to {@link #onDataSetChanged()}
+     * Binds {@link IArrayViewModel#getCount()} to {@link #onDataSetChanged()}
      */
     void bindCount(AVM arrayViewModel);
 
@@ -25,7 +25,7 @@ public interface IArrayViewController<VM extends ViewModelType, AVM extends Arra
     void onDataSetChanged();
 
     /**
-     * Binds {@link ArrayViewModelType#getLocalizedEmptyMessage()} to {@link #setLocalizedEmptyMessage(CharSequence)}
+     * Binds {@link IArrayViewModel#getLocalizedEmptyMessage()} to {@link #setLocalizedEmptyMessage(CharSequence)}
      */
     void bindLocalizedEmptyMessage(AVM arrayViewModel);
 

@@ -6,15 +6,15 @@ import rx.Observable;
 
 /**
  * Created by Ahmad Baraka on 3/30/16.
- * ArrayViewModelType which its array is lazily fetched, or even paginated.
+ * {@link IArrayViewModel} which its array is lazily fetched, or even paginated.
  *
  * @param <E> Type of Elements in Array.
  * @param <P> Type representing page.
  * @param <I> Type of FetchCommand Input.
  * @param <R> Type of FetchCommand Output.
  */
-public interface FetchedArrayViewModelType<E extends ViewModelType, P, I, R>
-        extends ArrayViewModelType<E> {
+public interface IFetchedArrayViewModel<E extends IViewModel, P, I, R>
+        extends IArrayViewModel<E> {
     /**
      * @return Whether the receiver is refreshing.
      */

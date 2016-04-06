@@ -8,19 +8,19 @@ import java.util.List;
 
 import io.reactivesprint.rx.Command;
 import io.reactivesprint.rx.ICommand;
-import io.reactivesprint.rx.MutableProperty;
 import io.reactivesprint.rx.IMutableProperty;
-import io.reactivesprint.rx.Property;
 import io.reactivesprint.rx.IProperty;
+import io.reactivesprint.rx.MutableProperty;
+import io.reactivesprint.rx.Property;
 import rx.Observable;
 import rx.functions.Action1;
 import rx.functions.Func1;
 
 /**
  * Created by Ahmad Baraka on 4/2/16.
- * An implementation of FetchedArrayViewModelType that fetches ViewModels by calling {@code fetchFunc}
+ * An implementation of {@link IFetchedArrayViewModel} that fetches ViewModels by calling {@code fetchFunc}
  */
-public class FetchedArrayViewModel<E extends ViewModel> extends ViewModel implements FetchedArrayViewModelType<E, Integer, Void, List<E>> {
+public class FetchedArrayViewModel<E extends ViewModel> extends ViewModel implements IFetchedArrayViewModel<E, Integer, Void, List<E>> {
     //region Fields
 
     private MutableProperty<List<E>> viewModels = new MutableProperty<>(Collections.<E>emptyList());
@@ -28,7 +28,7 @@ public class FetchedArrayViewModel<E extends ViewModel> extends ViewModel implem
     private final IProperty<Integer> count;
     private final IProperty<Boolean> empty;
 
-    private final IMutableProperty<String> localizedEmptyMessage = new MutableProperty<>(null);
+    private final IMutableProperty<CharSequence> localizedEmptyMessage = new MutableProperty<>(null);
 
     private final MutableProperty<Boolean> refreshing = new MutableProperty<>(false);
     private final MutableProperty<Boolean> fetchingNextPage = new MutableProperty<>(false);
@@ -71,7 +71,7 @@ public class FetchedArrayViewModel<E extends ViewModel> extends ViewModel implem
 
     //endregion
 
-    //region ArrayViewModelType
+    //region IArrayViewModel
 
     @Override
     public IProperty<Integer> getCount() {
@@ -84,7 +84,7 @@ public class FetchedArrayViewModel<E extends ViewModel> extends ViewModel implem
     }
 
     @Override
-    public IMutableProperty<String> getLocalizedEmptyMessage() {
+    public IMutableProperty<CharSequence> getLocalizedEmptyMessage() {
         return localizedEmptyMessage;
     }
 
@@ -105,7 +105,7 @@ public class FetchedArrayViewModel<E extends ViewModel> extends ViewModel implem
 
     //endregion
 
-    //region FetchedArrayViewModelType
+    //region IFetchedArrayViewModel
 
     @Override
     public IProperty<Boolean> isRefreshing() {
@@ -178,20 +178,20 @@ public class FetchedArrayViewModel<E extends ViewModel> extends ViewModel implem
         return command;
     }
 
-    protected static <E extends ViewModelType, P, I, R> ICommand<I, R>
-    createFetchIfNeededCommand(final FetchedArrayViewModelType<E, P, I, R> fetchedArrayViewModelType) {
-        ICommand<I, R> command = new Command<>(fetchedArrayViewModelType.getEnabled(), new Func1<I, Observable<R>>() {
+    protected static <E extends IViewModel, P, I, R> ICommand<I, R>
+    createFetchIfNeededCommand(final IFetchedArrayViewModel<E, P, I, R> fetchedArrayViewModel) {
+        ICommand<I, R> command = new Command<>(fetchedArrayViewModel.getEnabled(), new Func1<I, Observable<R>>() {
             @Override
             public Observable<R> call(I input) {
-                if (fetchedArrayViewModelType.getNextPage() != null && fetchedArrayViewModelType.hasNextPage().getValue()) {
-                    return fetchedArrayViewModelType.getFetchCommand().apply(input);
+                if (fetchedArrayViewModel.getNextPage() != null && fetchedArrayViewModel.hasNextPage().getValue()) {
+                    return fetchedArrayViewModel.getFetchCommand().apply(input);
                 }
 
                 return Observable.empty();
             }
         });
 
-        fetchedArrayViewModelType.bindCommand(command);
+        fetchedArrayViewModel.bindCommand(command);
 
         return command;
     }

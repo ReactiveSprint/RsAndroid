@@ -9,7 +9,7 @@ import rx.Observable;
  * Created by Ahmad Baraka on 3/29/16.
  * Represents a ViewModel.
  */
-public interface ViewModelType {
+public interface IViewModel {
     /**
      * @return Whether the receiver is active.
      */
@@ -33,7 +33,7 @@ public interface ViewModelType {
     /**
      * An Observable of all errors that occur in the receiver.
      */
-    Observable<ErrorType> getErrors();
+    Observable<IError> getErrors();
 
     /**
      * Binds {@code loadingObservable} to the receiver.
@@ -45,14 +45,14 @@ public interface ViewModelType {
     /**
      * Binds {@code errorsObservable} to the receiver.
      *
-     * @param errorObservable An Observable which sends {@link ErrorType}.
+     * @param errorObservable An Observable which sends {@link IError}.
      */
-    void bindErrors(Observable<ErrorType> errorObservable);
+    void bindErrors(Observable<IError> errorObservable);
 
     /**
      * Binds {@code command} executing and errors of {@code command} to the receiver.
      * <p/>
-     * If command errors are not instanceof {@link ErrorType}, these errors will not be forward from the receiver.
+     * If command errors are not instanceof {@link IError}, these errors will not be forward from the receiver.
      */
     <I, R> void bindCommand(ICommand<I, R> command);
 }

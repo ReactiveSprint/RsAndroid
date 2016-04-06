@@ -1,12 +1,12 @@
 package io.reactivesprint.views;
 
-import io.reactivesprint.viewmodels.ViewModelType;
+import io.reactivesprint.viewmodels.IViewModel;
 
 /**
  * Created by Ahmad Baraka on 4/6/16.
  * Represents any View in {@code MVVM}.
  */
-public interface IView<VM extends ViewModelType> {
+public interface IView<VM extends IViewModel> {
     /**
      * @return ViewModel used in the receiver.
      */
@@ -18,7 +18,7 @@ public interface IView<VM extends ViewModelType> {
     void bindViewModel(VM viewModel);
 
     /**
-     * Binds {@link ViewModelType#getActive()} property from the receiver.
+     * Binds {@link IViewModel#getActive()} property from the receiver.
      */
     void bindActive(VM viewModel);
 }

@@ -10,7 +10,7 @@ import io.reactivesprint.rx.IProperty;
  *
  * @param <E> Type of each element in Array.
  */
-public interface ArrayViewModelType<E extends ViewModelType> extends ViewModelType {
+public interface IArrayViewModel<E extends IViewModel> extends IViewModel {
     /**
      * @return List of {@code Element}
      */

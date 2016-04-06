@@ -14,7 +14,7 @@ import rx.subjects.Subject;
  * Created by Ahmad Baraka on 3/29/16.
  * Abstract implementation of a {@code ViewModel} used in MVVM.
  */
-public class ViewModel implements ViewModelType {
+public class ViewModel implements IViewModel {
     //region Fields
 
     private final IMutableProperty<Boolean> active = new MutableProperty<>(false);
@@ -29,8 +29,8 @@ public class ViewModel implements ViewModelType {
         }
     }));
 
-    private final Subject<Observable<ErrorType>, Observable<ErrorType>> errorsSubject = PublishSubject.create();
-    private final Observable<ErrorType> errors = Observable.merge(errorsSubject);
+    private final Subject<Observable<IError>, Observable<IError>> errorsSubject = PublishSubject.create();
+    private final Observable<IError> errors = Observable.merge(errorsSubject);
 
     //endregion
 
@@ -52,7 +52,7 @@ public class ViewModel implements ViewModelType {
     }
 
     @Override
-    public Observable<ErrorType> getErrors() {
+    public Observable<IError> getErrors() {
         return errors;
     }
 
@@ -71,19 +71,19 @@ public class ViewModel implements ViewModelType {
     }
 
     @Override
-    public void bindErrors(Observable<ErrorType> errorObservable) {
-        errorsSubject.onNext(errorObservable.onErrorResumeNext(Observable.<ErrorType>empty()));
+    public void bindErrors(Observable<IError> errorObservable) {
+        errorsSubject.onNext(errorObservable.onErrorResumeNext(Observable.<IError>empty()));
     }
 
     @Override
     public <I, R> void bindCommand(ICommand<I, R> command) {
         bindLoading(command.isExecuting().getObservable());
 
-        bindErrors(command.getErrors().flatMap(new Func1<Throwable, Observable<ErrorType>>() {
+        bindErrors(command.getErrors().flatMap(new Func1<Throwable, Observable<IError>>() {
             @Override
-            public Observable<ErrorType> call(Throwable throwable) {
-                if (throwable instanceof ErrorType) {
-                    return Observable.just((ErrorType) throwable);
+            public Observable<IError> call(Throwable throwable) {
+                if (throwable instanceof IError) {
+                    return Observable.just((IError) throwable);
                 }
                 return Observable.empty();
             }

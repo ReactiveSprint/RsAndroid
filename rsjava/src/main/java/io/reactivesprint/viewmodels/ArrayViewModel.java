@@ -10,9 +10,9 @@ import io.reactivesprint.rx.IProperty;
 
 /**
  * Created by Ahmad Baraka on 4/1/16.
- * ArrayViewModelType implementation that has a constant {@code List<ViewModel>}
+ * {@link IArrayViewModel} implementation that has a constant {@code List<ViewModel>}
  */
-public class ArrayViewModel<E extends ViewModelType> extends ViewModel implements ArrayViewModelType<E> {
+public class ArrayViewModel<E extends IViewModel> extends ViewModel implements IArrayViewModel<E> {
     //region Fields
 
     private final IProperty<Integer> count;
@@ -38,7 +38,7 @@ public class ArrayViewModel<E extends ViewModelType> extends ViewModel implement
 
     //endregion
 
-    //region ArrayViewModelType
+    //region IArrayViewModel
 
     @Override
     public IProperty<Integer> getCount() {

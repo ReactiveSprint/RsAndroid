@@ -1,15 +1,15 @@
 package io.reactivesprint.views;
 
-import io.reactivesprint.viewmodels.FetchedArrayViewModelType;
-import io.reactivesprint.viewmodels.ViewModelType;
+import io.reactivesprint.viewmodels.IFetchedArrayViewModel;
+import io.reactivesprint.viewmodels.IViewModel;
 
 /**
  * Created by Ahmad Baraka on 4/6/16.
- * Represents a View Controller that wraps {@link FetchedArrayViewModelType}
+ * Represents a View Controller that wraps {@link IFetchedArrayViewModel}
  */
-public interface IFetchedArrayViewController<VM extends ViewModelType, AVM extends FetchedArrayViewModelType> extends IArrayViewController<VM, AVM> {
+public interface IFetchedArrayViewController<VM extends IViewModel, AVM extends IFetchedArrayViewModel> extends IArrayViewController<VM, AVM> {
     /**
-     * Binds {@link FetchedArrayViewModelType#isRefreshing()} to {@link #presentRefreshing(boolean)}
+     * Binds {@link IFetchedArrayViewModel#isRefreshing()} to {@link #presentRefreshing(boolean)}
      */
     void bindRefreshing(AVM arrayViewModel);
 
@@ -19,7 +19,7 @@ public interface IFetchedArrayViewController<VM extends ViewModelType, AVM exten
     void presentRefreshing(boolean refreshing);
 
     /**
-     * Binds {@link FetchedArrayViewModelType#isFetchingNextPage()} to {@link #presentFetchingNextPage(boolean)}
+     * Binds {@link IFetchedArrayViewModel#isFetchingNextPage()} to {@link #presentFetchingNextPage(boolean)}
      */
     void bindFetchingNextPage(AVM arrayViewModel);
 

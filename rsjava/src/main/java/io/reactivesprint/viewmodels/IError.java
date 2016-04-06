@@ -6,7 +6,7 @@ import java.util.List;
  * Created by Ahmad Baraka on 4/1/16.
  * Represents an Error which can occur in a ViewModel.
  */
-public interface ErrorType {
+public interface IError {
     String getLocalizedDescription();
 
     String getLocalizedRecoverySuggestions();
