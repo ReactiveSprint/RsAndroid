@@ -3,13 +3,9 @@
   <component name="ProjectModuleManager">
     <modules>
       <module fileurl="file://$PROJECT_DIR$/ReactiveSprint.iml" filepath="$PROJECT_DIR$/ReactiveSprint.iml" />
-      <module fileurl="file://$PROJECT_DIR$/glass/glass.iml" filepath="$PROJECT_DIR$/glass/glass.iml" />
-      <module fileurl="file://$PROJECT_DIR$/mobile/mobile.iml" filepath="$PROJECT_DIR$/mobile/mobile.iml" />
-      <module fileurl="file://$PROJECT_DIR$/rsandroid/androidreactivesprint.iml" filepath="$PROJECT_DIR$/rsandroid/androidreactivesprint.iml" />
+      <module fileurl="file://$PROJECT_DIR$/rsandroid/rsandroid.iml" filepath="$PROJECT_DIR$/rsandroid/rsandroid.iml" />
       <module fileurl="file://$PROJECT_DIR$/rsandroid-components/rsandroid-components.iml" filepath="$PROJECT_DIR$/rsandroid-components/rsandroid-components.iml" />
       <module fileurl="file://$PROJECT_DIR$/rsjava/rsjava.iml" filepath="$PROJECT_DIR$/rsjava/rsjava.iml" />
-      <module fileurl="file://$PROJECT_DIR$/tv/tv.iml" filepath="$PROJECT_DIR$/tv/tv.iml" />
-      <module fileurl="file://$PROJECT_DIR$/wear/wear.iml" filepath="$PROJECT_DIR$/wear/wear.iml" />
     </modules>
   </component>
 </project>

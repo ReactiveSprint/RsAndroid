@@ -1,1 +1,1 @@
-include ':mobile', ':wear', ':tv', ':glass', ':rsandroid', ':rsjava', ':rsandroid-components'
+include ':rsandroid', ':rsjava', ':rsandroid-components'
