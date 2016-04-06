@@ -22,8 +22,6 @@ public interface ICommand<I, R> {
     @SuppressWarnings("unchecked")
     Observable<R> apply(I... inputs);
 
-    //region Getters
-
     /**
      * An Observable of all {@link Notification} that occur in the receiver.
      */
@@ -48,15 +46,4 @@ public interface ICommand<I, R> {
      * An Observable of all errors that occur in the receiver.
      */
     Observable<Throwable> getErrors();
-
-    //endregion
-
-    /**
-     * An Exception which occurs when user attempts to apply a Command while is not enabled.
-     */
-    class CommandNotEnabledException extends RuntimeException {
-        CommandNotEnabledException() {
-            super("Command is not enabled, and cannot be executed.");
-        }
-    }
 }

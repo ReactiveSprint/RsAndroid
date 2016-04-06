@@ -7,9 +7,11 @@ import rx.Observable;
 import rx.Scheduler;
 import rx.Subscriber;
 import rx.Subscription;
+import rx.functions.Action0;
 import rx.functions.Action1;
 import rx.functions.Func1;
 import rx.functions.Func2;
+import rx.observables.ConnectableObservable;
 import rx.subjects.PublishSubject;
 import rx.subjects.Subject;
 
@@ -24,8 +26,6 @@ import static io.reactivesprint.internal.Preconditions.checkNotNull;
  */
 public final class Command<I, R> implements ICommand<I, R> {
     //region Fields
-
-    private final Scheduler scheduler;
 
     private final Func1<I, Observable<R>> createObservable;
 
@@ -49,17 +49,7 @@ public final class Command<I, R> implements ICommand<I, R> {
      * @param createObservable Function used to create an Observable each time {@link #apply(Object[])} is invoked.
      */
     public Command(final Func1<I, Observable<R>> createObservable) {
-        this(null, new ConstantProperty<>(true), createObservable);
-    }
-
-    /**
-     * Creates a Command.
-     *
-     * @param scheduler        Scheduler used to send all notifications in the receiver.
-     * @param createObservable Function used to create an Observable each time {@link #apply(Object[])} is invoked.
-     */
-    public Command(Scheduler scheduler, final Func1<I, Observable<R>> createObservable) {
-        this(scheduler, new ConstantProperty<>(true), createObservable);
+        this(new ConstantProperty<>(true), createObservable);
     }
 
     /**
@@ -70,28 +60,10 @@ public final class Command<I, R> implements ICommand<I, R> {
      */
     public Command(IProperty<Boolean> enabled,
                    final Func1<I, Observable<R>> createObservable) {
-        this(null, enabled, createObservable);
-    }
-
-    /**
-     * Creates a Command.
-     *
-     * @param scheduler        Scheduler used to send all notifications in the receiver.
-     * @param enabled          Property whether or not this Command should be enabled.
-     * @param createObservable Function used to create an Observable each time {@link #apply(Object[])} is invoked.
-     */
-    public Command(Scheduler scheduler, IProperty<Boolean> enabled,
-                   final Func1<I, Observable<R>> createObservable) {
         checkNotNull(createObservable, "createObservable");
-        this.scheduler = scheduler;
         this.createObservable = createObservable;
 
-        Observable<Notification<R>> notificationObservable;
-        if (scheduler == null) {
-            notificationObservable = notifications;
-        } else {
-            notificationObservable = notifications.observeOn(scheduler);
-        }
+        Observable<Notification<R>> notificationObservable = notifications;
 
         values = notificationObservable.filter(new Func1<Notification<R>, Boolean>() {
             @Override
@@ -142,7 +114,7 @@ public final class Command<I, R> implements ICommand<I, R> {
         final I input = inputs != null && inputs.length > 0 ? inputs[0] : null;
         return Observable.create(new Observable.OnSubscribe<R>() {
             @Override
-            public void call(Subscriber<? super R> subscriber) {
+            public void call(final Subscriber<? super R> subscriber) {
                 boolean startedExecuting = false;
 
                 synchronized (lock) {
@@ -157,14 +129,31 @@ public final class Command<I, R> implements ICommand<I, R> {
                     return;
                 }
 
-                Subscription subscription = createObservable.call(input).materialize().subscribe(new Action1<Notification<R>>() {
+                ConnectableObservable<R> connectableObservable = createObservable.call(input).publish();
+
+                Subscription subscription = connectableObservable.materialize().subscribe(new Action1<Notification<R>>() {
                     @Override
                     public void call(Notification<R> outputNotification) {
                         notifications.onNext(outputNotification);
                     }
                 });
-
                 subscriber.add(subscription);
+
+                subscriber.add(connectableObservable.subscribe(subscriber));
+
+                subscriber.add(new Subscription() {
+                    @Override
+                    public void unsubscribe() {
+                        executing.setValue(false);
+                    }
+
+                    @Override
+                    public boolean isUnsubscribed() {
+                        return !executing.getValue();
+                    }
+                });
+
+                connectableObservable.connect();
             }
         });
     }
@@ -198,11 +187,7 @@ public final class Command<I, R> implements ICommand<I, R> {
      * Whether or not the receiver is executing.
      */
     public IProperty<Boolean> isExecuting() {
-        if (scheduler == null) {
-            return new Property<>(executing);
-        } else {
-            return new Property<>(executing.getValue(), executing.getObservable().observeOn(scheduler));
-        }
+        return new Property<>(executing);
     }
 
     /**
