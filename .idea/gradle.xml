@@ -9,9 +9,9 @@
         <option name="modules">
           <set>
             <option value="$PROJECT_DIR$" />
-            <option value="$PROJECT_DIR$/androidreactivesprint" />
             <option value="$PROJECT_DIR$/glass" />
             <option value="$PROJECT_DIR$/mobile" />
+            <option value="$PROJECT_DIR$/rsandroid" />
             <option value="$PROJECT_DIR$/rsjava" />
             <option value="$PROJECT_DIR$/tv" />
             <option value="$PROJECT_DIR$/wear" />
@@ -20,9 +20,9 @@
         <option name="myModules">
           <set>
             <option value="$PROJECT_DIR$" />
-            <option value="$PROJECT_DIR$/androidreactivesprint" />
             <option value="$PROJECT_DIR$/glass" />
             <option value="$PROJECT_DIR$/mobile" />
+            <option value="$PROJECT_DIR$/rsandroid" />
             <option value="$PROJECT_DIR$/rsjava" />
             <option value="$PROJECT_DIR$/tv" />
             <option value="$PROJECT_DIR$/wear" />
