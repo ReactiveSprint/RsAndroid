@@ -14,16 +14,16 @@ public final class ViewControllers {
     }
 
     /**
-     * Create an action which invokes {@link IViewController#setTitle(String)}
+     * Create an action which invokes {@link IViewController#setTitle(CharSequence)}
      * <p/>
      * <em>Note:</em>  The created action keeps a strong reference to {@code viewController},
      * so when this is used with {@link rx.Observable}, unsubscribe
      * to free this reference.
      */
-    public static Action1<String> setTitle(final IViewController<?> viewController) {
-        return new Action1<String>() {
+    public static Action1<CharSequence> setTitle(final IViewController<?> viewController) {
+        return new Action1<CharSequence>() {
             @Override
-            public void call(String s) {
+            public void call(CharSequence s) {
                 viewController.setTitle(s);
             }
         };

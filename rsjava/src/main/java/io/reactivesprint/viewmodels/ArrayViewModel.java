@@ -21,7 +21,7 @@ public class ArrayViewModel<E extends ViewModelType> extends ViewModel implement
 
     private final List<E> viewModels;
 
-    private final IMutableProperty<String> localizedEmptyMessage = new MutableProperty<>(null);
+    private final IMutableProperty<CharSequence> localizedEmptyMessage = new MutableProperty<>(null);
 
     //endregion
 
@@ -51,7 +51,7 @@ public class ArrayViewModel<E extends ViewModelType> extends ViewModel implement
     }
 
     @Override
-    public IMutableProperty<String> getLocalizedEmptyMessage() {
+    public IMutableProperty<CharSequence> getLocalizedEmptyMessage() {
         return localizedEmptyMessage;
     }
 

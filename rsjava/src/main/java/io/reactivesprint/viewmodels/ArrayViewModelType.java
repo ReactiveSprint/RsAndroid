@@ -29,7 +29,7 @@ public interface ArrayViewModelType<E extends ViewModelType> extends ViewModelTy
     /**
      * @return localized message to be used when the array is empty.
      */
-    IProperty<String> getLocalizedEmptyMessage();
+    IProperty<CharSequence> getLocalizedEmptyMessage();
 
     /**
      * Access the indexth element.

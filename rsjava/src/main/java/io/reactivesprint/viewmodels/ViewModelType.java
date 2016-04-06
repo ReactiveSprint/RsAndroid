@@ -18,7 +18,7 @@ public interface ViewModelType {
     /**
      * @return General title of the receiver.
      */
-    IMutableProperty<String> getTitle();
+    IProperty<CharSequence> getTitle();
 
     /**
      * @return Whether the receiver is loading.

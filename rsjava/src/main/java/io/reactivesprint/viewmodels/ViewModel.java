@@ -18,7 +18,7 @@ public class ViewModel implements ViewModelType {
     //region Fields
 
     private final IMutableProperty<Boolean> active = new MutableProperty<>(false);
-    private final IMutableProperty<String> title = new MutableProperty<>(null);
+    private final IMutableProperty<CharSequence> title = new MutableProperty<>(null);
 
     private final Subject<Observable<Boolean>, Observable<Boolean>> loadingSubject = PublishSubject.create();
     private final IProperty<Boolean> loading = new MutableProperty<>(false);
@@ -42,7 +42,7 @@ public class ViewModel implements ViewModelType {
     }
 
     @Override
-    public IMutableProperty<String> getTitle() {
+    public IMutableProperty<CharSequence> getTitle() {
         return title;
     }
 

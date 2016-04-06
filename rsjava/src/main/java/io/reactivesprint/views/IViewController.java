@@ -16,7 +16,7 @@ public interface IViewController<VM extends ViewModelType> extends IView<VM> {
     /**
      * Sets Title of View Controller.
      */
-    void setTitle(String title);
+    void setTitle(CharSequence title);
 
     /**
      * Binds {@link ViewModelType#getLoading()} to {@link #presentLoading(boolean)}
