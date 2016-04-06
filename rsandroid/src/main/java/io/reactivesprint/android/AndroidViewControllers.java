@@ -15,6 +15,7 @@ import static io.reactivesprint.views.ViewControllers.presentError;
 import static io.reactivesprint.views.ViewControllers.presentFetchingNextPage;
 import static io.reactivesprint.views.ViewControllers.presentLoading;
 import static io.reactivesprint.views.ViewControllers.presentRefreshing;
+import static io.reactivesprint.views.ViewControllers.setLocalizedEmptyMessage;
 import static io.reactivesprint.views.ViewControllers.setTitle;
 
 /**
@@ -37,34 +38,40 @@ public final class AndroidViewControllers {
                 .subscribe(bindAction);
     }
 
-    public static <VM extends ViewModelType> void bindTitle(final IActivity<VM> fragment, VM viewModel) {
-        bind(fragment, viewModel.getTitle().getObservable(), setTitle(fragment));
+    public static <VM extends ViewModelType> void bindTitle(final IActivity<VM> activity, VM viewModel) {
+        bind(activity, viewModel.getTitle().getObservable(), setTitle(activity));
     }
 
-    public static <VM extends ViewModelType> void bindLoading(final IActivity<VM> fragment, VM viewModel) {
-        bind(fragment, viewModel.getLoading().getObservable(), presentLoading(fragment));
+    public static <VM extends ViewModelType> void bindLoading(final IActivity<VM> activity, VM viewModel) {
+        bind(activity, viewModel.getLoading().getObservable(), presentLoading(activity));
     }
 
-    public static <VM extends ViewModelType> void bindErrors(final IActivity<VM> fragment, VM viewModel) {
-        bind(fragment, viewModel.getErrors(), presentError(fragment));
+    public static <VM extends ViewModelType> void bindErrors(final IActivity<VM> activity, VM viewModel) {
+        bind(activity, viewModel.getErrors(), presentError(activity));
     }
 
     public static <VM extends ViewModelType,
             AVM extends ArrayViewModelType<?>,
-            F extends IActivity<VM> & IArrayViewController<VM, AVM>> void bindCount(final F fragment, AVM arrayViewModel) {
-        bind(fragment, arrayViewModel.getCount().getObservable(), onDataSetChanged(fragment));
+            A extends IActivity<VM> & IArrayViewController<VM, AVM>> void bindCount(final A activity, AVM arrayViewModel) {
+        bind(activity, arrayViewModel.getCount().getObservable(), onDataSetChanged(activity));
+    }
+
+    public static <VM extends ViewModelType,
+            AVM extends ArrayViewModelType<?>,
+            A extends IActivity<VM> & IArrayViewController<VM, AVM>> void bindLocalizedEmptyMessage(final A activity, AVM arrayViewModel) {
+        bind(activity, arrayViewModel.getLocalizedEmptyMessage().getObservable(), setLocalizedEmptyMessage(activity));
     }
 
     public static <VM extends ViewModelType,
             AVM extends FetchedArrayViewModelType<?, ?, ?, ?>,
-            F extends IActivity<VM> & IFetchedArrayViewController<VM, AVM>> void bindRefreshing(final F fragment, AVM arrayViewModel) {
-        bind(fragment, arrayViewModel.isRefreshing().getObservable(), presentRefreshing(fragment));
+            A extends IActivity<VM> & IFetchedArrayViewController<VM, AVM>> void bindRefreshing(final A activity, AVM arrayViewModel) {
+        bind(activity, arrayViewModel.isRefreshing().getObservable(), presentRefreshing(activity));
     }
 
     public static <VM extends ViewModelType,
             AVM extends FetchedArrayViewModelType<?, ?, ?, ?>,
-            F extends IActivity<VM> & IFetchedArrayViewController<VM, AVM>> void bindFetchingNextPage(final F fragment, AVM arrayViewModel) {
-        bind(fragment, arrayViewModel.isRefreshing().getObservable(), presentFetchingNextPage(fragment));
+            A extends IActivity<VM> & IFetchedArrayViewController<VM, AVM>> void bindFetchingNextPage(final A activity, AVM arrayViewModel) {
+        bind(activity, arrayViewModel.isRefreshing().getObservable(), presentFetchingNextPage(activity));
     }
 
     //endregion
@@ -92,6 +99,12 @@ public final class AndroidViewControllers {
             AVM extends ArrayViewModelType<?>,
             F extends IFragment<VM> & IArrayViewController<VM, AVM>> void bindCount(final F fragment, AVM arrayViewModel) {
         bind(fragment, arrayViewModel.getCount().getObservable(), onDataSetChanged(fragment));
+    }
+
+    public static <VM extends ViewModelType,
+            AVM extends ArrayViewModelType<?>,
+            F extends IFragment<VM> & IArrayViewController<VM, AVM>> void bindLocalizedEmptyMessage(final F fragment, AVM arrayViewModel) {
+        bind(fragment, arrayViewModel.getLocalizedEmptyMessage().getObservable(), setLocalizedEmptyMessage(fragment));
     }
 
     public static <VM extends ViewModelType,

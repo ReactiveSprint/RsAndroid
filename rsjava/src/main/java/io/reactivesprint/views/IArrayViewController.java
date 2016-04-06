@@ -23,4 +23,14 @@ public interface IArrayViewController<VM extends ViewModelType, AVM extends Arra
      * Should be implemented to reload views.
      */
     void onDataSetChanged();
+
+    /**
+     * Binds {@link ArrayViewModelType#getLocalizedEmptyMessage()} to {@link #setLocalizedEmptyMessage(CharSequence)}
+     */
+    void bindLocalizedEmptyMessage(AVM arrayViewModel);
+
+    /**
+     * Sets message used when array is empty.
+     */
+    void setLocalizedEmptyMessage(CharSequence localizedEmptyMessage);
 }

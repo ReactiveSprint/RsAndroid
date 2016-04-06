@@ -78,6 +78,22 @@ public final class ViewControllers {
     }
 
     /**
+     * Create an action which invokes {@link IArrayViewController#setLocalizedEmptyMessage(CharSequence)}
+     * <p/>
+     * <em>Note:</em>  The created action keeps a strong reference to {@code viewController},
+     * so when this is used with {@link rx.Observable}, unsubscribe
+     * to free this reference.
+     */
+    public static Action1<CharSequence> setLocalizedEmptyMessage(final IArrayViewController<?, ?> viewController) {
+        return new Action1<CharSequence>() {
+            @Override
+            public void call(CharSequence charSequence) {
+                viewController.setLocalizedEmptyMessage(charSequence);
+            }
+        };
+    }
+
+    /**
      * Create an action which invokes {@link IFetchedArrayViewController#presentRefreshing(boolean)}
      * <p/>
      * <em>Note:</em>  The created action keeps a strong reference to {@code viewController},
