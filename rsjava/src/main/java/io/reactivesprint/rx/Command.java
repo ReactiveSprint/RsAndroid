@@ -13,6 +13,8 @@ import rx.functions.Func2;
 import rx.subjects.PublishSubject;
 import rx.subjects.Subject;
 
+import static io.reactivesprint.internal.Preconditions.checkNotNull;
+
 /**
  * Created by Ahmad Baraka on 5/30/15.
  * Represents a Command or Action that will do some work when executed with {@code I}
@@ -80,6 +82,7 @@ public final class Command<I, R> implements ICommand<I, R> {
      */
     public Command(Scheduler scheduler, IProperty<Boolean> enabled,
                    final Func1<I, Observable<R>> createObservable) {
+        checkNotNull(createObservable, "createObservable");
         this.scheduler = scheduler;
         this.createObservable = createObservable;
 

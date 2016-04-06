@@ -2,6 +2,8 @@ package io.reactivesprint.rx;
 
 import rx.Observable;
 
+import static io.reactivesprint.internal.Preconditions.checkNotNull;
+
 /**
  * Created by Ahmad Baraka on 3/30/16.
  * A read-only property that allows observation of its changes.
@@ -14,6 +16,7 @@ public final class Property<V> implements IProperty<V> {
      * Constructs a property as a read-only view of {@code property.}
      */
     public Property(IProperty<V> property) {
+        checkNotNull(property, "property");
         this.property = property;
     }
 
@@ -22,6 +25,7 @@ public final class Property<V> implements IProperty<V> {
      * sent by {@code observable.}
      */
     public Property(V initialValue, Observable<V> observable) {
+        checkNotNull(observable, "observable");
         MutableProperty<V> property = new MutableProperty<>(initialValue);
         property.bind(observable);
         this.property = property;

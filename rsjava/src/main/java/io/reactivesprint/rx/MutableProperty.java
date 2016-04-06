@@ -8,6 +8,8 @@ import rx.internal.util.SubscriptionList;
 import rx.subjects.BehaviorSubject;
 import rx.subjects.Subject;
 
+import static io.reactivesprint.internal.Preconditions.checkNotNull;
+
 /**
  * Created by Ahmad Baraka on 3/30/16.
  * A mutable property of type {@code Value} that allows observation of its changes.
@@ -67,6 +69,9 @@ public final class MutableProperty<V> implements IMutableProperty<V> {
     //region Binding
 
     public static <Value> Subscription bind(/* this */ final IMutableProperty<Value> destination, Observable<Value> source) {
+        checkNotNull(destination, "destination");
+        checkNotNull(source, "source");
+
         final SubscriptionList subscriptionList = new SubscriptionList();
 
         destination.getObservable().subscribe(new Observer<Value>() {
@@ -107,16 +112,20 @@ public final class MutableProperty<V> implements IMutableProperty<V> {
     }
 
     public static <V> Subscription bind(/* this */ final IMutableProperty<V> destination, IProperty<V> source) {
+        checkNotNull(destination, "destination");
+        checkNotNull(source, "source");
         return destination.bind(source.getObservable());
     }
 
     @Override
     public Subscription bind(Observable<V> source) {
+        checkNotNull(source, "source");
         return bind(this, source);
     }
 
     @Override
     public Subscription bind(IProperty<V> source) {
+        checkNotNull(source, "source");
         return bind(this, source);
     }
 
