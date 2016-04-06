@@ -14,6 +14,11 @@ public interface IViewController<VM extends ViewModelType> extends IView<VM> {
     void bindTitle(VM viewModel);
 
     /**
+     * Sets Title of View Controller.
+     */
+    void setTitle(String title);
+
+    /**
      * Binds {@link ViewModelType#getLoading()} to {@link #presentLoading(boolean)}
      */
     void bindLoading(VM viewModel);
