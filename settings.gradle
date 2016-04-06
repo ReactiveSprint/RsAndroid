@@ -1,1 +1,1 @@
-include ':mobile', ':wear', ':tv', ':glass', ':androidreactivesprint', ':javareactivesprint'
+include ':mobile', ':wear', ':tv', ':glass', ':androidreactivesprint', ':rsjava'
