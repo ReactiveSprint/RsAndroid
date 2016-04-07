@@ -7,6 +7,7 @@ import rx.Observable;
 import rx.Scheduler;
 import rx.Subscriber;
 import rx.Subscription;
+import rx.exceptions.OnErrorNotImplementedException;
 import rx.functions.Action0;
 import rx.functions.Action1;
 import rx.functions.Func1;
@@ -102,9 +103,13 @@ public final class Command<I, R> implements ICommand<I, R> {
      * <p/>
      * If Command is executing or not enabled,
      * an Observable with error {@link CommandNotEnabledException} is returned.
+     * <p/>
+     * <em>Note:</em> In case the {@link Observable} emits an error, Implementing Error handler is not required.
+     * aka. {@link OnErrorNotImplementedException} will be ignored since errors are forwarded on {@link #getErrors()}
      *
      * @param inputs Must be either null, empty or contain exactly 1 object.
      */
+    @Override
     @SafeVarargs
     public final Observable<R> apply(I... inputs) {
         if (inputs != null && inputs.length > 1) {
@@ -129,7 +134,8 @@ public final class Command<I, R> implements ICommand<I, R> {
                     return;
                 }
 
-                ConnectableObservable<R> connectableObservable = createObservable.call(input).publish();
+                ConnectableObservable<R> connectableObservable = createObservable.call(input)
+                        .lift(new OperatorIgnoreErrorNotImplemented<R>()).publish();
 
                 Subscription subscription = connectableObservable.materialize().subscribe(new Action1<Notification<R>>() {
                     @Override
@@ -205,6 +211,40 @@ public final class Command<I, R> implements ICommand<I, R> {
     protected void finalize() throws Throwable {
         notifications.onCompleted();
         super.finalize();
+    }
+
+    //endregion
+
+    //region OperatorIgnoreErrorNotImplemented
+
+    /**
+     * Operator which forwards events to subscriber, but wraps {@link Subscriber#onError(Throwable)} call
+     * with {@code try catch} {@link OnErrorNotImplementedException}
+     */
+    private static final class OperatorIgnoreErrorNotImplemented<T> implements Observable.Operator<T, T> {
+        @Override
+        public Subscriber<? super T> call(final Subscriber<? super T> subscriber) {
+            return new Subscriber<T>() {
+                @Override
+                public void onCompleted() {
+                    subscriber.onCompleted();
+                }
+
+                @Override
+                public void onError(Throwable e) {
+                    try {
+                        subscriber.onError(e);
+                    } catch (OnErrorNotImplementedException ignored) {
+
+                    }
+                }
+
+                @Override
+                public void onNext(T r) {
+                    subscriber.onNext(r);
+                }
+            };
+        }
     }
 
     //endregion

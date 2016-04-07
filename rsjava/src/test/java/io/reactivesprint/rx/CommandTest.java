@@ -178,4 +178,26 @@ public class CommandTest extends TestCase {
         assertThat(errors).isNotEmpty();
         assertThat(errors).containsExactly(testError);
     }
+
+    public void testOnErrorNotImplemented() throws Exception {
+        enabled.setValue(true);
+
+        /**
+         * Subscribing without implementing error should not cause a crash.
+         */
+        command.apply(1).subscribe();
+
+        assertThat(executionCount).isEqualTo(1);
+        assertThat(command.isExecuting().getValue()).isEqualTo(true);
+        assertThat(command.isEnabled().getValue()).isEqualTo(false);
+
+        subscriber.onError(testError);
+
+        assertThat(command.isExecuting().getValue()).isEqualTo(false);
+        assertThat(command.isEnabled().getValue()).isEqualTo(true);
+
+        assertThat(values).isEmpty();
+        assertThat(errors).isNotEmpty();
+        assertThat(errors).containsExactly(testError);
+    }
 }
