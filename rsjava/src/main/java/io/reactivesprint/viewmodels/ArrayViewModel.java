@@ -1,7 +1,10 @@
 package io.reactivesprint.viewmodels;
 
 import java.util.ArrayList;
+import java.util.Collection;
+import java.util.Iterator;
 import java.util.List;
+import java.util.RandomAccess;
 
 import io.reactivesprint.rx.ConstantProperty;
 import io.reactivesprint.rx.MutableProperty;
@@ -14,7 +17,7 @@ import static io.reactivesprint.internal.Preconditions.checkNotNull;
  * Created by Ahmad Baraka on 4/1/16.
  * {@link IArrayViewModel} implementation that has a constant {@code List<ViewModel>}
  */
-public class ArrayViewModel<E extends IViewModel> extends ViewModel implements IArrayViewModel<E> {
+public class ArrayViewModel<E extends IViewModel> extends ViewModel implements IArrayViewModel<E>, RandomAccess {
     //region Fields
 
     private final IProperty<Integer> count;
@@ -32,11 +35,31 @@ public class ArrayViewModel<E extends IViewModel> extends ViewModel implements I
     /**
      * Creates an instance with {@code viewModels}
      */
-    public ArrayViewModel(List<E> viewModels) {
+    public ArrayViewModel(Collection<E> viewModels) {
         checkNotNull(viewModels, "viewModels");
         this.viewModels = new ArrayList<>(viewModels);
         count = new ConstantProperty<>(viewModels.size());
         empty = new ConstantProperty<>(viewModels.isEmpty());
+    }
+
+    public ArrayViewModel(Collection<E> viewModels, String title) {
+        this(viewModels);
+        getTitle().setValue(title);
+    }
+
+    public ArrayViewModel(Collection<E> viewModels, String title, String localizedEmptyMessage) {
+        this(viewModels);
+        getTitle().setValue(title);
+        getLocalizedEmptyMessage().setValue(localizedEmptyMessage);
+    }
+
+    //endregion
+
+    //region Iterable
+
+    @Override
+    public Iterator<E> iterator() {
+        return viewModels.iterator();
     }
 
     //endregion

@@ -1,5 +1,6 @@
 package io.reactivesprint.viewmodels;
 
+import java.util.Iterator;
 import java.util.List;
 
 import io.reactivesprint.rx.IProperty;
@@ -10,7 +11,7 @@ import io.reactivesprint.rx.IProperty;
  *
  * @param <E> Type of each element in Array.
  */
-public interface IArrayViewModel<E extends IViewModel> extends IViewModel {
+public interface IArrayViewModel<E extends IViewModel> extends IViewModel, Iterable<E> {
     /**
      * @return List of {@code Element}
      */

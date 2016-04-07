@@ -4,7 +4,9 @@ import org.javatuples.Pair;
 
 import java.util.ArrayList;
 import java.util.Collections;
+import java.util.Iterator;
 import java.util.List;
+import java.util.RandomAccess;
 
 import io.reactivesprint.rx.Command;
 import io.reactivesprint.rx.ICommand;
@@ -22,7 +24,7 @@ import static io.reactivesprint.internal.Preconditions.checkNotNull;
  * Created by Ahmad Baraka on 4/2/16.
  * An implementation of {@link IFetchedArrayViewModel} that fetches ViewModels by calling {@code fetchFunc}
  */
-public class FetchedArrayViewModel<E extends ViewModel> extends ViewModel implements IFetchedArrayViewModel<E, Integer, Void, List<E>> {
+public class FetchedArrayViewModel<E extends ViewModel> extends ViewModel implements IFetchedArrayViewModel<E, Integer, Void, List<E>>, RandomAccess {
     //region Fields
 
     private MutableProperty<List<E>> viewModels = new MutableProperty<>(Collections.<E>emptyList());
@@ -70,6 +72,15 @@ public class FetchedArrayViewModel<E extends ViewModel> extends ViewModel implem
         fetchCommand = createFetchCommand();
         refreshCommand = createRefreshCommand();
         fetchIfNeededCommand = createFetchIfNeededCommand(this);
+    }
+
+    //endregion
+
+    //region Iterable
+
+    @Override
+    public Iterator<E> iterator() {
+        return viewModels.getValue().iterator();
     }
 
     //endregion
@@ -231,4 +242,5 @@ public class FetchedArrayViewModel<E extends ViewModel> extends ViewModel implem
 
 
     //endregion
+
 }
