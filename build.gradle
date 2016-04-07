@@ -26,7 +26,7 @@ ext {
     minSdkVersion = 14
     compileSdkVersion = 23
     targetSdkVersion = compileSdkVersion
-    buildToolsVersion = '23.0.1'
+    buildToolsVersion = '23.0.2'
 
     // Define all dependencies in the base project, to unify & make it easy to update
     rxJava = 'io.reactivex:rxjava:1.1.2'
