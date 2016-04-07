@@ -21,3 +21,16 @@ allprojects {
 task clean(type: Delete) {
     delete rootProject.buildDir
 }
+
+ext {
+    minSdkVersion = 14
+    compileSdkVersion = 23
+    targetSdkVersion = compileSdkVersion
+    buildToolsVersion = '23.0.1'
+
+    // Define all dependencies in the base project, to unify & make it easy to update
+    rxJava = 'io.reactivex:rxjava:1.1.2'
+    javaTuples = 'org.javatuples:javatuples:1.2'
+    junit = 'junit:junit:4.12'
+    assertj = 'uk.co.ribot.assertj-rx:assertj-rx:0.1.0'
+}
