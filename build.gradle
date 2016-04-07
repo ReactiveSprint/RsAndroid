@@ -33,4 +33,6 @@ ext {
     javaTuples = 'org.javatuples:javatuples:1.2'
     junit = 'junit:junit:4.12'
     assertj = 'uk.co.ribot.assertj-rx:assertj-rx:0.1.0'
+    rxLifecycle = 'com.trello:rxlifecycle:0.5.0'
+    rxLifecycleComponents = 'com.trello:rxlifecycle-components:0.5.0'
 }

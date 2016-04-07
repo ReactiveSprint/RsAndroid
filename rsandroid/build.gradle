@@ -12,4 +12,5 @@ android {
 dependencies {
     compile fileTree(include: ['*.jar'], dir: 'libs')
     compile project(':rsjava')
+    compile rootProject.ext.rxLifecycle
 }
