@@ -1,6 +1,6 @@
 package io.reactivesprint.views;
 
-import io.reactivesprint.viewmodels.IError;
+import io.reactivesprint.viewmodels.IViewModelException;
 import io.reactivesprint.viewmodels.IViewModel;
 
 /**
@@ -29,12 +29,12 @@ public interface IViewController<VM extends IViewModel> extends IView<VM> {
     void presentLoading(boolean loading);
 
     /**
-     * Binds {@link IViewModel#getErrors()} to {@link #presentError(IError)}
+     * Binds {@link IViewModel#getErrors()} to {@link #presentError(IViewModelException)}
      */
     void bindErrors(VM viewModel);
 
     /**
      * Presents `error`
      */
-    void presentError(IError error);
+    void presentError(IViewModelException error);
 }

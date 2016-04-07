@@ -4,7 +4,7 @@ import com.trello.rxlifecycle.components.RxActivity;
 
 import io.reactivesprint.android.AndroidViewControllers;
 import io.reactivesprint.android.IActivity;
-import io.reactivesprint.viewmodels.IError;
+import io.reactivesprint.viewmodels.IViewModelException;
 import io.reactivesprint.viewmodels.IViewModel;
 
 public class RSActivity<VM extends IViewModel> extends RxActivity implements IActivity<VM> {
@@ -51,6 +51,6 @@ public class RSActivity<VM extends IViewModel> extends RxActivity implements IAc
     }
 
     @Override
-    public void presentError(IError error) {
+    public void presentError(IViewModelException error) {
     }
 }

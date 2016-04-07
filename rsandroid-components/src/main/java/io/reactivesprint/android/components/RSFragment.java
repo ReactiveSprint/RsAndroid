@@ -7,7 +7,7 @@ import com.trello.rxlifecycle.components.RxFragment;
 
 import io.reactivesprint.android.AndroidViewControllers;
 import io.reactivesprint.android.IFragment;
-import io.reactivesprint.viewmodels.IError;
+import io.reactivesprint.viewmodels.IViewModelException;
 import io.reactivesprint.viewmodels.IViewModel;
 
 @TargetApi(Build.VERSION_CODES.HONEYCOMB)
@@ -60,6 +60,6 @@ public class RSFragment<VM extends IViewModel> extends RxFragment implements IFr
     }
 
     @Override
-    public void presentError(IError error) {
+    public void presentError(IViewModelException error) {
     }
 }

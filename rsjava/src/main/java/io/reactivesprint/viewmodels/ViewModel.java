@@ -31,8 +31,8 @@ public class ViewModel implements IViewModel {
         }
     }));
 
-    private final Subject<Observable<IError>, Observable<IError>> errorsSubject = PublishSubject.create();
-    private final Observable<IError> errors = Observable.merge(errorsSubject);
+    private final Subject<Observable<IViewModelException>, Observable<IViewModelException>> errorsSubject = PublishSubject.create();
+    private final Observable<IViewModelException> errors = Observable.merge(errorsSubject);
 
     //endregion
 
@@ -54,7 +54,7 @@ public class ViewModel implements IViewModel {
     }
 
     @Override
-    public Observable<IError> getErrors() {
+    public Observable<IViewModelException> getErrors() {
         return errors;
     }
 
@@ -74,9 +74,9 @@ public class ViewModel implements IViewModel {
     }
 
     @Override
-    public void bindErrors(Observable<IError> errorObservable) {
+    public void bindErrors(Observable<IViewModelException> errorObservable) {
         checkNotNull(errorObservable, "errorObservable");
-        errorsSubject.onNext(errorObservable.onErrorResumeNext(Observable.<IError>empty()));
+        errorsSubject.onNext(errorObservable.onErrorResumeNext(Observable.<IViewModelException>empty()));
     }
 
     @Override
@@ -84,11 +84,11 @@ public class ViewModel implements IViewModel {
         checkNotNull(command, "command");
         bindLoading(command.isExecuting().getObservable());
 
-        bindErrors(command.getErrors().flatMap(new Func1<Throwable, Observable<IError>>() {
+        bindErrors(command.getErrors().flatMap(new Func1<Throwable, Observable<IViewModelException>>() {
             @Override
-            public Observable<IError> call(Throwable throwable) {
-                if (throwable instanceof IError) {
-                    return Observable.just((IError) throwable);
+            public Observable<IViewModelException> call(Throwable throwable) {
+                if (throwable instanceof IViewModelException) {
+                    return Observable.just((IViewModelException) throwable);
                 }
                 return Observable.empty();
             }
