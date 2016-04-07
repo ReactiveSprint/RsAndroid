@@ -19,7 +19,7 @@ public interface IViewController<VM extends IViewModel> extends IView<VM> {
     void setTitle(CharSequence title);
 
     /**
-     * Binds {@link IViewModel#getLoading()} to {@link #presentLoading(boolean)}
+     * Binds {@link IViewModel#isLoading()} to {@link #presentLoading(boolean)}
      */
     void bindLoading(VM viewModel);
 

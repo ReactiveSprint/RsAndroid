@@ -43,7 +43,7 @@ public final class AndroidViewControllers {
     }
 
     public static <VM extends IViewModel> void bindLoading(final IActivity<VM> activity, VM viewModel) {
-        bind(activity, viewModel.getLoading().getObservable(), presentLoading(activity));
+        bind(activity, viewModel.isLoading().getObservable(), presentLoading(activity));
     }
 
     public static <VM extends IViewModel> void bindErrors(final IActivity<VM> activity, VM viewModel) {
@@ -88,7 +88,7 @@ public final class AndroidViewControllers {
     }
 
     public static <VM extends IViewModel> void bindLoading(final IFragment<VM> fragment, VM viewModel) {
-        bind(fragment, viewModel.getLoading().getObservable(), presentLoading(fragment));
+        bind(fragment, viewModel.isLoading().getObservable(), presentLoading(fragment));
     }
 
     public static <VM extends IViewModel> void bindErrors(final IFragment<VM> fragment, VM viewModel) {

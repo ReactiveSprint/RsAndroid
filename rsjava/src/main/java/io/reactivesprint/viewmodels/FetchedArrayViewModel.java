@@ -162,7 +162,7 @@ public class FetchedArrayViewModel<E extends ViewModel> extends ViewModel implem
     //region Create Commands
 
     protected ICommand<Void, List<E>> createRefreshCommand() {
-        Command<Void, List<E>> command = new Command<>(getEnabled(), new Func1<Void, Observable<List<E>>>() {
+        Command<Void, List<E>> command = new Command<>(isEnabled(), new Func1<Void, Observable<List<E>>>() {
             @Override
             public Observable<List<E>> call(Void aVoid) {
                 refreshing.setValue(true);
@@ -176,7 +176,7 @@ public class FetchedArrayViewModel<E extends ViewModel> extends ViewModel implem
     }
 
     protected ICommand<Void, List<E>> createFetchCommand() {
-        Command<Void, List<E>> command = new Command<>(getEnabled(), new Func1<Void, Observable<List<E>>>() {
+        Command<Void, List<E>> command = new Command<>(isEnabled(), new Func1<Void, Observable<List<E>>>() {
             @Override
             public Observable<List<E>> call(Void aVoid) {
                 if (nextPage != null) {
@@ -197,7 +197,7 @@ public class FetchedArrayViewModel<E extends ViewModel> extends ViewModel implem
     createFetchIfNeededCommand(final IFetchedArrayViewModel<E, P, I, R> fetchedArrayViewModel) {
         checkNotNull(fetchedArrayViewModel, "fetchedArrayViewModel");
 
-        ICommand<I, R> command = new Command<>(fetchedArrayViewModel.getEnabled(), new Func1<I, Observable<R>>() {
+        ICommand<I, R> command = new Command<>(fetchedArrayViewModel.isEnabled(), new Func1<I, Observable<R>>() {
             @Override
             public Observable<R> call(I input) {
                 if (fetchedArrayViewModel.getNextPage() != null && fetchedArrayViewModel.hasNextPage().getValue()) {

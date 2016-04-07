@@ -23,12 +23,12 @@ public interface IViewModel {
     /**
      * @return Whether the receiver is loading.
      */
-    IProperty<Boolean> getLoading();
+    IProperty<Boolean> isLoading();
 
     /**
      * @return Whether the receiver is enabled.
      */
-    IProperty<Boolean> getEnabled();
+    IProperty<Boolean> isEnabled();
 
     /**
      * An Observable of all errors that occur in the receiver.

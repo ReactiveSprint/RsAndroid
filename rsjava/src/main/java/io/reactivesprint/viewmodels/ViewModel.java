@@ -6,7 +6,9 @@ import io.reactivesprint.rx.IProperty;
 import io.reactivesprint.rx.MutableProperty;
 import io.reactivesprint.rx.Property;
 import rx.Observable;
+import rx.functions.Func0;
 import rx.functions.Func1;
+import rx.functions.Func2;
 import rx.subjects.PublishSubject;
 import rx.subjects.Subject;
 
@@ -23,13 +25,9 @@ public class ViewModel implements IViewModel {
     private final IMutableProperty<CharSequence> title = new MutableProperty<>(null);
 
     private final Subject<Observable<Boolean>, Observable<Boolean>> loadingSubject = PublishSubject.create();
-    private final IProperty<Boolean> loading = new MutableProperty<>(false);
-    private final IProperty<Boolean> enabled = new Property<>(false, loading.getObservable().map(new Func1<Boolean, Boolean>() {
-        @Override
-        public Boolean call(Boolean aBoolean) {
-            return !aBoolean;
-        }
-    }));
+    private final IProperty<Boolean> loading;
+
+    private final IProperty<Boolean> enabled;
 
     private final Subject<Observable<IViewModelException>, Observable<IViewModelException>> errorsSubject = PublishSubject.create();
     private final Observable<IViewModelException> errors = Observable.merge(errorsSubject);
@@ -39,10 +37,35 @@ public class ViewModel implements IViewModel {
     //region Constructors
 
     public ViewModel() {
+        Observable<Boolean> loadingObservable = loadingSubject.scan(Observable.just(false), new Func2<Observable<Boolean>, Observable<Boolean>, Observable<Boolean>>() {
+            @Override
+            public Observable<Boolean> call(Observable<Boolean> observable, Observable<Boolean> observable2) {
+                return Observable.combineLatest(observable, observable2.startWith(false), new Func2<Boolean, Boolean, Boolean>() {
+                    @Override
+                    public Boolean call(Boolean aBoolean, Boolean aBoolean2) {
+                        return aBoolean || aBoolean2;
+                    }
+                });
+            }
+        }).switchMap(new Func1<Observable<Boolean>, Observable<? extends Boolean>>() {
+            @Override
+            public Observable<? extends Boolean> call(Observable<Boolean> observable) {
+                return observable;
+            }
+        });
 
+        loading = new Property<>(false, loadingObservable);
+
+        enabled = new Property<>(false, loading.getObservable().map(new Func1<Boolean, Boolean>() {
+            @Override
+            public Boolean call(Boolean aBoolean) {
+                return !aBoolean;
+            }
+        }));
     }
 
     public ViewModel(String title) {
+        this();
         this.title.setValue(title);
     }
 
@@ -61,7 +84,7 @@ public class ViewModel implements IViewModel {
     }
 
     @Override
-    public IProperty<Boolean> getLoading() {
+    public IProperty<Boolean> isLoading() {
         return loading;
     }
 
@@ -71,7 +94,7 @@ public class ViewModel implements IViewModel {
     }
 
     @Override
-    public IProperty<Boolean> getEnabled() {
+    public IProperty<Boolean> isEnabled() {
         return enabled;
     }
 
@@ -82,7 +105,10 @@ public class ViewModel implements IViewModel {
     @Override
     public void bindLoading(Observable<Boolean> loadingObservable) {
         checkNotNull(loadingObservable, "loadingObservable");
-        loadingSubject.onNext(loadingObservable.onErrorResumeNext(Observable.<Boolean>empty()));
+        loadingSubject.onNext(loadingObservable
+                .concatWith(Observable.just(false))
+                .onErrorResumeNext(Observable.just(false))
+        );
     }
 
     @Override
