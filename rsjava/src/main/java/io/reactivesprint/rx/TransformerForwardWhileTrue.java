@@ -9,9 +9,10 @@ import static io.reactivesprint.internal.Preconditions.checkNotNull;
 /**
  * Created by Ahmad Baraka on 4/7/16.
  * <p/>
- * {@link rx.Observable.Transformer} which represents "active" and "inactive" states.
- * As it subscribes to source {@link Observable}
- * whenever {@code shouldForwardObservable} sends true and unsubscribes
+ * {@link rx.Observable.Transformer} which takes represents {@code shouldForwardObservable} that
+ * represents "active" and "inactive" states.
+ * And it subscribes to source {@link Observable}
+ * whenever {@code shouldForwardObservable} sends true "active" and unsubscribes
  * when {@code shouldForwardObservable} sends false.
  * <br />
  * The Output {@link Observable} completes only when {@code shouldForwardObservable} completes.
