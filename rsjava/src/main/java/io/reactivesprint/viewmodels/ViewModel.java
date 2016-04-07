@@ -37,7 +37,7 @@ public class ViewModel implements IViewModel {
     //region Constructors
 
     public ViewModel() {
-        Observable<Boolean> loadingObservable = loadingSubject.scan(Observable.just(false), new Func2<Observable<Boolean>, Observable<Boolean>, Observable<Boolean>>() {
+        Observable<Boolean> loadingObservable = Observable.switchOnNext(loadingSubject.scan(Observable.just(false), new Func2<Observable<Boolean>, Observable<Boolean>, Observable<Boolean>>() {
             @Override
             public Observable<Boolean> call(Observable<Boolean> observable, Observable<Boolean> observable2) {
                 return Observable.combineLatest(observable, observable2.startWith(false), new Func2<Boolean, Boolean, Boolean>() {
@@ -47,12 +47,7 @@ public class ViewModel implements IViewModel {
                     }
                 });
             }
-        }).switchMap(new Func1<Observable<Boolean>, Observable<? extends Boolean>>() {
-            @Override
-            public Observable<? extends Boolean> call(Observable<Boolean> observable) {
-                return observable;
-            }
-        });
+        }));
 
         loading = new Property<>(false, loadingObservable);
 
