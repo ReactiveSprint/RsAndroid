@@ -36,6 +36,18 @@ public class ViewModel implements IViewModel {
 
     //endregion
 
+    //region Constructors
+
+    public ViewModel() {
+
+    }
+
+    public ViewModel(String title) {
+        this.title.setValue(title);
+    }
+
+    //endregion
+
     //region Properties
 
     @Override
