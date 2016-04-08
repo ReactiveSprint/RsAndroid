@@ -8,11 +8,11 @@ import io.reactivesprint.viewmodels.IArrayViewModel;
 import io.reactivesprint.viewmodels.IViewModel;
 import rx.functions.Func2;
 
-public class RSAdapter<E extends IViewModel, AVM extends IArrayViewModel<E>> extends BaseAdapter {
+public class RsAdapter<E extends IViewModel, AVM extends IArrayViewModel<E>> extends BaseAdapter {
     private final AVM arrayViewModel;
     private final Func2<Integer, ViewGroup, ViewHolder<E>> onCreateViewHolder;
 
-    public RSAdapter(AVM arrayViewModel, Func2<Integer, ViewGroup, ViewHolder<E>> onCreateViewHolder) {
+    public RsAdapter(AVM arrayViewModel, Func2<Integer, ViewGroup, ViewHolder<E>> onCreateViewHolder) {
         this.arrayViewModel = arrayViewModel;
         this.onCreateViewHolder = onCreateViewHolder;
     }

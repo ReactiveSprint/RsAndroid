@@ -11,7 +11,7 @@ import io.reactivesprint.viewmodels.IViewModelException;
 import io.reactivesprint.viewmodels.IViewModel;
 
 @TargetApi(Build.VERSION_CODES.HONEYCOMB)
-public class RSFragment<VM extends IViewModel> extends RxFragment implements IFragment<VM> {
+public class RsFragment<VM extends IViewModel> extends RxFragment implements IFragment<VM> {
     private VM viewModel;
 
     @Override

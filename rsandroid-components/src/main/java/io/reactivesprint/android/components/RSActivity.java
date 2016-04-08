@@ -7,7 +7,7 @@ import io.reactivesprint.android.IActivity;
 import io.reactivesprint.viewmodels.IViewModelException;
 import io.reactivesprint.viewmodels.IViewModel;
 
-public class RSActivity<VM extends IViewModel> extends RxActivity implements IActivity<VM> {
+public class RsActivity<VM extends IViewModel> extends RxActivity implements IActivity<VM> {
     private VM viewModel;
 
     @Override

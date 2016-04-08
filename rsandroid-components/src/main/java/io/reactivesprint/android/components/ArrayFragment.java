@@ -5,7 +5,7 @@ import io.reactivesprint.viewmodels.IArrayViewModel;
 import io.reactivesprint.viewmodels.IViewModel;
 import io.reactivesprint.views.IArrayViewController;
 
-public abstract class ArrayFragment<VM extends IViewModel, E extends IViewModel, AVM extends IArrayViewModel<E>> extends RSFragment<VM> implements IArrayViewController<VM, E, AVM> {
+public abstract class ArrayFragment<VM extends IViewModel, E extends IViewModel, AVM extends IArrayViewModel<E>> extends RsFragment<VM> implements IArrayViewController<VM, E, AVM> {
     @Override
     public AVM getArrayViewModel() {
         //noinspection unchecked
