@@ -13,8 +13,7 @@ import rx.Observable;
  * @param <I> Type of FetchCommand Input.
  * @param <R> Type of FetchCommand Output.
  */
-public interface IFetchedArrayViewModel<E extends IViewModel, P, I, R>
-        extends IArrayViewModel<E> {
+public interface IFetchedArrayViewModel<E extends IViewModel, P, I, R> extends IArrayViewModel<E> {
     /**
      * @return Whether the receiver is refreshing.
      */
