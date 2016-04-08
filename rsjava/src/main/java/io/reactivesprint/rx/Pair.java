@@ -5,7 +5,7 @@ package io.reactivesprint.rx;
  * <br />
  * Tuple of 2 elements.
  */
-public class Pair<A, B> {
+public final class Pair<A, B> {
     private A value0;
     private B value1;
 
