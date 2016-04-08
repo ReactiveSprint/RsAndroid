@@ -1,7 +1,5 @@
 package io.reactivesprint.viewmodels;
 
-import org.javatuples.Pair;
-
 import java.util.ArrayList;
 import java.util.Collection;
 import java.util.Collections;
@@ -14,6 +12,7 @@ import io.reactivesprint.rx.ICommand;
 import io.reactivesprint.rx.IMutableProperty;
 import io.reactivesprint.rx.IProperty;
 import io.reactivesprint.rx.MutableProperty;
+import io.reactivesprint.rx.Pair;
 import io.reactivesprint.rx.Property;
 import rx.Observable;
 import rx.functions.Action0;

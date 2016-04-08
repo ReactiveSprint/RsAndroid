@@ -2,10 +2,9 @@ package io.reactivesprint.viewmodels;
 
 import junit.framework.TestCase;
 
-import org.javatuples.Pair;
-
 import java.util.Collection;
 
+import io.reactivesprint.rx.Pair;
 import rx.Observable;
 import rx.Subscriber;
 import rx.functions.Func1;
