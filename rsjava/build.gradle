@@ -7,5 +7,6 @@ dependencies {
     compile fileTree(dir: 'libs', include: ['*.jar'])
     testCompile rootProject.ext.junit
     testCompile rootProject.ext.assertj
+    testCompile rootProject.ext.mockito
     compile rootProject.ext.rxJava
 }

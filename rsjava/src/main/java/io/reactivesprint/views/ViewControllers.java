@@ -4,6 +4,7 @@ import io.reactivesprint.viewmodels.IArrayViewModel;
 import io.reactivesprint.viewmodels.IFetchedArrayViewModel;
 import io.reactivesprint.viewmodels.IViewModel;
 import io.reactivesprint.viewmodels.IViewModelException;
+import rx.functions.Action0;
 import rx.functions.Action1;
 
 import static io.reactivesprint.internal.Preconditions.checkNotNull;
@@ -76,11 +77,11 @@ public final class ViewControllers {
      * so when this is used with {@link rx.Observable}, unsubscribe
      * to free this reference.
      */
-    public static <VM extends IViewModel, E extends IViewModel, AVM extends IArrayViewModel<E>> Action1<Integer> onDataSetChanged(final IArrayViewController<VM, E, AVM> viewController) {
+    public static <VM extends IViewModel, E extends IViewModel, AVM extends IArrayViewModel<E>> Action0 onDataSetChanged(final IArrayViewController<VM, E, AVM> viewController) {
         checkNotNull(viewController, "viewController");
-        return new Action1<Integer>() {
+        return new Action0() {
             @Override
-            public void call(Integer integer) {
+            public void call() {
                 viewController.onDataSetChanged();
             }
         };
