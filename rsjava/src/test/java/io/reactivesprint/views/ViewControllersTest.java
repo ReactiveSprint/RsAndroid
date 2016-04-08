@@ -41,7 +41,7 @@ public class ViewControllersTest extends TestCase {
 
     public void testOnDataSetChanged() throws Exception {
         IArrayViewController<ViewModel, ViewModel, ArrayViewModel<ViewModel>> viewController = mock(IArrayViewController.class);
-        ViewControllers.onDataSetChanged(viewController).call();
+        ViewControllers.onDataSetChanged(viewController).call(0);
         verify(viewController).onDataSetChanged();
     }
 
