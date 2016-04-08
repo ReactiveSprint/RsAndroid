@@ -3,6 +3,8 @@ package io.reactivesprint.views;
 import io.reactivesprint.viewmodels.IViewModelException;
 import rx.functions.Action1;
 
+import static io.reactivesprint.internal.Preconditions.checkNotNull;
+
 /**
  * Created by Ahmad Baraka on 4/6/16.
  * Static Factory methods for creating {@link Action1} for
@@ -10,7 +12,7 @@ import rx.functions.Action1;
  */
 public final class ViewControllers {
     private ViewControllers() {
-        throw new IllegalStateException("no instances.");
+        throw new AssertionError("no instances.");
     }
 
     /**
@@ -21,6 +23,7 @@ public final class ViewControllers {
      * to free this reference.
      */
     public static Action1<CharSequence> setTitle(final IViewController<?> viewController) {
+        checkNotNull(viewController, "viewController");
         return new Action1<CharSequence>() {
             @Override
             public void call(CharSequence s) {
@@ -37,6 +40,7 @@ public final class ViewControllers {
      * to free this reference.
      */
     public static Action1<Boolean> presentLoading(final IViewController<?> viewController) {
+        checkNotNull(viewController, "viewController");
         return new Action1<Boolean>() {
             @Override
             public void call(Boolean aBoolean) {
@@ -53,6 +57,7 @@ public final class ViewControllers {
      * to free this reference.
      */
     public static Action1<IViewModelException> presentError(final IViewController<?> viewController) {
+        checkNotNull(viewController, "viewController");
         return new Action1<IViewModelException>() {
             @Override
             public void call(IViewModelException error) {
@@ -69,6 +74,7 @@ public final class ViewControllers {
      * to free this reference.
      */
     public static Action1<Integer> onDataSetChanged(final IArrayViewController<?, ?> viewController) {
+        checkNotNull(viewController, "viewController");
         return new Action1<Integer>() {
             @Override
             public void call(Integer integer) {
@@ -85,6 +91,7 @@ public final class ViewControllers {
      * to free this reference.
      */
     public static Action1<CharSequence> setLocalizedEmptyMessage(final IArrayViewController<?, ?> viewController) {
+        checkNotNull(viewController, "viewController");
         return new Action1<CharSequence>() {
             @Override
             public void call(CharSequence charSequence) {
@@ -101,6 +108,7 @@ public final class ViewControllers {
      * to free this reference.
      */
     public static Action1<Boolean> presentRefreshing(final IFetchedArrayViewController<?, ?> viewController) {
+        checkNotNull(viewController, "viewController");
         return new Action1<Boolean>() {
             @Override
             public void call(Boolean aBoolean) {
@@ -117,6 +125,7 @@ public final class ViewControllers {
      * to free this reference.
      */
     public static Action1<Boolean> presentFetchingNextPage(final IFetchedArrayViewController<?, ?> viewController) {
+        checkNotNull(viewController, "viewController");
         return new Action1<Boolean>() {
             @Override
             public void call(Boolean aBoolean) {
