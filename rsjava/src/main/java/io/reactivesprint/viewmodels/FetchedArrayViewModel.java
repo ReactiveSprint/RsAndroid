@@ -197,7 +197,7 @@ public class FetchedArrayViewModel<E extends ViewModel> extends ViewModel
     }
 
     protected ICommand<Void, Collection<E>> createFetchIfNeededCommand() {
-        ICommand<Void, Collection<E>> command = new Command<>(isEnabled(), new Func1<Void, Observable<Collection<E>>>() {
+        return new Command<>(isEnabled(), new Func1<Void, Observable<Collection<E>>>() {
             @Override
             public Observable<Collection<E>> call(Void input) {
                 if (getNextPage() != null && hasNextPage().getValue()) {
@@ -207,8 +207,6 @@ public class FetchedArrayViewModel<E extends ViewModel> extends ViewModel
                 return Observable.empty();
             }
         });
-
-        return command;
     }
 
     private Observable<Collection<E>> fetch(final Integer nextPage) {
