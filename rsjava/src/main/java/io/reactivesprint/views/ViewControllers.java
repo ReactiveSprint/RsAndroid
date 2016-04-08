@@ -12,7 +12,7 @@ import static io.reactivesprint.internal.Preconditions.checkNotNull;
  */
 public final class ViewControllers {
     private ViewControllers() {
-        throw new AssertionError("no instances.");
+        throw new AssertionError("No instances.");
     }
 
     /**
