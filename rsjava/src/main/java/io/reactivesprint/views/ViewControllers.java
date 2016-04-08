@@ -1,5 +1,8 @@
 package io.reactivesprint.views;
 
+import io.reactivesprint.viewmodels.IArrayViewModel;
+import io.reactivesprint.viewmodels.IFetchedArrayViewModel;
+import io.reactivesprint.viewmodels.IViewModel;
 import io.reactivesprint.viewmodels.IViewModelException;
 import rx.functions.Action1;
 
@@ -22,7 +25,7 @@ public final class ViewControllers {
      * so when this is used with {@link rx.Observable}, unsubscribe
      * to free this reference.
      */
-    public static Action1<CharSequence> setTitle(final IViewController<?> viewController) {
+    public static <VM extends IViewModel> Action1<CharSequence> setTitle(final IViewController<VM> viewController) {
         checkNotNull(viewController, "viewController");
         return new Action1<CharSequence>() {
             @Override
@@ -39,7 +42,7 @@ public final class ViewControllers {
      * so when this is used with {@link rx.Observable}, unsubscribe
      * to free this reference.
      */
-    public static Action1<Boolean> presentLoading(final IViewController<?> viewController) {
+    public static <VM extends IViewModel> Action1<Boolean> presentLoading(final IViewController<VM> viewController) {
         checkNotNull(viewController, "viewController");
         return new Action1<Boolean>() {
             @Override
@@ -56,7 +59,7 @@ public final class ViewControllers {
      * so when this is used with {@link rx.Observable}, unsubscribe
      * to free this reference.
      */
-    public static Action1<IViewModelException> presentError(final IViewController<?> viewController) {
+    public static <VM extends IViewModel> Action1<IViewModelException> presentError(final IViewController<VM> viewController) {
         checkNotNull(viewController, "viewController");
         return new Action1<IViewModelException>() {
             @Override
@@ -73,7 +76,7 @@ public final class ViewControllers {
      * so when this is used with {@link rx.Observable}, unsubscribe
      * to free this reference.
      */
-    public static Action1<Integer> onDataSetChanged(final IArrayViewController<?, ?> viewController) {
+    public static <VM extends IViewModel, E extends IViewModel, AVM extends IArrayViewModel<E>> Action1<Integer> onDataSetChanged(final IArrayViewController<VM, E, AVM> viewController) {
         checkNotNull(viewController, "viewController");
         return new Action1<Integer>() {
             @Override
@@ -90,7 +93,7 @@ public final class ViewControllers {
      * so when this is used with {@link rx.Observable}, unsubscribe
      * to free this reference.
      */
-    public static Action1<CharSequence> setLocalizedEmptyMessage(final IArrayViewController<?, ?> viewController) {
+    public static <VM extends IViewModel, E extends IViewModel, AVM extends IArrayViewModel<E>> Action1<CharSequence> setLocalizedEmptyMessage(final IArrayViewController<VM, E, AVM> viewController) {
         checkNotNull(viewController, "viewController");
         return new Action1<CharSequence>() {
             @Override
@@ -107,7 +110,7 @@ public final class ViewControllers {
      * so when this is used with {@link rx.Observable}, unsubscribe
      * to free this reference.
      */
-    public static Action1<Boolean> presentRefreshing(final IFetchedArrayViewController<?, ?> viewController) {
+    public static <VM extends IViewModel, E extends IViewModel, P, FI, FO, AVM extends IFetchedArrayViewModel<E, P, FI, FO>> Action1<Boolean> presentRefreshing(final IFetchedArrayViewController<VM, E, P, FI, FO, AVM> viewController) {
         checkNotNull(viewController, "viewController");
         return new Action1<Boolean>() {
             @Override
@@ -124,7 +127,7 @@ public final class ViewControllers {
      * so when this is used with {@link rx.Observable}, unsubscribe
      * to free this reference.
      */
-    public static Action1<Boolean> presentFetchingNextPage(final IFetchedArrayViewController<?, ?> viewController) {
+    public static <VM extends IViewModel, E extends IViewModel, P, FI, FO, AVM extends IFetchedArrayViewModel<E, P, FI, FO>> Action1<Boolean> presentFetchingNextPage(final IFetchedArrayViewController<VM, E, P, FI, FO, AVM> viewController) {
         checkNotNull(viewController, "viewController");
         return new Action1<Boolean>() {
             @Override
