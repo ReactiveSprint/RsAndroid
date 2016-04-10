@@ -6,10 +6,10 @@ import io.reactivesprint.rx.IProperty;
 import io.reactivesprint.rx.MutableProperty;
 import io.reactivesprint.rx.Property;
 import rx.Observable;
-import rx.functions.Func0;
 import rx.functions.Func1;
 import rx.functions.Func2;
 import rx.subjects.PublishSubject;
+import rx.subjects.ReplaySubject;
 import rx.subjects.Subject;
 
 import static io.reactivesprint.internal.Preconditions.checkNotNull;
@@ -29,7 +29,7 @@ public class ViewModel implements IViewModel {
 
     private final IProperty<Boolean> enabled;
 
-    private final Subject<Observable<IViewModelException>, Observable<IViewModelException>> errorsSubject = PublishSubject.create();
+    private final Subject<Observable<IViewModelException>, Observable<IViewModelException>> errorsSubject = ReplaySubject.create(1);
     private final Observable<IViewModelException> errors = Observable.merge(errorsSubject);
 
     //endregion

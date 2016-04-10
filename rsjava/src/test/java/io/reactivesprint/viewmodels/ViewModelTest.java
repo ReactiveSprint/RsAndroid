@@ -21,6 +21,7 @@ public class ViewModelTest extends TestCase {
     final ViewModelException TEST_EXCEPTION = new ViewModelException("Test Exception");
     IViewModelException receivedThrowable = null;
     boolean completed = false;
+    int calls = 0;
 
     @Override
     protected void setUp() throws Exception {
@@ -28,15 +29,15 @@ public class ViewModelTest extends TestCase {
         viewModel = new ViewModel(TEST_TITLE);
         receivedThrowable = null;
         completed = false;
+        calls = 0;
+    }
 
-        viewModel.getErrors().subscribe(new Action1<IViewModelException>() {
-            @Override
-            public void call(IViewModelException e) {
-                receivedThrowable = e;
-            }
-        });
+    public void testTitle() {
+        assertThat(viewModel.getTitle().getValue()).isEqualTo(TEST_TITLE);
+    }
 
-        viewModel.getErrors().subscribe(new Subscriber<IViewModelException>() {
+    Subscriber<IViewModelException> createErrorsSubscriber() {
+        return new Subscriber<IViewModelException>() {
             @Override
             public void onCompleted() {
                 completed = true;
@@ -44,22 +45,20 @@ public class ViewModelTest extends TestCase {
 
             @Override
             public void onError(Throwable e) {
-
             }
 
             @Override
             public void onNext(IViewModelException e) {
-
+                calls++;
+                receivedThrowable = e;
             }
-        });
-    }
-
-    public void testTitle() {
-        assertThat(viewModel.getTitle().getValue()).isEqualTo(TEST_TITLE);
+        };
     }
 
     public void testBindErrorsFromObservable() throws Exception {
         PublishSubject<IViewModelException> subject = PublishSubject.create();
+
+        viewModel.getErrors().subscribe(createErrorsSubscriber());
 
         viewModel.bindErrors(subject);
 
@@ -68,6 +67,26 @@ public class ViewModelTest extends TestCase {
         subject.onNext(TEST_EXCEPTION);
 
         assertThat(receivedThrowable).isSameAs(TEST_EXCEPTION);
+        assertThat(calls).isEqualTo(1);
+        assertThat(completed).isFalse();
+
+        subject.onCompleted();
+        assertThat(completed).isFalse();
+    }
+
+    public void testBindErrorsFromObservable2() throws Exception {
+        PublishSubject<IViewModelException> subject = PublishSubject.create();
+
+        viewModel.bindErrors(subject);
+
+        viewModel.getErrors().subscribe(createErrorsSubscriber());
+
+        assertThat(receivedThrowable).isNull();
+
+        subject.onNext(TEST_EXCEPTION);
+
+        assertThat(receivedThrowable).isSameAs(TEST_EXCEPTION);
+        assertThat(calls).isEqualTo(1);
         assertThat(completed).isFalse();
 
         subject.onCompleted();
@@ -81,6 +100,8 @@ public class ViewModelTest extends TestCase {
                 return Observable.error(TEST_EXCEPTION);
             }
         });
+
+        viewModel.getErrors().subscribe(createErrorsSubscriber());
 
         viewModel.bindCommand(command);
 
@@ -98,6 +119,7 @@ public class ViewModelTest extends TestCase {
             }
         });
 
+        assertThat(calls).isEqualTo(1);
         assertThat(receivedThrowable).isSameAs(TEST_EXCEPTION);
         assertThat(completed).isFalse();
     }
