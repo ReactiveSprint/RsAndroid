@@ -23,7 +23,7 @@ import static io.reactivesprint.internal.Preconditions.checkNotNull;
  * Represents a Command or Action that will do some work when executed with {@code I}
  * and returns {@code R.}
  *
- * @see #apply(Object[])
+ * @see #apply(Object)
  */
 public final class Command<I, R> implements ICommand<I, R> {
     //region Fields
@@ -47,7 +47,7 @@ public final class Command<I, R> implements ICommand<I, R> {
     /**
      * Creates a Command.
      *
-     * @param createObservable Function used to create an Observable each time {@link #apply(Object[])} is invoked.
+     * @param createObservable Function used to create an Observable each time {@link #apply(Object)} is invoked.
      */
     public Command(final Func1<I, Observable<R>> createObservable) {
         this(new ConstantProperty<>(true), createObservable);
@@ -57,7 +57,7 @@ public final class Command<I, R> implements ICommand<I, R> {
      * Creates a Command.
      *
      * @param enabled          Property whether or not this Command should be enabled.
-     * @param createObservable Function used to create an Observable each time {@link #apply(Object[])} is invoked.
+     * @param createObservable Function used to create an Observable each time {@link #apply(Object)} is invoked.
      */
     public Command(IProperty<Boolean> enabled,
                    final Func1<I, Observable<R>> createObservable) {
@@ -97,6 +97,10 @@ public final class Command<I, R> implements ICommand<I, R> {
 
     //region Apply
 
+    public Observable<R> apply() {
+        return apply(null);
+    }
+
     /**
      * Applies the receiver returning an {@link Observable} which when subscribed,
      * will execute the command with {@code input} and forwards the results.
@@ -106,17 +110,9 @@ public final class Command<I, R> implements ICommand<I, R> {
      * <p/>
      * <em>Note:</em> In case the {@link Observable} emits an error, Implementing Error handler is not required.
      * aka. {@link OnErrorNotImplementedException} will be ignored since errors are forwarded on {@link #getErrors()}
-     *
-     * @param inputs Must be either null, empty or contain exactly 1 object.
      */
     @Override
-    @SafeVarargs
-    public final Observable<R> apply(I... inputs) {
-        if (inputs != null && inputs.length > 1) {
-            throw new IllegalStateException("Invalid value of inputs. It must be either null, empty or contain exactly 1 object. Received value is " + Arrays.toString(inputs));
-        }
-
-        final I input = inputs != null && inputs.length > 0 ? inputs[0] : null;
+    public Observable<R> apply(final I input) {
         return Observable.create(new Observable.OnSubscribe<R>() {
             @Override
             public void call(final Subscriber<? super R> subscriber) {
