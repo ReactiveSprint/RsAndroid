@@ -13,3 +13,6 @@ sudo: false
 cache:
   directories:
     - $HOME/.gradle
+
+- sys-img-armeabi-v7a-android-21
+- sys-img-x86-android-21
