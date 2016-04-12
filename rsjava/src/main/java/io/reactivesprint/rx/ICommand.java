@@ -11,6 +11,11 @@ import rx.Observable;
 public interface ICommand<I, R> {
 
     /**
+     * Invokes {@link #apply(Object)} with null.
+     */
+    Observable<R> apply();
+
+    /**
      * Applies the receiver returning an {@link Observable} which when subscribed,
      * will execute the command with {@code input} and forwards the results.
      * <p/>
