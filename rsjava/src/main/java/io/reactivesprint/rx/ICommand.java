@@ -16,11 +16,8 @@ public interface ICommand<I, R> {
      * <p/>
      * If Command is executing or not enabled,
      * an Observable with error {@link CommandNotEnabledException} is returned.
-     *
-     * @param inputs Must be either null, empty or contain exactly 1 object.
      */
-    @SuppressWarnings("unchecked")
-    Observable<R> apply(I... inputs);
+    Observable<R> apply(I input);
 
     /**
      * An Observable of all {@link Notification} that occur in the receiver.
