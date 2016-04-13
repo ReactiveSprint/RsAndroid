@@ -5,6 +5,7 @@ import io.reactivesprint.rx.IMutableProperty;
 import io.reactivesprint.rx.IProperty;
 import io.reactivesprint.rx.MutableProperty;
 import io.reactivesprint.rx.Property;
+import io.reactivesprint.rx.functions.Func1BooleanNot;
 import rx.Observable;
 import rx.functions.Func1;
 import rx.functions.Func2;
@@ -37,6 +38,8 @@ public class ViewModel implements IViewModel {
     //region Constructors
 
     public ViewModel() {
+
+
         Observable<Boolean> loadingObservable = Observable.switchOnNext(loadingSubject.scan(Observable.just(false), new Func2<Observable<Boolean>, Observable<Boolean>, Observable<Boolean>>() {
             @Override
             public Observable<Boolean> call(Observable<Boolean> observable, Observable<Boolean> observable2) {
@@ -51,12 +54,7 @@ public class ViewModel implements IViewModel {
 
         loading = new Property<>(false, loadingObservable);
 
-        enabled = new Property<>(false, loading.getObservable().map(new Func1<Boolean, Boolean>() {
-            @Override
-            public Boolean call(Boolean aBoolean) {
-                return !aBoolean;
-            }
-        }));
+        enabled = new Property<>(false, loading.getObservable().map(Func1BooleanNot.getInstance()));
     }
 
     public ViewModel(String title) {

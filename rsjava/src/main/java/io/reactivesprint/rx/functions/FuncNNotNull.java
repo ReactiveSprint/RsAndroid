@@ -1,5 +1,13 @@
 package io.reactivesprint.rx.functions;
 
+import rx.functions.Func2;
+import rx.functions.Func3;
+import rx.functions.Func4;
+import rx.functions.Func5;
+import rx.functions.Func6;
+import rx.functions.Func7;
+import rx.functions.Func8;
+import rx.functions.Func9;
 import rx.functions.FuncN;
 
 /**
@@ -7,7 +15,16 @@ import rx.functions.FuncN;
  * <p/>
  * {@link FuncN} which returns true if all input objects are not null.
  */
-public class FuncNNotNull implements FuncN<Boolean> {
+public class FuncNNotNull implements
+        Func2<Boolean, Boolean, Boolean>,
+        Func3<Boolean, Boolean, Boolean, Boolean>,
+        Func4<Boolean, Boolean, Boolean, Boolean, Boolean>,
+        Func5<Boolean, Boolean, Boolean, Boolean, Boolean, Boolean>,
+        Func6<Boolean, Boolean, Boolean, Boolean, Boolean, Boolean, Boolean>,
+        Func7<Boolean, Boolean, Boolean, Boolean, Boolean, Boolean, Boolean, Boolean>,
+        Func8<Boolean, Boolean, Boolean, Boolean, Boolean, Boolean, Boolean, Boolean, Boolean>,
+        Func9<Boolean, Boolean, Boolean, Boolean, Boolean, Boolean, Boolean, Boolean, Boolean, Boolean>,
+        FuncN<Boolean> {
 
     /**
      * Lazy Initialization via inner-class holder
@@ -22,6 +39,46 @@ public class FuncNNotNull implements FuncN<Boolean> {
 
     public static FuncNNotNull getInstance() {
         return Holder.INSTANCE;
+    }
+
+    @Override
+    public Boolean call(Boolean aBoolean, Boolean aBoolean2) {
+        return call(new Object[]{aBoolean, aBoolean2});
+    }
+
+    @Override
+    public Boolean call(Boolean aBoolean, Boolean aBoolean2, Boolean aBoolean3) {
+        return call(new Object[]{aBoolean, aBoolean2, aBoolean3});
+    }
+
+    @Override
+    public Boolean call(Boolean aBoolean, Boolean aBoolean2, Boolean aBoolean3, Boolean aBoolean4) {
+        return call(new Object[]{aBoolean, aBoolean2, aBoolean3, aBoolean4});
+    }
+
+    @Override
+    public Boolean call(Boolean aBoolean, Boolean aBoolean2, Boolean aBoolean3, Boolean aBoolean4, Boolean aBoolean5) {
+        return call(new Object[]{aBoolean, aBoolean2, aBoolean3, aBoolean4, aBoolean5});
+    }
+
+    @Override
+    public Boolean call(Boolean aBoolean, Boolean aBoolean2, Boolean aBoolean3, Boolean aBoolean4, Boolean aBoolean5, Boolean aBoolean6) {
+        return call(new Object[]{aBoolean, aBoolean2, aBoolean3, aBoolean4, aBoolean5, aBoolean6});
+    }
+
+    @Override
+    public Boolean call(Boolean aBoolean, Boolean aBoolean2, Boolean aBoolean3, Boolean aBoolean4, Boolean aBoolean5, Boolean aBoolean6, Boolean aBoolean7) {
+        return call(new Object[]{aBoolean, aBoolean2, aBoolean3, aBoolean4, aBoolean5, aBoolean6, aBoolean7});
+    }
+
+    @Override
+    public Boolean call(Boolean aBoolean, Boolean aBoolean2, Boolean aBoolean3, Boolean aBoolean4, Boolean aBoolean5, Boolean aBoolean6, Boolean aBoolean7, Boolean aBoolean8) {
+        return call(new Object[]{aBoolean, aBoolean2, aBoolean3, aBoolean4, aBoolean5, aBoolean6, aBoolean7, aBoolean8});
+    }
+
+    @Override
+    public Boolean call(Boolean aBoolean, Boolean aBoolean2, Boolean aBoolean3, Boolean aBoolean4, Boolean aBoolean5, Boolean aBoolean6, Boolean aBoolean7, Boolean aBoolean8, Boolean aBoolean9) {
+        return call(new Object[]{aBoolean, aBoolean2, aBoolean3, aBoolean4, aBoolean5, aBoolean6, aBoolean7, aBoolean8, aBoolean9});
     }
 
     @Override
