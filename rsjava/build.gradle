@@ -10,3 +10,5 @@ dependencies {
     compile rootProject.ext.mockito
     compile rootProject.ext.rxJava
 }
+
+apply from: rootProject.file('gradle/java-gradle-mvn-push.gradle')
