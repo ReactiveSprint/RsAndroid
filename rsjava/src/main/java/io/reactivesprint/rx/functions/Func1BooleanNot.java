@@ -4,6 +4,8 @@ import rx.functions.Func1;
 
 /**
  * Created by Ahmad Baraka on 4/12/16.
+ * <p/>
+ * {@link Func1} which applies "Not" operator to inputs.
  */
 public class Func1BooleanNot implements Func1<Boolean, Boolean> {
 

@@ -4,6 +4,10 @@ import rx.functions.FuncN;
 
 /**
  * Created by Ahmad Baraka on 4/12/16.
+ * <p/>
+ * {@link FuncN} which applies AND operator to input objects.
+ * <p/>
+ * {@code null} inputs are considered {@code false}
  */
 public class FuncNBooleanAnd implements FuncN<Boolean> {
 
@@ -24,20 +28,23 @@ public class FuncNBooleanAnd implements FuncN<Boolean> {
 
     @Override
     public Boolean call(Object... args) {
-        boolean result = args != null;
-        if (!result) {
+        if (args == null) {
             return false;
         }
 
         for (Object object : args) {
-            result = result && object != null;
+            if (object == null) {
+                return false;
+            }
 
             if (object instanceof Boolean) {
-                result = result && (Boolean) object;
+                if (!(Boolean) object) {
+                    return false;
+                }
             } else {
                 throw new AssertionError(getClass().getName() + " expects objects to be instance of Boolean.");
             }
         }
-        return result;
+        return true;
     }
 }

@@ -4,6 +4,8 @@ import rx.functions.FuncN;
 
 /**
  * Created by Ahmad Baraka on 4/12/16.
+ * <p/>
+ * {@link FuncN} which applies OR operator to input objects.
  */
 public class FuncNBooleanOr implements FuncN<Boolean> {
     /**

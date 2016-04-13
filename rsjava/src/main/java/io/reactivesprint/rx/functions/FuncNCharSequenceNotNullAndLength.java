@@ -4,13 +4,21 @@ import rx.functions.FuncN;
 
 /**
  * Created by Ahmad Baraka on 4/12/16.
+ * <p/>
+ * {@link FuncN} which returns true when all input objects are not null
+ * and {@link CharSequence#length()} {@code >= minimumLength}
+ * <p/>
+ * All input objects must be instance of {@link CharSequence}.
  */
 public class FuncNCharSequenceNotNullAndLength implements FuncN<Boolean> {
 
     private final int minimumLength;
 
+    /**
+     * Creates instance with {@code minimumLength = 1}
+     */
     public FuncNCharSequenceNotNullAndLength() {
-        this(0);
+        this(1);
     }
 
     public FuncNCharSequenceNotNullAndLength(int minimumLength) {
@@ -19,19 +27,23 @@ public class FuncNCharSequenceNotNullAndLength implements FuncN<Boolean> {
 
     @Override
     public Boolean call(Object... args) {
-        boolean notNull = args != null;
-        if (!notNull) {
+        if (args == null) {
             return false;
         }
 
         for (Object object : args) {
-            notNull = notNull && object != null;
+            if (object == null) {
+                return false;
+            }
+
             if (object instanceof CharSequence) {
-                notNull = notNull && ((CharSequence) object).length() >= minimumLength;
+                if (((CharSequence) object).length() < minimumLength) {
+                    return false;
+                }
             } else {
-                throw new AssertionError(getClass().getName() + " expects objects to be instanceof CharSequence.");
+                throw new AssertionError(getClass().getName() + " expects objects to be instance of CharSequence.");
             }
         }
-        return notNull;
+        return true;
     }
 }

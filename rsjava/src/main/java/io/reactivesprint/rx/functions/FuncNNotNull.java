@@ -4,6 +4,8 @@ import rx.functions.FuncN;
 
 /**
  * Created by Ahmad Baraka on 4/12/16.
+ * <p/>
+ * {@link FuncN} which returns true if all input objects are not null.
  */
 public class FuncNNotNull implements FuncN<Boolean> {
 
@@ -24,14 +26,15 @@ public class FuncNNotNull implements FuncN<Boolean> {
 
     @Override
     public Boolean call(Object... args) {
-        boolean notNull = args != null;
-        if (!notNull) {
+        if (args == null) {
             return false;
         }
 
         for (Object object : args) {
-            notNull = notNull && object != null;
+            if (object == null) {
+                return false;
+            }
         }
-        return notNull;
+        return true;
     }
 }

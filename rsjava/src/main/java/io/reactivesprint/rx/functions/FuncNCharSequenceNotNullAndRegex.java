@@ -4,6 +4,11 @@ import rx.functions.FuncN;
 
 /**
  * Created by Ahmad Baraka on 4/13/16.
+ * <p/>
+ * {@link FuncN} which returns true when all input objects are not null
+ * and {@link String#matches(String)} {@code regex}
+ * <p/>
+ * All input objects must be instance of {@link CharSequence}.
  */
 public class FuncNCharSequenceNotNullAndRegex implements FuncN<Boolean> {
     private final String regex;
@@ -14,19 +19,23 @@ public class FuncNCharSequenceNotNullAndRegex implements FuncN<Boolean> {
 
     @Override
     public Boolean call(Object... args) {
-        boolean notNull = args != null;
-        if (!notNull) {
+        if (args == null) {
             return false;
         }
 
         for (Object object : args) {
-            notNull = notNull && object != null;
+            if (object == null) {
+                return false;
+            }
+
             if (object instanceof CharSequence) {
-                notNull = notNull && object.toString().matches(regex);
+                if (!object.toString().matches(regex)) {
+                    return false;
+                }
             } else {
-                throw new AssertionError(getClass().getName() + " expects objects to be instanceof CharSequence.");
+                throw new AssertionError(getClass().getName() + " expects objects to be instance of CharSequence.");
             }
         }
-        return notNull;
+        return true;
     }
 }

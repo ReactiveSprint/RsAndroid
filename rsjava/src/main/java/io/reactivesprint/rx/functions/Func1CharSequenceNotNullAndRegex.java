@@ -4,6 +4,11 @@ import rx.functions.Func1;
 
 /**
  * Created by Ahmad Baraka on 4/12/16.
+ * <p/>
+ * {@link Func1} which returns true if input is not null
+ * and matches {@code regex}
+ *
+ * @see Func1CharSequenceNotNullAndLength
  */
 public class Func1CharSequenceNotNullAndRegex<T extends CharSequence> implements Func1<T, Boolean> {
 
