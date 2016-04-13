@@ -13,6 +13,7 @@ dependencies {
     compile fileTree(include: ['*.jar'], dir: 'libs')
     compile project(':rsjava')
     compile rootProject.ext.rxLifecycle
+    compile rootProject.ext.rxLifecycleComponents
     androidTestCompile rootProject.ext.dexmaker
     androidTestCompile rootProject.ext.dexmakerMockito
 }

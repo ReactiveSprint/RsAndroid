@@ -1,4 +1,4 @@
-package io.reactivesprint.android.components;
+package io.reactivesprint.android;
 
 import com.trello.rxlifecycle.components.RxActivity;
 

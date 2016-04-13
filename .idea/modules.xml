@@ -4,7 +4,6 @@
     <modules>
       <module fileurl="file://$PROJECT_DIR$/ReactiveSprint.iml" filepath="$PROJECT_DIR$/ReactiveSprint.iml" />
       <module fileurl="file://$PROJECT_DIR$/rsandroid/rsandroid.iml" filepath="$PROJECT_DIR$/rsandroid/rsandroid.iml" />
-      <module fileurl="file://$PROJECT_DIR$/rsandroid-components/rsandroid-components.iml" filepath="$PROJECT_DIR$/rsandroid-components/rsandroid-components.iml" />
       <module fileurl="file://$PROJECT_DIR$/rsjava/rsjava.iml" filepath="$PROJECT_DIR$/rsjava/rsjava.iml" />
     </modules>
   </component>

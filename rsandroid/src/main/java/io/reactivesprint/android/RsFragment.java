@@ -1,4 +1,4 @@
-package io.reactivesprint.android.components;
+package io.reactivesprint.android;
 
 import android.annotation.TargetApi;
 import android.os.Build;

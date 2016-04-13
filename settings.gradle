@@ -1,1 +1,1 @@
-include ':rsandroid', ':rsjava', ':rsandroid-components'
+include ':rsandroid', ':rsjava'

@@ -1,11 +1,10 @@
-package io.reactivesprint.android.components;
+package io.reactivesprint.android;
 
-import io.reactivesprint.android.AndroidViewControllers;
 import io.reactivesprint.viewmodels.IArrayViewModel;
 import io.reactivesprint.viewmodels.IViewModel;
 import io.reactivesprint.views.IArrayViewController;
 
-public abstract class ArrayFragment<VM extends IViewModel, E extends IViewModel, AVM extends IArrayViewModel<E>> extends RsFragment<VM> implements IArrayViewController<VM, E, AVM> {
+public abstract class ArrayActivity<VM extends IViewModel, AVM extends IArrayViewModel> extends RsActivity<VM> implements IArrayViewController<VM, AVM> {
     @Override
     public AVM getArrayViewModel() {
         //noinspection unchecked
