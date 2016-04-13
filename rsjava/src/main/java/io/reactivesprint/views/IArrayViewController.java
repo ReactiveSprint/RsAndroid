@@ -7,7 +7,7 @@ import io.reactivesprint.viewmodels.IViewModel;
  * Created by Ahmad Baraka on 4/6/16.
  * Represents a View Controller that wraps {@link IArrayViewModel}
  */
-public interface IArrayViewController<VM extends IViewModel, E extends IViewModel, AVM extends IArrayViewModel<E>> extends IViewController<VM> {
+public interface IArrayViewController<VM extends IViewModel, AVM extends IArrayViewModel> extends IViewController<VM> {
     /**
      * @return a ViewModel used as {@link IArrayViewModel}
      * This could return a different value than {@link #getViewModel()}

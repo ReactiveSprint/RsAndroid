@@ -53,14 +53,14 @@ public final class AndroidViewControllers {
     public static <VM extends IViewModel,
             E extends IViewModel,
             AVM extends IArrayViewModel<E>,
-            A extends IActivity<VM> & IArrayViewController<VM, E, AVM>> void bindCount(final A activity, AVM arrayViewModel) {
+            A extends IActivity<VM> & IArrayViewController<VM, AVM>> void bindCount(final A activity, AVM arrayViewModel) {
         bind(activity, arrayViewModel.getCount().getObservable(), onDataSetChanged(activity));
     }
 
     public static <VM extends IViewModel,
             E extends IViewModel,
             AVM extends IArrayViewModel<E>,
-            A extends IActivity<VM> & IArrayViewController<VM, E, AVM>> void bindLocalizedEmptyMessage(final A activity, AVM arrayViewModel) {
+            A extends IActivity<VM> & IArrayViewController<VM, AVM>> void bindLocalizedEmptyMessage(final A activity, AVM arrayViewModel) {
         bind(activity, arrayViewModel.getLocalizedEmptyMessage().getObservable(), setLocalizedEmptyMessage(activity));
     }
 
@@ -68,7 +68,7 @@ public final class AndroidViewControllers {
             E extends IViewModel,
             P, FI, FO,
             AVM extends IFetchedArrayViewModel<E, P, FI, FO>,
-            A extends IActivity<VM> & IFetchedArrayViewController<VM, E, P, FI, FO, AVM>> void bindRefreshing(final A activity, AVM arrayViewModel) {
+            A extends IActivity<VM> & IFetchedArrayViewController<VM, AVM>> void bindRefreshing(final A activity, AVM arrayViewModel) {
         bind(activity, arrayViewModel.isRefreshing().getObservable(), presentRefreshing(activity));
     }
 
@@ -76,7 +76,7 @@ public final class AndroidViewControllers {
             E extends IViewModel,
             P, FI, FO,
             AVM extends IFetchedArrayViewModel<E, P, FI, FO>,
-            A extends IActivity<VM> & IFetchedArrayViewController<VM, E, P, FI, FO, AVM>> void bindFetchingNextPage(final A activity, AVM arrayViewModel) {
+            A extends IActivity<VM> & IFetchedArrayViewController<VM, AVM>> void bindFetchingNextPage(final A activity, AVM arrayViewModel) {
         bind(activity, arrayViewModel.isRefreshing().getObservable(), presentFetchingNextPage(activity));
     }
 
@@ -104,14 +104,14 @@ public final class AndroidViewControllers {
     public static <VM extends IViewModel,
             E extends IViewModel,
             AVM extends IArrayViewModel<E>,
-            F extends IFragment<VM> & IArrayViewController<VM, E, AVM>> void bindCount(final F fragment, AVM arrayViewModel) {
+            F extends IFragment<VM> & IArrayViewController<VM, AVM>> void bindCount(final F fragment, AVM arrayViewModel) {
         bind(fragment, arrayViewModel.getCount().getObservable(), onDataSetChanged(fragment));
     }
 
     public static <VM extends IViewModel,
             E extends IViewModel,
             AVM extends IArrayViewModel<E>,
-            F extends IFragment<VM> & IArrayViewController<VM, E, AVM>> void bindLocalizedEmptyMessage(final F fragment, AVM arrayViewModel) {
+            F extends IFragment<VM> & IArrayViewController<VM, AVM>> void bindLocalizedEmptyMessage(final F fragment, AVM arrayViewModel) {
         bind(fragment, arrayViewModel.getLocalizedEmptyMessage().getObservable(), setLocalizedEmptyMessage(fragment));
     }
 
@@ -119,7 +119,7 @@ public final class AndroidViewControllers {
             E extends IViewModel,
             P, FI, FO,
             AVM extends IFetchedArrayViewModel<E, P, FI, FO>,
-            F extends IFragment<VM> & IFetchedArrayViewController<VM, E, P, FI, FO, AVM>> void bindRefreshing(final F fragment, AVM arrayViewModel) {
+            F extends IFragment<VM> & IFetchedArrayViewController<VM, AVM>> void bindRefreshing(final F fragment, AVM arrayViewModel) {
         bind(fragment, arrayViewModel.isRefreshing().getObservable(), presentRefreshing(fragment));
     }
 
@@ -127,7 +127,7 @@ public final class AndroidViewControllers {
             E extends IViewModel,
             P, FI, FO,
             AVM extends IFetchedArrayViewModel<E, P, FI, FO>,
-            F extends IFragment<VM> & IFetchedArrayViewController<VM, E, P, FI, FO, AVM>> void bindFetchingNextPage(final F fragment, AVM arrayViewModel) {
+            F extends IFragment<VM> & IFetchedArrayViewController<VM, AVM>> void bindFetchingNextPage(final F fragment, AVM arrayViewModel) {
         bind(fragment, arrayViewModel.isRefreshing().getObservable(), presentFetchingNextPage(fragment));
     }
 

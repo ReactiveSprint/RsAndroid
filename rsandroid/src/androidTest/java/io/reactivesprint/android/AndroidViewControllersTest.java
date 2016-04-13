@@ -19,8 +19,6 @@ import io.reactivesprint.views.IArrayViewController;
 import io.reactivesprint.views.IFetchedArrayViewController;
 import rx.Observable;
 import rx.Subscriber;
-import rx.functions.Action0;
-import rx.functions.Action1;
 import rx.functions.Func1;
 import rx.subjects.PublishSubject;
 
@@ -295,18 +293,18 @@ public class AndroidViewControllersTest extends TestCase {
 
     /// Interfaces for generic insanity
 
-    private interface TestArrayActivity extends IActivity<ViewModel>, IArrayViewController<ViewModel, ViewModel, ArrayViewModel<ViewModel>> {
+    private interface TestArrayActivity extends IActivity<ViewModel>, IArrayViewController<ViewModel, ArrayViewModel<ViewModel>> {
     }
 
-    private interface TestArrayFragment extends IFragment<ViewModel>, IArrayViewController<ViewModel, ViewModel, ArrayViewModel<ViewModel>> {
+    private interface TestArrayFragment extends IFragment<ViewModel>, IArrayViewController<ViewModel, ArrayViewModel<ViewModel>> {
     }
 
     private interface TestFetchedArrayActivity extends IActivity<ViewModel>,
-            IFetchedArrayViewController<ViewModel, ViewModel, Integer, Void, Collection<ViewModel>, FetchedArrayViewModel<ViewModel>> {
+            IFetchedArrayViewController<ViewModel, FetchedArrayViewModel<ViewModel>> {
     }
 
     private interface TestFetchedArrayFragment extends IFragment<ViewModel>,
-            IFetchedArrayViewController<ViewModel, ViewModel, Integer, Void, Collection<ViewModel>, FetchedArrayViewModel<ViewModel>> {
+            IFetchedArrayViewController<ViewModel, FetchedArrayViewModel<ViewModel>> {
     }
 
     //endregion

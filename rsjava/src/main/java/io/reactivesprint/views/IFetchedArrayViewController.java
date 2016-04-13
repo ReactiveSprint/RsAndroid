@@ -8,8 +8,8 @@ import io.reactivesprint.viewmodels.IViewModel;
  * Represents a View Controller that wraps {@link IFetchedArrayViewModel}
  */
 public interface IFetchedArrayViewController
-        <VM extends IViewModel, E extends IViewModel, P, FI, FO, AVM extends IFetchedArrayViewModel<E, P, FI, FO>>
-        extends IArrayViewController<VM, E, AVM> {
+        <VM extends IViewModel, AVM extends IFetchedArrayViewModel>
+        extends IArrayViewController<VM, AVM> {
     /**
      * Binds {@link IFetchedArrayViewModel#isRefreshing()} to {@link #presentRefreshing(boolean)}
      */
