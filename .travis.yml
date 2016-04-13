@@ -7,12 +7,11 @@ android:
     - build-tools-23.0.2
     - android-23
     - extra-android-m2repository
+    - sys-img-armeabi-v7a-android-21
+    - sys-img-x86-android-21
 
 sudo: false
 
 cache:
   directories:
     - $HOME/.gradle
-
-- sys-img-armeabi-v7a-android-21
-- sys-img-x86-android-21
