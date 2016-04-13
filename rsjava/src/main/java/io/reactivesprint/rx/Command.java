@@ -13,7 +13,7 @@ import rx.observables.ConnectableObservable;
 import rx.subjects.PublishSubject;
 import rx.subjects.Subject;
 
-import static io.reactivesprint.internal.Preconditions.checkNotNull;
+import static io.reactivesprint.Preconditions.checkNotNull;
 
 /**
  * Created by Ahmad Baraka on 5/30/15.

@@ -8,7 +8,7 @@ import rx.internal.util.SubscriptionList;
 import rx.subjects.BehaviorSubject;
 import rx.subjects.Subject;
 
-import static io.reactivesprint.internal.Preconditions.checkNotNull;
+import static io.reactivesprint.Preconditions.checkNotNull;
 
 /**
  * Created by Ahmad Baraka on 3/30/16.

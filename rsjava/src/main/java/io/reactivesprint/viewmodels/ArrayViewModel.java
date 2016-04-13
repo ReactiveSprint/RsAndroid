@@ -11,7 +11,7 @@ import io.reactivesprint.rx.IMutableProperty;
 import io.reactivesprint.rx.IProperty;
 import io.reactivesprint.rx.MutableProperty;
 
-import static io.reactivesprint.internal.Preconditions.checkNotNull;
+import static io.reactivesprint.Preconditions.checkNotNull;
 
 /**
  * Created by Ahmad Baraka on 4/1/16.

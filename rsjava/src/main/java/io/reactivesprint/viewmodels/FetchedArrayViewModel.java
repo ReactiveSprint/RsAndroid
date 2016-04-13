@@ -19,7 +19,7 @@ import rx.functions.Action0;
 import rx.functions.Action1;
 import rx.functions.Func1;
 
-import static io.reactivesprint.internal.Preconditions.checkNotNull;
+import static io.reactivesprint.Preconditions.checkNotNull;
 
 /**
  * Created by Ahmad Baraka on 4/2/16.

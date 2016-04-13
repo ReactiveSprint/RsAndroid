@@ -2,7 +2,7 @@ package io.reactivesprint.viewmodels;
 
 import io.reactivesprint.models.IModel;
 
-import static io.reactivesprint.internal.Preconditions.checkNotNull;
+import static io.reactivesprint.Preconditions.checkNotNull;
 
 public class ModelViewModel<M extends IModel> extends ViewModel implements IModelViewModel<M> {
 

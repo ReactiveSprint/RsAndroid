@@ -2,7 +2,7 @@ package io.reactivesprint.rx;
 
 import rx.Observable;
 
-import static io.reactivesprint.internal.Preconditions.checkNotNull;
+import static io.reactivesprint.Preconditions.checkNotNull;
 
 /**
  * Created by Ahmad Baraka on 3/30/16.

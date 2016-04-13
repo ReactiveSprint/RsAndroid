@@ -4,7 +4,7 @@ import rx.Observable;
 import rx.Subscriber;
 import rx.Subscription;
 
-import static io.reactivesprint.internal.Preconditions.checkNotNull;
+import static io.reactivesprint.Preconditions.checkNotNull;
 
 /**
  * Created by Ahmad Baraka on 4/7/16.

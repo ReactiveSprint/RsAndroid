@@ -1,4 +1,4 @@
-package io.reactivesprint.internal;
+package io.reactivesprint;
 
 import java.util.Collection;
 
