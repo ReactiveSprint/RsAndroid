@@ -20,7 +20,7 @@ import static io.reactivesprint.internal.Preconditions.checkNotNull;
  *
  * @see TransformerForwardWhileTrue
  */
-public final class TransformerThrottleWhileFalse<T> implements Observable.Transformer<T, T> {
+final class TransformerThrottleWhileFalse<T> implements Observable.Transformer<T, T> {
     private final Observable<Boolean> throttleWhileFalseObservable;
     private final Observable.Transformer<T, T> throttleTransformer;
     private final Observable.Operator<T, T> throttleOperator;

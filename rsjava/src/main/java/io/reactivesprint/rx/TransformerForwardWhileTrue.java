@@ -19,7 +19,7 @@ import static io.reactivesprint.internal.Preconditions.checkNotNull;
  * And errors when either {@code shouldForwardObservable} errors
  * or if source {@link Observable} errors while {@code shouldForwardObservable} is "active".
  */
-public final class TransformerForwardWhileTrue<T> implements Observable.Transformer<T, T> {
+final class TransformerForwardWhileTrue<T> implements Observable.Transformer<T, T> {
     private final Observable<Boolean> shouldForwardObservable;
     private Subscription observableSubscription;
 

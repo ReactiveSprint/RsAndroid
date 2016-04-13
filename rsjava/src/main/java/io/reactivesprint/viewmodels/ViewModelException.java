@@ -1,7 +1,6 @@
 package io.reactivesprint.viewmodels;
 
 import rx.Observable;
-import rx.Scheduler;
 import rx.functions.Func1;
 
 /**

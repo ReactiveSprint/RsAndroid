@@ -1,7 +1,7 @@
 package io.reactivesprint.views;
 
-import io.reactivesprint.viewmodels.IViewModelException;
 import io.reactivesprint.viewmodels.IViewModel;
+import io.reactivesprint.viewmodels.IViewModelException;
 
 /**
  * Created by Ahmad Baraka on 4/6/16.

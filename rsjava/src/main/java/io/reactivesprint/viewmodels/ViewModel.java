@@ -6,6 +6,7 @@ import io.reactivesprint.rx.IProperty;
 import io.reactivesprint.rx.MutableProperty;
 import io.reactivesprint.rx.Property;
 import io.reactivesprint.rx.functions.Func1BooleanNot;
+import io.reactivesprint.rx.functions.FuncNBooleanOr;
 import rx.Observable;
 import rx.functions.Func1;
 import rx.functions.Func2;
@@ -38,17 +39,10 @@ public class ViewModel implements IViewModel {
     //region Constructors
 
     public ViewModel() {
-
-
         Observable<Boolean> loadingObservable = Observable.switchOnNext(loadingSubject.scan(Observable.just(false), new Func2<Observable<Boolean>, Observable<Boolean>, Observable<Boolean>>() {
             @Override
             public Observable<Boolean> call(Observable<Boolean> observable, Observable<Boolean> observable2) {
-                return Observable.combineLatest(observable, observable2.startWith(false), new Func2<Boolean, Boolean, Boolean>() {
-                    @Override
-                    public Boolean call(Boolean aBoolean, Boolean aBoolean2) {
-                        return aBoolean || aBoolean2;
-                    }
-                });
+                return Observable.combineLatest(observable, observable2.startWith(false), FuncNBooleanOr.getInstance());
             }
         }));
 

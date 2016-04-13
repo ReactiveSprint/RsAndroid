@@ -5,7 +5,7 @@ import junit.framework.TestCase;
 import rx.Observable;
 import rx.Subscriber;
 
-import static uk.co.ribot.assertjrx.api.Assertions.*;
+import static uk.co.ribot.assertjrx.api.Assertions.assertThat;
 
 /**
  * Created by Ahmad Baraka on 4/7/16.

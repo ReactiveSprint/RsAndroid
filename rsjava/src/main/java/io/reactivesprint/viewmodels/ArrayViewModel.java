@@ -7,9 +7,9 @@ import java.util.List;
 import java.util.RandomAccess;
 
 import io.reactivesprint.rx.ConstantProperty;
-import io.reactivesprint.rx.MutableProperty;
 import io.reactivesprint.rx.IMutableProperty;
 import io.reactivesprint.rx.IProperty;
+import io.reactivesprint.rx.MutableProperty;
 
 import static io.reactivesprint.internal.Preconditions.checkNotNull;
 

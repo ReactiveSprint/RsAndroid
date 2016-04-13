@@ -1,17 +1,14 @@
 package io.reactivesprint.rx;
 
-import java.util.Arrays;
-
+import io.reactivesprint.rx.functions.Func1BooleanNot;
+import io.reactivesprint.rx.functions.FuncNBooleanAnd;
 import rx.Notification;
 import rx.Observable;
-import rx.Scheduler;
 import rx.Subscriber;
 import rx.Subscription;
 import rx.exceptions.OnErrorNotImplementedException;
-import rx.functions.Action0;
 import rx.functions.Action1;
 import rx.functions.Func1;
-import rx.functions.Func2;
 import rx.observables.ConnectableObservable;
 import rx.subjects.PublishSubject;
 import rx.subjects.Subject;
@@ -85,12 +82,11 @@ public final class Command<I, R> implements ICommand<I, R> {
             }
         });
 
-        this.enabled = new Property<>(false, Observable.combineLatest(enabled.getObservable(), isExecuting().getObservable(), new Func2<Boolean, Boolean, Boolean>() {
-            @Override
-            public Boolean call(Boolean userEnabled, Boolean executing) {
-                return userEnabled && !executing;
-            }
-        }));
+
+        this.enabled = new Property<>(false, Observable.combineLatest(enabled.getObservable(),
+                isExecuting().getObservable().map(Func1BooleanNot.getInstance()),
+                FuncNBooleanAnd.getInstance())
+        );
     }
 
     //endregion

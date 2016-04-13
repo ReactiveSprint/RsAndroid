@@ -1,6 +1,5 @@
 package io.reactivesprint.viewmodels;
 
-import java.util.Iterator;
 import java.util.List;
 
 import io.reactivesprint.rx.IProperty;
