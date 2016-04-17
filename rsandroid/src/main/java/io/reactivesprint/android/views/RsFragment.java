@@ -1,17 +1,15 @@
-package io.reactivesprint.android;
+package io.reactivesprint.android.views;
 
 import android.annotation.TargetApi;
 import android.os.Build;
 
 import com.trello.rxlifecycle.components.RxFragment;
 
-import io.reactivesprint.android.AndroidViewControllers;
-import io.reactivesprint.android.IFragment;
+import io.reactivesprint.android.viewmodels.IAndroidViewModel;
 import io.reactivesprint.viewmodels.IViewModelException;
-import io.reactivesprint.viewmodels.IViewModel;
 
 @TargetApi(Build.VERSION_CODES.HONEYCOMB)
-public class RsFragment<VM extends IViewModel> extends RxFragment implements IFragment<VM> {
+public class RsFragment<VM extends IAndroidViewModel> extends RxFragment implements IFragment<VM> {
     private VM viewModel;
 
     @Override
@@ -23,7 +21,6 @@ public class RsFragment<VM extends IViewModel> extends RxFragment implements IFr
 
     @Override
     public void bindViewModel(VM viewModel) {
-
     }
 
     @Override

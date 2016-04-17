@@ -6,7 +6,11 @@ import static io.reactivesprint.Preconditions.checkNotNull;
 
 public class ModelViewModel<M extends IModel> extends ViewModel implements IModelViewModel<M> {
 
-    private final M model;
+    private M model;
+
+    protected ModelViewModel() {
+
+    }
 
     public ModelViewModel(M model) {
         checkNotNull(model, "model");
@@ -16,5 +20,13 @@ public class ModelViewModel<M extends IModel> extends ViewModel implements IMode
     @Override
     public M getModel() {
         return model;
+    }
+
+    protected void setModel(M model) {
+        if (this.model != null) {
+            throw new AssertionError("Cannot re-setModel.");
+        }
+        checkNotNull(model, "model");
+        this.model = model;
     }
 }

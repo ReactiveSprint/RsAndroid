@@ -1,14 +1,14 @@
-package io.reactivesprint.android;
+package io.reactivesprint.android.views;
 
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.BaseAdapter;
 
+import io.reactivesprint.android.viewmodels.IAndroidViewModel;
 import io.reactivesprint.viewmodels.IArrayViewModel;
-import io.reactivesprint.viewmodels.IViewModel;
 import rx.functions.Func2;
 
-public class RsAdapter<E extends IViewModel, AVM extends IArrayViewModel<E>> extends BaseAdapter {
+public class RsAdapter<E extends IAndroidViewModel, AVM extends IArrayViewModel<E> & IAndroidViewModel> extends BaseAdapter {
     private final AVM arrayViewModel;
     private final Func2<Integer, ViewGroup, ViewHolder<E>> onCreateViewHolder;
 

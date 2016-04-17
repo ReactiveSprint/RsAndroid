@@ -1,11 +1,11 @@
-package io.reactivesprint.android;
+package io.reactivesprint.android.views;
 
 import android.view.View;
 
-import io.reactivesprint.viewmodels.IViewModel;
+import io.reactivesprint.android.viewmodels.IAndroidViewModel;
 import io.reactivesprint.views.IView;
 
-public class ViewHolder<VM extends IViewModel> implements IView<VM> {
+public class ViewHolder<VM extends IAndroidViewModel> implements IView<VM> {
     private VM viewModel;
     private final View view;
 

@@ -84,6 +84,9 @@ public class ArrayViewModel<E extends IViewModel> extends ViewModel implements I
     }
 
     protected void setViewModels(Collection<E> viewModels) {
+        if (this.viewModels != null) {
+            throw new AssertionError("Cannot re-setViewModels.");
+        }
         this.viewModels = new ArrayList<>(viewModels);
         count = new ConstantProperty<>(viewModels.size());
         empty = new ConstantProperty<>(viewModels.isEmpty());

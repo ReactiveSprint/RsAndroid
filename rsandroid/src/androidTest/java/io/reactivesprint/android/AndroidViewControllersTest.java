@@ -1,25 +1,27 @@
 package io.reactivesprint.android;
 
+import android.test.AndroidTestCase;
+
 import com.trello.rxlifecycle.ActivityEvent;
 import com.trello.rxlifecycle.FragmentEvent;
-
-import junit.framework.TestCase;
 
 import java.util.ArrayList;
 import java.util.Collection;
 import java.util.List;
 
+import io.reactivesprint.android.viewmodels.AndroidArrayViewModel;
+import io.reactivesprint.android.viewmodels.AndroidFetchedArrayViewModel;
+import io.reactivesprint.android.viewmodels.AndroidViewModel;
+import io.reactivesprint.android.views.AndroidViewControllers;
+import io.reactivesprint.android.views.IActivity;
+import io.reactivesprint.android.views.IFragment;
 import io.reactivesprint.rx.Pair;
-import io.reactivesprint.viewmodels.ArrayViewModel;
-import io.reactivesprint.viewmodels.FetchedArrayViewModel;
 import io.reactivesprint.viewmodels.IViewModelException;
-import io.reactivesprint.viewmodels.ViewModel;
 import io.reactivesprint.viewmodels.ViewModelException;
 import io.reactivesprint.views.IArrayViewController;
 import io.reactivesprint.views.IFetchedArrayViewController;
 import rx.Observable;
 import rx.Subscriber;
-import rx.functions.Func1;
 import rx.subjects.PublishSubject;
 
 import static org.mockito.Mockito.mock;
@@ -31,11 +33,11 @@ import static org.mockito.Mockito.when;
  * Created by Ahmad Baraka on 4/8/Fragment6.
  */
 @SuppressWarnings("unchecked")
-public class AndroidViewControllersTest extends TestCase {
-    ViewModel viewModel;
+public class AndroidViewControllersTest extends AndroidTestCase {
+    AndroidViewModel viewModel;
     Observable<ActivityEvent> activityEventObservable;
     Observable<FragmentEvent> fragmentEventObservable;
-    PublishSubject<Pair<Integer, Collection<ViewModel>>> subject;
+    PublishSubject<Pair<Integer, Collection<AndroidViewModel>>> subject;
 
     <T extends IActivity> T mockActivity(Class<T> aClass) {
         T activity = mock(aClass);
@@ -52,7 +54,7 @@ public class AndroidViewControllersTest extends TestCase {
     @Override
     protected void setUp() throws Exception {
         super.setUp();
-        viewModel = new ViewModel();
+        viewModel = new AndroidViewModel(getContext());
         subject = null;
 
         activityEventObservable = Observable.create(new Observable.OnSubscribe<ActivityEvent>() {
@@ -73,7 +75,7 @@ public class AndroidViewControllersTest extends TestCase {
     //region ActivityTests
 
     public void testBindTitleActivity() throws Exception {
-        IActivity<ViewModel> activity = mockActivity(IActivity.class);
+        IActivity<AndroidViewModel> activity = mockActivity(IActivity.class);
         AndroidViewControllers.bindTitle(activity, viewModel);
         viewModel.getTitle().setValue("Test");
         verify(activity).setTitle(null);
@@ -82,7 +84,7 @@ public class AndroidViewControllersTest extends TestCase {
 
     public void testBindLoadingActivity() throws Exception {
         PublishSubject<Boolean> loadingSubject = PublishSubject.create();
-        IActivity<ViewModel> activity = mockActivity(IActivity.class);
+        IActivity<AndroidViewModel> activity = mockActivity(IActivity.class);
         viewModel.bindLoading(loadingSubject);
         AndroidViewControllers.bindLoading(activity, viewModel);
 
@@ -93,7 +95,7 @@ public class AndroidViewControllersTest extends TestCase {
 
     public void testBindErrorsActivity() throws Exception {
         PublishSubject<IViewModelException> errorsSubject = PublishSubject.create();
-        IActivity<ViewModel> activity = mockActivity(IActivity.class);
+        IActivity<AndroidViewModel> activity = mockActivity(IActivity.class);
         AndroidViewControllers.bindErrors(activity, viewModel);
         viewModel.bindErrors(errorsSubject);
         ViewModelException exception = new ViewModelException("TestException");
@@ -104,7 +106,7 @@ public class AndroidViewControllersTest extends TestCase {
     }
 
     public void testBindCountActivity() throws Exception {
-        ArrayViewModel<ViewModel> arrayViewModel = new ArrayViewModel<>(generateViewModels(3));
+        AndroidArrayViewModel<AndroidViewModel> arrayViewModel = new AndroidArrayViewModel<>(getContext(), generateViewModels(3));
         TestArrayActivity activity = mockActivity(TestArrayActivity.class);
 
         AndroidViewControllers.bindCount(activity, arrayViewModel);
@@ -113,7 +115,7 @@ public class AndroidViewControllersTest extends TestCase {
     }
 
     public void testBindLocalizedEmptyMessageActivity() throws Exception {
-        ArrayViewModel<ViewModel> arrayViewModel = new ArrayViewModel<>(generateViewModels(3));
+        AndroidArrayViewModel<AndroidViewModel> arrayViewModel = new AndroidArrayViewModel<>(getContext(), generateViewModels(3));
         TestArrayActivity activity = mockActivity(TestArrayActivity.class);
 
         AndroidViewControllers.bindLocalizedEmptyMessage(activity, arrayViewModel);
@@ -124,17 +126,17 @@ public class AndroidViewControllersTest extends TestCase {
     }
 
     public void testBindRefreshingActivity() throws Exception {
-        FetchedArrayViewModel<ViewModel> arrayViewModel = new FetchedArrayViewModel<>(new Func1<Integer, Observable<Pair<Integer, Collection<ViewModel>>>>() {
+        AndroidFetchedArrayViewModel<AndroidViewModel, Integer> arrayViewModel = new AndroidFetchedArrayViewModel<AndroidViewModel, Integer>(getContext()) {
             @Override
-            public Observable<Pair<Integer, Collection<ViewModel>>> call(Integer integer) {
-                return Observable.create(new Observable.OnSubscribe<Pair<Integer, Collection<ViewModel>>>() {
+            protected Observable<Pair<Integer, Collection<AndroidViewModel>>> onFetch(Integer page) {
+                return Observable.create(new Observable.OnSubscribe<Pair<Integer, Collection<AndroidViewModel>>>() {
                     @Override
-                    public void call(Subscriber<? super Pair<Integer, Collection<ViewModel>>> subscriber) {
-                        subscriber.onNext(new Pair<Integer, Collection<ViewModel>>(null, generateViewModels(4)));
+                    public void call(Subscriber<? super Pair<Integer, Collection<AndroidViewModel>>> subscriber) {
+                        subscriber.onNext(new Pair<Integer, Collection<AndroidViewModel>>(null, generateViewModels(4)));
                     }
                 });
             }
-        });
+        };
 
         TestFetchedArrayActivity activity = mockActivity(TestFetchedArrayActivity.class);
 
@@ -146,23 +148,23 @@ public class AndroidViewControllersTest extends TestCase {
     }
 
     public void testBindFetchingNextPageActivity() throws Exception {
-        FetchedArrayViewModel<ViewModel> arrayViewModel = new FetchedArrayViewModel<>(new Func1<Integer, Observable<Pair<Integer, Collection<ViewModel>>>>() {
+        AndroidFetchedArrayViewModel<AndroidViewModel, Integer> arrayViewModel = new AndroidFetchedArrayViewModel<AndroidViewModel, Integer>(getContext()) {
             @Override
-            public Observable<Pair<Integer, Collection<ViewModel>>> call(Integer integer) {
+            protected Observable<Pair<Integer, Collection<AndroidViewModel>>> onFetch(Integer page) {
                 subject = PublishSubject.create();
                 return subject;
             }
-        });
+        };
 
         TestFetchedArrayActivity activity = mockActivity(TestFetchedArrayActivity.class);
 
         AndroidViewControllers.bindFetchingNextPage(activity, arrayViewModel);
         arrayViewModel.getRefreshCommand().apply().subscribe();
-        subject.onNext(new Pair<Integer, Collection<ViewModel>>(1, generateViewModels(4)));
+        subject.onNext(new Pair<Integer, Collection<AndroidViewModel>>(1, generateViewModels(4)));
         subject.onCompleted();
 
         arrayViewModel.getFetchCommand().apply().subscribe();
-        subject.onNext(new Pair<Integer, Collection<ViewModel>>(2, generateViewModels(4)));
+        subject.onNext(new Pair<Integer, Collection<AndroidViewModel>>(2, generateViewModels(4)));
 
         verify(activity, times(2)).presentFetchingNextPage(false);
         verify(activity).presentFetchingNextPage(true);
@@ -173,7 +175,7 @@ public class AndroidViewControllersTest extends TestCase {
     //region FragmentTests
 
     public void testBindTitleFragment() throws Exception {
-        IFragment<ViewModel> fragment = mockFragment(IFragment.class);
+        IFragment<AndroidViewModel> fragment = mockFragment(IFragment.class);
         AndroidViewControllers.bindTitle(fragment, viewModel);
         viewModel.getTitle().setValue("Test");
         verify(fragment).setTitle(null);
@@ -182,7 +184,7 @@ public class AndroidViewControllersTest extends TestCase {
 
     public void testBindLoadingFragment() throws Exception {
         PublishSubject<Boolean> loadingSubject = PublishSubject.create();
-        IFragment<ViewModel> fragment = mockFragment(IFragment.class);
+        IFragment<AndroidViewModel> fragment = mockFragment(IFragment.class);
         viewModel.bindLoading(loadingSubject);
         AndroidViewControllers.bindLoading(fragment, viewModel);
 
@@ -193,7 +195,7 @@ public class AndroidViewControllersTest extends TestCase {
 
     public void testBindErrorsFragment() throws Exception {
         PublishSubject<IViewModelException> errorsSubject = PublishSubject.create();
-        IFragment<ViewModel> fragment = mockFragment(IFragment.class);
+        IFragment<AndroidViewModel> fragment = mockFragment(IFragment.class);
         viewModel.bindErrors(errorsSubject);
         AndroidViewControllers.bindErrors(fragment, viewModel);
         ViewModelException exception = new ViewModelException("TestException");
@@ -203,7 +205,7 @@ public class AndroidViewControllersTest extends TestCase {
     }
 
     public void testBindCountFragment() throws Exception {
-        ArrayViewModel<ViewModel> arrayViewModel = new ArrayViewModel<>(generateViewModels(3));
+        AndroidArrayViewModel<AndroidViewModel> arrayViewModel = new AndroidArrayViewModel<>(getContext(), generateViewModels(3));
         TestArrayFragment fragment = mockFragment(TestArrayFragment.class);
 
         AndroidViewControllers.bindCount(fragment, arrayViewModel);
@@ -212,7 +214,7 @@ public class AndroidViewControllersTest extends TestCase {
     }
 
     public void testBindLocalizedEmptyMessageFragment() throws Exception {
-        ArrayViewModel<ViewModel> arrayViewModel = new ArrayViewModel<>(generateViewModels(3));
+        AndroidArrayViewModel<AndroidViewModel> arrayViewModel = new AndroidArrayViewModel<>(getContext(), generateViewModels(3));
         TestArrayFragment fragment = mockFragment(TestArrayFragment.class);
 
         AndroidViewControllers.bindLocalizedEmptyMessage(fragment, arrayViewModel);
@@ -223,17 +225,17 @@ public class AndroidViewControllersTest extends TestCase {
     }
 
     public void testBindRefreshingFragment() throws Exception {
-        FetchedArrayViewModel<ViewModel> arrayViewModel = new FetchedArrayViewModel<>(new Func1<Integer, Observable<Pair<Integer, Collection<ViewModel>>>>() {
+        AndroidFetchedArrayViewModel<AndroidViewModel, Integer> arrayViewModel = new AndroidFetchedArrayViewModel<AndroidViewModel, Integer>(getContext()) {
             @Override
-            public Observable<Pair<Integer, Collection<ViewModel>>> call(Integer integer) {
-                return Observable.create(new Observable.OnSubscribe<Pair<Integer, Collection<ViewModel>>>() {
+            protected Observable<Pair<Integer, Collection<AndroidViewModel>>> onFetch(Integer page) {
+                return Observable.create(new Observable.OnSubscribe<Pair<Integer, Collection<AndroidViewModel>>>() {
                     @Override
-                    public void call(Subscriber<? super Pair<Integer, Collection<ViewModel>>> subscriber) {
-                        subscriber.onNext(new Pair<Integer, Collection<ViewModel>>(null, generateViewModels(4)));
+                    public void call(Subscriber<? super Pair<Integer, Collection<AndroidViewModel>>> subscriber) {
+                        subscriber.onNext(new Pair<Integer, Collection<AndroidViewModel>>(null, generateViewModels(4)));
                     }
                 });
             }
-        });
+        };
 
         TestFetchedArrayFragment fragment = mockFragment(TestFetchedArrayFragment.class);
 
@@ -245,23 +247,23 @@ public class AndroidViewControllersTest extends TestCase {
     }
 
     public void testBindFetchingNextPageFragment() throws Exception {
-        FetchedArrayViewModel<ViewModel> arrayViewModel = new FetchedArrayViewModel<>(new Func1<Integer, Observable<Pair<Integer, Collection<ViewModel>>>>() {
+        AndroidFetchedArrayViewModel<AndroidViewModel, Integer> arrayViewModel = new AndroidFetchedArrayViewModel<AndroidViewModel, Integer>(getContext()) {
             @Override
-            public Observable<Pair<Integer, Collection<ViewModel>>> call(Integer integer) {
+            protected Observable<Pair<Integer, Collection<AndroidViewModel>>> onFetch(Integer page) {
                 subject = PublishSubject.create();
                 return subject;
             }
-        });
+        };
 
         TestFetchedArrayFragment fragment = mockFragment(TestFetchedArrayFragment.class);
 
         AndroidViewControllers.bindFetchingNextPage(fragment, arrayViewModel);
         arrayViewModel.getRefreshCommand().apply().subscribe();
-        subject.onNext(new Pair<Integer, Collection<ViewModel>>(1, generateViewModels(4)));
+        subject.onNext(new Pair<Integer, Collection<AndroidViewModel>>(1, generateViewModels(4)));
         subject.onCompleted();
 
         arrayViewModel.getFetchCommand().apply().subscribe();
-        subject.onNext(new Pair<Integer, Collection<ViewModel>>(2, generateViewModels(4)));
+        subject.onNext(new Pair<Integer, Collection<AndroidViewModel>>(2, generateViewModels(4)));
 
         verify(fragment, times(2)).presentFetchingNextPage(false);
         verify(fragment).presentFetchingNextPage(true);
@@ -271,16 +273,16 @@ public class AndroidViewControllersTest extends TestCase {
 
     //region Helpers
 
-    public static List<ViewModel> generateViewModels(int count) {
+    public List<AndroidViewModel> generateViewModels(int count) {
         return generateViewModels(count, 0);
     }
 
-    public static List<ViewModel> generateViewModels(int count, int start) {
-        List<ViewModel> viewModels = new ArrayList<>(count);
+    public List<AndroidViewModel> generateViewModels(int count, int start) {
+        List<AndroidViewModel> viewModels = new ArrayList<>(count);
 
         for (int i = 1; i <= count; i++) {
-            ViewModel viewModel = new ViewModel(Integer.toString(i + start));
-
+            AndroidViewModel viewModel = new AndroidViewModel(getContext());
+            viewModel.getTitle().setValue(Integer.toString(i + start));
             viewModels.add(viewModel);
         }
 
@@ -290,21 +292,20 @@ public class AndroidViewControllersTest extends TestCase {
     //endregion
 
     //region Test Interfaces
-
     /// Interfaces for generic insanity
 
-    private interface TestArrayActivity extends IActivity<ViewModel>, IArrayViewController<ViewModel, ArrayViewModel<ViewModel>> {
+    private interface TestArrayActivity extends IActivity<AndroidViewModel>, IArrayViewController<AndroidViewModel, AndroidArrayViewModel<AndroidViewModel>> {
     }
 
-    private interface TestArrayFragment extends IFragment<ViewModel>, IArrayViewController<ViewModel, ArrayViewModel<ViewModel>> {
+    private interface TestArrayFragment extends IFragment<AndroidViewModel>, IArrayViewController<AndroidViewModel, AndroidArrayViewModel<AndroidViewModel>> {
     }
 
-    private interface TestFetchedArrayActivity extends IActivity<ViewModel>,
-            IFetchedArrayViewController<ViewModel, FetchedArrayViewModel<ViewModel>> {
+    private interface TestFetchedArrayActivity extends IActivity<AndroidViewModel>,
+            IFetchedArrayViewController<AndroidViewModel, AndroidFetchedArrayViewModel<AndroidViewModel, Integer>> {
     }
 
-    private interface TestFetchedArrayFragment extends IFragment<ViewModel>,
-            IFetchedArrayViewController<ViewModel, FetchedArrayViewModel<ViewModel>> {
+    private interface TestFetchedArrayFragment extends IFragment<AndroidViewModel>,
+            IFetchedArrayViewController<AndroidViewModel, AndroidFetchedArrayViewModel<AndroidViewModel, Integer>> {
     }
 
     //endregion

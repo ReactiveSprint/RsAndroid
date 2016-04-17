@@ -112,6 +112,10 @@ public abstract class FetchedArrayViewModel<E extends IViewModel, P> extends Vie
         return viewModels.getValue();
     }
 
+    protected void setViewModels(Collection<E> viewModels) {
+        this.viewModels.setValue(new ArrayList<E>(viewModels));
+    }
+
     @Override
     public int indexOf(E element) {
         checkNotNull(element, "element");
@@ -135,6 +139,10 @@ public abstract class FetchedArrayViewModel<E extends IViewModel, P> extends Vie
     @Override
     public P getNextPage() {
         return nextPage;
+    }
+
+    protected void setNextPage(P nextPage) {
+        this.nextPage = nextPage;
     }
 
     @Override

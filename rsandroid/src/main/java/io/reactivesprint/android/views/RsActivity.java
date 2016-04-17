@@ -1,13 +1,14 @@
-package io.reactivesprint.android;
+package io.reactivesprint.android.views;
+
+import android.os.Bundle;
 
 import com.trello.rxlifecycle.components.RxActivity;
 
-import io.reactivesprint.android.AndroidViewControllers;
-import io.reactivesprint.android.IActivity;
+import io.reactivesprint.android.viewmodels.IAndroidViewModel;
 import io.reactivesprint.viewmodels.IViewModelException;
 import io.reactivesprint.viewmodels.IViewModel;
 
-public class RsActivity<VM extends IViewModel> extends RxActivity implements IActivity<VM> {
+public class RsActivity<VM extends IAndroidViewModel> extends RxActivity implements IActivity<VM> {
     private VM viewModel;
 
     @Override

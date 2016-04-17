@@ -17,3 +17,5 @@ dependencies {
     androidTestCompile rootProject.ext.dexmaker
     androidTestCompile rootProject.ext.dexmakerMockito
 }
+
+apply from: rootProject.file('gradle/gradle-mvn-push.gradle')
