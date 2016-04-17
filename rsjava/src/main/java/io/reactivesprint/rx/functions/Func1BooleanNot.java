@@ -7,7 +7,7 @@ import rx.functions.Func1;
  * <p/>
  * {@link Func1} which applies "Not" operator to inputs.
  */
-public class Func1BooleanNot implements Func1<Boolean, Boolean> {
+public final class Func1BooleanNot implements Func1<Boolean, Boolean> {
 
     /**
      * Lazy Initialization via inner-class holder

@@ -15,7 +15,7 @@ import rx.functions.FuncN;
  * <p/>
  * {@link FuncN} which returns true if all input objects are not null.
  */
-public class FuncNNotNull implements
+public final class FuncNNotNull implements
         Func2<Boolean, Boolean, Boolean>,
         Func3<Boolean, Boolean, Boolean, Boolean>,
         Func4<Boolean, Boolean, Boolean, Boolean, Boolean>,

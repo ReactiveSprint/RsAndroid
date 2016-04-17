@@ -11,7 +11,7 @@ import rx.functions.Func1;
  * @see Func1NotNull
  * @see Func1CharSequenceNotNullAndRegex
  */
-public class Func1CharSequenceNotNullAndLength<T extends CharSequence> implements Func1<T, Boolean> {
+public final class Func1CharSequenceNotNullAndLength<T extends CharSequence> implements Func1<T, Boolean> {
 
     private final int minimumLength;
 

@@ -17,7 +17,7 @@ import rx.functions.FuncN;
  * <p/>
  * {@code null} inputs are considered {@code false}
  */
-public class FuncNBooleanAnd implements
+public final class FuncNBooleanAnd implements
         Func2<Boolean, Boolean, Boolean>,
         Func3<Boolean, Boolean, Boolean, Boolean>,
         Func4<Boolean, Boolean, Boolean, Boolean, Boolean>,

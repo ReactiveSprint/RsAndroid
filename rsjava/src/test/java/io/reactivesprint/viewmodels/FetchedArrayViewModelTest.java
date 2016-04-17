@@ -7,7 +7,6 @@ import java.util.Collection;
 import io.reactivesprint.rx.Pair;
 import rx.Observable;
 import rx.Subscriber;
-import rx.functions.Func1;
 import rx.subjects.PublishSubject;
 
 import static io.reactivesprint.viewmodels.ArrayViewModelTest.generateViewModels;
@@ -18,7 +17,7 @@ import static org.assertj.core.api.Assertions.assertThat;
  */
 public class FetchedArrayViewModelTest extends TestCase {
 
-    FetchedArrayViewModel<ViewModel> viewModel;
+    FetchedArrayViewModel<ViewModel, Integer> viewModel;
     PublishSubject<Pair<Integer, Collection<ViewModel>>> subject;
     boolean completed;
     Collection<ViewModel> receivedViewModels;
@@ -31,13 +30,13 @@ public class FetchedArrayViewModelTest extends TestCase {
 
         receivedViewModels = null;
 
-        viewModel = new FetchedArrayViewModel<>(new Func1<Integer, Observable<Pair<Integer, Collection<ViewModel>>>>() {
+        viewModel = new FetchedArrayViewModel<ViewModel, Integer>() {
             @Override
-            public Observable<Pair<Integer, Collection<ViewModel>>> call(Integer integer) {
+            protected Observable<Pair<Integer, Collection<ViewModel>>> onFetch(Integer page) {
                 subject = PublishSubject.create();
                 return subject;
             }
-        });
+        };
     }
 
     Subscriber<Collection<ViewModel>> createSubscriber() {

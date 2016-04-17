@@ -9,7 +9,7 @@ import rx.functions.Func1;
  *
  * @see Func1CharSequenceNotNullAndLength
  */
-public class Func1NotNull<T> implements Func1<T, Boolean> {
+public final class Func1NotNull<T> implements Func1<T, Boolean> {
 
     /**
      * Lazy Initialization via inner-class holder

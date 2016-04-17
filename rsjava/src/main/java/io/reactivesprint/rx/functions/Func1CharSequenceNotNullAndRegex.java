@@ -10,7 +10,7 @@ import rx.functions.Func1;
  *
  * @see Func1CharSequenceNotNullAndLength
  */
-public class Func1CharSequenceNotNullAndRegex<T extends CharSequence> implements Func1<T, Boolean> {
+public final class Func1CharSequenceNotNullAndRegex<T extends CharSequence> implements Func1<T, Boolean> {
 
     private final String regex;
 

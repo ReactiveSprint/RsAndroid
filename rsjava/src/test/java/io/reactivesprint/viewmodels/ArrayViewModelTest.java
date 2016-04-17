@@ -33,24 +33,6 @@ public class ArrayViewModelTest extends TestCase {
         assertThat(arrayViewModel.isEmpty().getValue()).isTrue();
     }
 
-    public void testConstructorWithTitle() throws Exception {
-        arrayViewModel = new ArrayViewModel<>(Collections.<ViewModel>emptyList(), TEST_TITLE);
-
-        assertThat(arrayViewModel.getTitle().getValue()).isEqualTo(TEST_TITLE);
-        assertThat(arrayViewModel.getLocalizedEmptyMessage().getValue()).isNull();
-        assertThat(arrayViewModel.getCount().getValue()).isZero();
-        assertThat(arrayViewModel.isEmpty().getValue()).isTrue();
-    }
-
-    public void testConstructorWithTitleAndMessage() throws Exception {
-        arrayViewModel = new ArrayViewModel<>(Collections.<ViewModel>emptyList(), TEST_TITLE, TEST_EMPTY_MESSAGE);
-
-        assertThat(arrayViewModel.getTitle().getValue()).isEqualTo(TEST_TITLE);
-        assertThat(arrayViewModel.getLocalizedEmptyMessage().getValue()).isEqualTo(TEST_EMPTY_MESSAGE);
-        assertThat(arrayViewModel.getCount().getValue()).isZero();
-        assertThat(arrayViewModel.isEmpty().getValue()).isTrue();
-    }
-
     public void testGetViewModel() throws Exception {
         arrayViewModel = new ArrayViewModel<>(viewModels);
 

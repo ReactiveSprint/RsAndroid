@@ -20,26 +20,28 @@ import static io.reactivesprint.Preconditions.checkNotNull;
 public class ArrayViewModel<E extends IViewModel> extends ViewModel implements IArrayViewModel<E>, RandomAccess {
     //region Fields
 
-    private final IProperty<Integer> count;
+    private IProperty<Integer> count;
 
-    private final IProperty<Boolean> empty;
+    private IProperty<Boolean> empty;
 
-    private final List<E> viewModels;
+    private List<E> viewModels;
 
-    private final IMutableProperty<CharSequence> localizedEmptyMessage = new MutableProperty<>(null);
+    private IMutableProperty<CharSequence> localizedEmptyMessage = new MutableProperty<>(null);
 
     //endregion
 
     //region Constructors
+
+    protected ArrayViewModel() {
+
+    }
 
     /**
      * Creates an instance with {@code viewModels}
      */
     public ArrayViewModel(Collection<E> viewModels) {
         checkNotNull(viewModels, "viewModels");
-        this.viewModels = new ArrayList<>(viewModels);
-        count = new ConstantProperty<>(viewModels.size());
-        empty = new ConstantProperty<>(viewModels.isEmpty());
+        setViewModels(viewModels);
     }
 
     public ArrayViewModel(Collection<E> viewModels, String title) {
@@ -79,6 +81,12 @@ public class ArrayViewModel<E extends IViewModel> extends ViewModel implements I
     @Override
     public IMutableProperty<CharSequence> getLocalizedEmptyMessage() {
         return localizedEmptyMessage;
+    }
+
+    protected void setViewModels(Collection<E> viewModels) {
+        this.viewModels = new ArrayList<>(viewModels);
+        count = new ConstantProperty<>(viewModels.size());
+        empty = new ConstantProperty<>(viewModels.isEmpty());
     }
 
     @Override

@@ -23,10 +23,10 @@ import static io.reactivesprint.Preconditions.checkNotNull;
 
 /**
  * Created by Ahmad Baraka on 4/2/16.
- * An implementation of {@link IFetchedArrayViewModel} that fetches ViewModels by calling {@code fetchFunc}
+ * An implementation of {@link IFetchedArrayViewModel} that fetches ViewModels by calling {@link #onFetch(Object)}
  */
-public class FetchedArrayViewModel<E extends ViewModel> extends ViewModel
-        implements IFetchedArrayViewModel<E, Integer, Void, Collection<E>>, RandomAccess {
+public abstract class FetchedArrayViewModel<E extends IViewModel, P> extends ViewModel
+        implements IFetchedArrayViewModel<E, P, Void, Collection<E>>, RandomAccess {
     //region Fields
 
     private MutableProperty<List<E>> viewModels = new MutableProperty<>(Collections.<E>emptyList());
@@ -40,9 +40,8 @@ public class FetchedArrayViewModel<E extends ViewModel> extends ViewModel
     private final MutableProperty<Boolean> fetchingNextPage = new MutableProperty<>(false);
     private final MutableProperty<Boolean> hasNextPage = new MutableProperty<>(true);
 
-    private Integer nextPage;
+    private P nextPage;
 
-    private final Func1<Integer, Observable<Pair<Integer, Collection<E>>>> fetchFunc;
     private final ICommand<Void, Collection<E>> refreshCommand;
     private final ICommand<Void, Collection<E>> fetchCommand;
     private final ICommand<Void, Collection<E>> fetchIfNeededCommand;
@@ -51,12 +50,7 @@ public class FetchedArrayViewModel<E extends ViewModel> extends ViewModel
 
     //region Constructors
 
-    /**
-     * Creates an instance with {@code viewModels}
-     */
-    public FetchedArrayViewModel(Func1<Integer, Observable<Pair<Integer, Collection<E>>>> fetchFunc) {
-        checkNotNull(fetchFunc, "fetchFunc");
-        this.fetchFunc = fetchFunc;
+    public FetchedArrayViewModel() {
         count = new Property<>(0, viewModels.getObservable().map(new Func1<List<E>, Integer>() {
             @Override
             public Integer call(List<E> elements) {
@@ -75,6 +69,15 @@ public class FetchedArrayViewModel<E extends ViewModel> extends ViewModel
         refreshCommand = createRefreshCommand();
         fetchIfNeededCommand = createFetchIfNeededCommand();
     }
+
+    //endregion
+
+    //region Abstract
+
+    /**
+     * Implement this method to fetch ViewModels at {@code page}
+     */
+    protected abstract Observable<Pair<P, Collection<E>>> onFetch(P page);
 
     //endregion
 
@@ -130,7 +133,7 @@ public class FetchedArrayViewModel<E extends ViewModel> extends ViewModel
     }
 
     @Override
-    public Integer getNextPage() {
+    public P getNextPage() {
         return nextPage;
     }
 
@@ -208,11 +211,11 @@ public class FetchedArrayViewModel<E extends ViewModel> extends ViewModel
         });
     }
 
-    private Observable<Collection<E>> fetch(final Integer nextPage) {
-        return fetchFunc.call(nextPage)
-                .doOnNext(new Action1<Pair<Integer, Collection<E>>>() {
+    private Observable<Collection<E>> fetch(final P nextPage) {
+        return onFetch(nextPage)
+                .doOnNext(new Action1<Pair<P, Collection<E>>>() {
                     @Override
-                    public void call(Pair<Integer, Collection<E>> objects) {
+                    public void call(Pair<P, Collection<E>> objects) {
                         ArrayList<E> newViewModels = new ArrayList<>();
                         if (!refreshing.getValue()) {
                             newViewModels.addAll(viewModels.getValue());
@@ -234,9 +237,9 @@ public class FetchedArrayViewModel<E extends ViewModel> extends ViewModel
                         fetchingNextPage.setValue(false);
                     }
                 })
-                .map(new Func1<Pair<Integer, Collection<E>>, Collection<E>>() {
+                .map(new Func1<Pair<P, Collection<E>>, Collection<E>>() {
                     @Override
-                    public Collection<E> call(Pair<Integer, Collection<E>> objects) {
+                    public Collection<E> call(Pair<P, Collection<E>> objects) {
                         return objects.getValue1();
                     }
                 });

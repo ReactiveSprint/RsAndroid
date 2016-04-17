@@ -18,7 +18,7 @@ import rx.functions.FuncN;
  * <p/>
  * All input objects must be instance of {@link CharSequence}.
  */
-public class FuncNCharSequenceNotNullAndLength implements
+public final class FuncNCharSequenceNotNullAndLength implements
         Func2<Boolean, Boolean, Boolean>,
         Func3<Boolean, Boolean, Boolean, Boolean>,
         Func4<Boolean, Boolean, Boolean, Boolean, Boolean>,

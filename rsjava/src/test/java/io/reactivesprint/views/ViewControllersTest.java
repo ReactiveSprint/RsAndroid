@@ -50,13 +50,13 @@ public class ViewControllersTest extends TestCase {
     }
 
     public void testPresentRefreshing() throws Exception {
-        IFetchedArrayViewController<ViewModel, FetchedArrayViewModel<ViewModel>> viewController = mock(IFetchedArrayViewController.class);
+        IFetchedArrayViewController<ViewModel, FetchedArrayViewModel<ViewModel, Integer>> viewController = mock(IFetchedArrayViewController.class);
         ViewControllers.presentRefreshing(viewController).call(true);
         verify(viewController).presentRefreshing(true);
     }
 
     public void testPresentFetchingNextPage() throws Exception {
-        IFetchedArrayViewController<ViewModel, FetchedArrayViewModel<ViewModel>> viewController = mock(IFetchedArrayViewController.class);
+        IFetchedArrayViewController<ViewModel, FetchedArrayViewModel<ViewModel, Integer>> viewController = mock(IFetchedArrayViewController.class);
         ViewControllers.presentFetchingNextPage(viewController).call(true);
         verify(viewController).presentFetchingNextPage(true);
     }

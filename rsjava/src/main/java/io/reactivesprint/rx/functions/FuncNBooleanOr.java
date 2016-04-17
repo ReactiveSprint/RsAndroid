@@ -15,7 +15,7 @@ import rx.functions.FuncN;
  * <p/>
  * {@link FuncN} which applies OR operator to input objects.
  */
-public class FuncNBooleanOr implements
+public final class FuncNBooleanOr implements
         Func2<Boolean, Boolean, Boolean>,
         Func3<Boolean, Boolean, Boolean, Boolean>,
         Func4<Boolean, Boolean, Boolean, Boolean, Boolean>,
