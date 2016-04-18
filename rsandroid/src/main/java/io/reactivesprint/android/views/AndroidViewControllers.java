@@ -1,5 +1,11 @@
 package io.reactivesprint.android.views;
 
+import android.app.Activity;
+import android.app.Fragment;
+import android.content.Context;
+import android.content.Intent;
+import android.os.Bundle;
+
 import com.trello.rxlifecycle.RxLifecycle;
 
 import io.reactivesprint.android.viewmodels.IAndroidViewModel;
@@ -33,7 +39,35 @@ public final class AndroidViewControllers {
 
     //endregion
 
+    //region Bundle
+
+    public static <VM extends IAndroidViewModel> void onSaveInstanceState(VM viewModel, Bundle outState) {
+        outState.putParcelable(AndroidViewControllers.VIEWMODEL_KEY, viewModel);
+    }
+
+    public static <VM extends IAndroidViewModel> VM getViewModelFromBundle(Bundle savedInstanceState) {
+        if (savedInstanceState == null) {
+            return null;
+        }
+        VM viewModel = savedInstanceState.getParcelable(AndroidViewControllers.VIEWMODEL_KEY);
+        if (viewModel != null) {
+            return viewModel;
+        }
+        return null;
+    }
+
+    //endregion
+
     //region Activity
+
+    public static <VM extends IAndroidViewModel, A extends Activity & IActivity<VM>>
+    Intent getActivityIntent(Context context, Class<A> activityClass, VM viewModel) {
+        Intent intent = new Intent(context, activityClass);
+
+        intent.putExtra(VIEWMODEL_KEY, viewModel);
+
+        return intent;
+    }
 
     public static <VM extends IAndroidViewModel, T> void bind(final IActivity<VM> activity, Observable<T> observable, Action1<T> bindAction) {
         observable.compose(RxLifecycle.<T>bindActivity(activity.lifecycle()))
@@ -85,6 +119,19 @@ public final class AndroidViewControllers {
     //endregion
 
     //region Fragments
+
+    public static <VM extends IAndroidViewModel, F extends Fragment & IFragment<VM>>
+    F instantiateFragment(Class<F> fragmentClass, VM viewModel) {
+        try {
+            F fragment = fragmentClass.newInstance();
+            Bundle bundle = new Bundle();
+            onSaveInstanceState(viewModel, bundle);
+            fragment.setArguments(bundle);
+            return fragment;
+        } catch (Exception e) {
+            throw new RuntimeException(e);
+        }
+    }
 
     public static <VM extends IAndroidViewModel, T> void bind(final IFragment<VM> fragment, Observable<T> observable, Action1<T> bindAction) {
         observable.compose(RxLifecycle.<T>bindFragment(fragment.lifecycle()))

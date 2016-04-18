@@ -26,11 +26,6 @@ public class ViewHolder<VM extends IAndroidViewModel> implements IView<VM> {
     }
 
     @Override
-    public void bindViewModel(VM viewModel) {
-
-    }
-
-    @Override
     public void bindActive(VM viewModel) {
 
     }

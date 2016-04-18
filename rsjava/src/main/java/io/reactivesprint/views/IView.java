@@ -13,11 +13,6 @@ public interface IView<VM extends IViewModel> {
     VM getViewModel();
 
     /**
-     * Binds {@code viewModel} to the receiver.
-     */
-    void bindViewModel(VM viewModel);
-
-    /**
      * Binds {@link IViewModel#getActive()} property from the receiver.
      */
     void bindActive(VM viewModel);
