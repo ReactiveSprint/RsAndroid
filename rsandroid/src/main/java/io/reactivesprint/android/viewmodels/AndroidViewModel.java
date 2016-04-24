@@ -112,7 +112,8 @@ public class AndroidViewModel extends ViewModel implements IAndroidViewModel {
 
     @Override
     public void writeToParcel(Parcel dest, int flags) {
-        dest.writeString(getTitle().getValue().toString());
+        String title = getTitle().getValue() == null ? null : getTitle().getValue().toString();
+        dest.writeString(title);
     }
 
     //endregion
