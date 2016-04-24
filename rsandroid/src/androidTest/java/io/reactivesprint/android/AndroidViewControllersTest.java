@@ -12,6 +12,8 @@ import java.util.List;
 import io.reactivesprint.android.viewmodels.AndroidArrayViewModel;
 import io.reactivesprint.android.viewmodels.AndroidFetchedArrayViewModel;
 import io.reactivesprint.android.viewmodels.AndroidViewModel;
+import io.reactivesprint.android.viewmodels.TestAndroidArrayViewModel;
+import io.reactivesprint.android.viewmodels.TestAndroidFetchedArrayViewModel;
 import io.reactivesprint.android.views.AndroidViewControllers;
 import io.reactivesprint.android.views.IActivity;
 import io.reactivesprint.android.views.IFragment;
@@ -106,7 +108,7 @@ public class AndroidViewControllersTest extends AndroidTestCase {
     }
 
     public void testBindCountActivity() throws Exception {
-        AndroidArrayViewModel<AndroidViewModel> arrayViewModel = new AndroidArrayViewModel<>(getContext(), generateViewModels(3));
+        AndroidArrayViewModel<AndroidViewModel> arrayViewModel = new TestAndroidArrayViewModel(getContext(), generateViewModels(3));
         TestArrayActivity activity = mockActivity(TestArrayActivity.class);
 
         AndroidViewControllers.bindCount(activity, arrayViewModel);
@@ -115,7 +117,7 @@ public class AndroidViewControllersTest extends AndroidTestCase {
     }
 
     public void testBindLocalizedEmptyMessageActivity() throws Exception {
-        AndroidArrayViewModel<AndroidViewModel> arrayViewModel = new AndroidArrayViewModel<>(getContext(), generateViewModels(3));
+        AndroidArrayViewModel<AndroidViewModel> arrayViewModel = new TestAndroidArrayViewModel(getContext(), generateViewModels(3));
         TestArrayActivity activity = mockActivity(TestArrayActivity.class);
 
         AndroidViewControllers.bindLocalizedEmptyMessage(activity, arrayViewModel);
@@ -126,7 +128,7 @@ public class AndroidViewControllersTest extends AndroidTestCase {
     }
 
     public void testBindRefreshingActivity() throws Exception {
-        AndroidFetchedArrayViewModel<AndroidViewModel, Integer> arrayViewModel = new AndroidFetchedArrayViewModel<AndroidViewModel, Integer>(getContext()) {
+        AndroidFetchedArrayViewModel<AndroidViewModel, Integer> arrayViewModel = new TestAndroidFetchedArrayViewModel(getContext()) {
             @Override
             protected Observable<Pair<Integer, Collection<AndroidViewModel>>> onFetch(Integer page) {
                 return Observable.create(new Observable.OnSubscribe<Pair<Integer, Collection<AndroidViewModel>>>() {
@@ -148,7 +150,7 @@ public class AndroidViewControllersTest extends AndroidTestCase {
     }
 
     public void testBindFetchingNextPageActivity() throws Exception {
-        AndroidFetchedArrayViewModel<AndroidViewModel, Integer> arrayViewModel = new AndroidFetchedArrayViewModel<AndroidViewModel, Integer>(getContext()) {
+        AndroidFetchedArrayViewModel<AndroidViewModel, Integer> arrayViewModel = new TestAndroidFetchedArrayViewModel(getContext()) {
             @Override
             protected Observable<Pair<Integer, Collection<AndroidViewModel>>> onFetch(Integer page) {
                 subject = PublishSubject.create();
@@ -205,7 +207,7 @@ public class AndroidViewControllersTest extends AndroidTestCase {
     }
 
     public void testBindCountFragment() throws Exception {
-        AndroidArrayViewModel<AndroidViewModel> arrayViewModel = new AndroidArrayViewModel<>(getContext(), generateViewModels(3));
+        AndroidArrayViewModel<AndroidViewModel> arrayViewModel = new TestAndroidArrayViewModel(getContext(), generateViewModels(3));
         TestArrayFragment fragment = mockFragment(TestArrayFragment.class);
 
         AndroidViewControllers.bindCount(fragment, arrayViewModel);
@@ -214,7 +216,7 @@ public class AndroidViewControllersTest extends AndroidTestCase {
     }
 
     public void testBindLocalizedEmptyMessageFragment() throws Exception {
-        AndroidArrayViewModel<AndroidViewModel> arrayViewModel = new AndroidArrayViewModel<>(getContext(), generateViewModels(3));
+        AndroidArrayViewModel<AndroidViewModel> arrayViewModel = new TestAndroidArrayViewModel(getContext(), generateViewModels(3));
         TestArrayFragment fragment = mockFragment(TestArrayFragment.class);
 
         AndroidViewControllers.bindLocalizedEmptyMessage(fragment, arrayViewModel);
@@ -225,7 +227,7 @@ public class AndroidViewControllersTest extends AndroidTestCase {
     }
 
     public void testBindRefreshingFragment() throws Exception {
-        AndroidFetchedArrayViewModel<AndroidViewModel, Integer> arrayViewModel = new AndroidFetchedArrayViewModel<AndroidViewModel, Integer>(getContext()) {
+        AndroidFetchedArrayViewModel<AndroidViewModel, Integer> arrayViewModel = new TestAndroidFetchedArrayViewModel(getContext()) {
             @Override
             protected Observable<Pair<Integer, Collection<AndroidViewModel>>> onFetch(Integer page) {
                 return Observable.create(new Observable.OnSubscribe<Pair<Integer, Collection<AndroidViewModel>>>() {
@@ -247,7 +249,7 @@ public class AndroidViewControllersTest extends AndroidTestCase {
     }
 
     public void testBindFetchingNextPageFragment() throws Exception {
-        AndroidFetchedArrayViewModel<AndroidViewModel, Integer> arrayViewModel = new AndroidFetchedArrayViewModel<AndroidViewModel, Integer>(getContext()) {
+        AndroidFetchedArrayViewModel<AndroidViewModel, Integer> arrayViewModel = new TestAndroidFetchedArrayViewModel(getContext()) {
             @Override
             protected Observable<Pair<Integer, Collection<AndroidViewModel>>> onFetch(Integer page) {
                 subject = PublishSubject.create();

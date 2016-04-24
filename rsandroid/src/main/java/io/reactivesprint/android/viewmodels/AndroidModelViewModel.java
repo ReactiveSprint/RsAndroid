@@ -21,7 +21,7 @@ import static io.reactivesprint.Preconditions.checkNotNull;
  * <dd>{@link ModelViewModel#getModel()}</dd>
  * </dl>
  */
-public class AndroidModelViewModel<M extends IAndroidModel> extends ModelViewModel<M> implements IAndroidViewModel {
+public abstract class AndroidModelViewModel<M extends IAndroidModel> extends ModelViewModel<M> implements IAndroidViewModel {
     //region Fields
 
     @Nullable
@@ -49,9 +49,7 @@ public class AndroidModelViewModel<M extends IAndroidModel> extends ModelViewMod
 
     //region Properties
 
-    protected ClassLoader getModelClassLoader() {
-        return null;
-    }
+    protected abstract ClassLoader getModelClassLoader();
 
     @Nullable
     @Override
@@ -91,18 +89,6 @@ public class AndroidModelViewModel<M extends IAndroidModel> extends ModelViewMod
 
     //region Parcelable
 
-    public static Creator<AndroidModelViewModel> CREATOR = new Creator<AndroidModelViewModel>() {
-        @Override
-        public AndroidModelViewModel createFromParcel(Parcel source) {
-            return new AndroidModelViewModel(source);
-        }
-
-        @Override
-        public AndroidModelViewModel[] newArray(int size) {
-            return new AndroidModelViewModel[0];
-        }
-    };
-
     @Override
     public int describeContents() {
         return 0;
@@ -110,7 +96,8 @@ public class AndroidModelViewModel<M extends IAndroidModel> extends ModelViewMod
 
     @Override
     public void writeToParcel(Parcel dest, int flags) {
-        dest.writeString(getTitle().getValue().toString());
+        String title = getTitle().getValue() == null ? null : getTitle().getValue().toString();
+        dest.writeString(title);
         dest.writeParcelable(getModel(), flags);
     }
 

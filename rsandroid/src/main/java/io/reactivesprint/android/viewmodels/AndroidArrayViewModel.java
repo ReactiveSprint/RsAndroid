@@ -24,7 +24,7 @@ import static io.reactivesprint.Preconditions.checkNotNull;
  * <dd>{@link IArrayViewModel#getViewModels()}</dd>
  * </dl>
  */
-public class AndroidArrayViewModel<E extends IAndroidViewModel> extends ArrayViewModel<E> implements IAndroidViewModel {
+public abstract class AndroidArrayViewModel<E extends IAndroidViewModel> extends ArrayViewModel<E> implements IAndroidViewModel {
     //region Fields
 
     @Nullable
@@ -52,9 +52,7 @@ public class AndroidArrayViewModel<E extends IAndroidViewModel> extends ArrayVie
 
     //region Properties
 
-    protected ClassLoader getArrayClassLoader() {
-        return null;
-    }
+    protected abstract ClassLoader getArrayClassLoader();
 
     @Nullable
     @Override
@@ -94,18 +92,6 @@ public class AndroidArrayViewModel<E extends IAndroidViewModel> extends ArrayVie
 
     //region Parcelable
 
-    public static Creator<AndroidArrayViewModel> CREATOR = new Creator<AndroidArrayViewModel>() {
-        @Override
-        public AndroidArrayViewModel createFromParcel(Parcel source) {
-            return new AndroidArrayViewModel(source);
-        }
-
-        @Override
-        public AndroidArrayViewModel[] newArray(int size) {
-            return new AndroidArrayViewModel[0];
-        }
-    };
-
     @Override
     public int describeContents() {
         return 0;
@@ -113,8 +99,12 @@ public class AndroidArrayViewModel<E extends IAndroidViewModel> extends ArrayVie
 
     @Override
     public void writeToParcel(Parcel dest, int flags) {
-        dest.writeString(getTitle().getValue().toString());
-        dest.writeString(getLocalizedEmptyMessage().getValue().toString());
+        String title = getTitle().getValue() == null ? null : getTitle().getValue().toString();
+        dest.writeString(title);
+
+        String message = getLocalizedEmptyMessage().getValue() == null ? null : getLocalizedEmptyMessage().getValue().toString();
+        dest.writeString(message);
+
         dest.writeList(getViewModels());
     }
 

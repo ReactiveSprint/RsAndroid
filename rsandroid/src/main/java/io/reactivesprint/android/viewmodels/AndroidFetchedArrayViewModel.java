@@ -58,9 +58,7 @@ public abstract class AndroidFetchedArrayViewModel<E extends IAndroidViewModel, 
 
     //region Properties
 
-    protected ClassLoader getArrayClassLoader() {
-        return null;
-    }
+    protected abstract ClassLoader getArrayClassLoader();
 
     protected ClassLoader getPageClassLoader() {
         return null;
@@ -111,9 +109,14 @@ public abstract class AndroidFetchedArrayViewModel<E extends IAndroidViewModel, 
 
     @Override
     public void writeToParcel(Parcel dest, int flags) {
-        dest.writeString(getTitle().getValue().toString());
-        dest.writeString(getLocalizedEmptyMessage().getValue().toString());
+        String title = getTitle().getValue() == null ? null : getTitle().getValue().toString();
+        dest.writeString(title);
+
+        String message = getLocalizedEmptyMessage().getValue() == null ? null : getLocalizedEmptyMessage().getValue().toString();
+        dest.writeString(message);
+
         dest.writeList(getViewModels());
+
         dest.writeValue(getNextPage());
     }
 
