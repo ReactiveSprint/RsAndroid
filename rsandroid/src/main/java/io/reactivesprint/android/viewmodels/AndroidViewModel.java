@@ -21,7 +21,7 @@ import static io.reactivesprint.Preconditions.checkNotNull;
  * It's an error to use an {@link AndroidViewModel} before {@link Context} is set.
  * <dl>
  * <dt><b>Parcel Written Fields:</b></dt>
- * <dd>{@link IViewModel#getTitle()}</dd>
+ * <dd>{@link IViewModel#title()}</dd>
  * </dl>
  *
  * @see #onContextSet(Context)
@@ -48,7 +48,7 @@ public class AndroidViewModel extends ViewModel implements IAndroidViewModel {
     }
 
     protected AndroidViewModel(Parcel in) {
-        getTitle().setValue(in.readString());
+        title().setValue(in.readString());
     }
 
     //endregion
@@ -112,7 +112,7 @@ public class AndroidViewModel extends ViewModel implements IAndroidViewModel {
 
     @Override
     public void writeToParcel(Parcel dest, int flags) {
-        String title = getTitle().getValue() == null ? null : getTitle().getValue().toString();
+        String title = title().getValue() == null ? null : title().getValue().toString();
         dest.writeString(title);
     }
 

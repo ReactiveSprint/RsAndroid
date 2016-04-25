@@ -78,13 +78,13 @@ public class AndroidViewControllersTest extends AndroidTestCase {
     public void testBindTitleActivity() throws Exception {
         IActivity<AndroidViewModel> activity = mockActivity(IActivity.class);
         Subscription subscription = AndroidViewControllers.bindTitle(activity, viewModel);
-        viewModel.getTitle().setValue("Test");
+        viewModel.title().setValue("Test");
         verify(activity).lifecycle();
         verify(activity).setTitle(null);
         verify(activity).setTitle("Test");
 
         subscription.unsubscribe();
-        viewModel.getTitle().setValue("Test2");
+        viewModel.title().setValue("Test2");
         verifyNoMoreInteractions(activity);
     }
 
@@ -137,13 +137,13 @@ public class AndroidViewControllersTest extends AndroidTestCase {
 
         Subscription subscription = AndroidViewControllers.bindLocalizedEmptyMessage(activity, arrayViewModel);
 
-        arrayViewModel.getLocalizedEmptyMessage().setValue("TestEmptyMessage");
+        arrayViewModel.localizedEmptyMessage().setValue("TestEmptyMessage");
         verify(activity).lifecycle();
         verify(activity).setLocalizedEmptyMessage(null);
         verify(activity).setLocalizedEmptyMessage("TestEmptyMessage");
 
         subscription.unsubscribe();
-        arrayViewModel.getLocalizedEmptyMessage().setValue("NotSent");
+        arrayViewModel.localizedEmptyMessage().setValue("NotSent");
         verifyNoMoreInteractions(activity);
     }
 
@@ -207,13 +207,13 @@ public class AndroidViewControllersTest extends AndroidTestCase {
     public void testBindTitleFragment() throws Exception {
         IFragment<AndroidViewModel> fragment = mockFragment(IFragment.class);
         Subscription subscription = AndroidViewControllers.bindTitle(fragment, viewModel);
-        viewModel.getTitle().setValue("Test");
+        viewModel.title().setValue("Test");
         verify(fragment).lifecycle();
         verify(fragment).setTitle(null);
         verify(fragment).setTitle("Test");
 
         subscription.unsubscribe();
-        viewModel.getTitle().setValue("Test2");
+        viewModel.title().setValue("Test2");
         verifyNoMoreInteractions(fragment);
     }
 
@@ -266,13 +266,13 @@ public class AndroidViewControllersTest extends AndroidTestCase {
 
         Subscription subscription = AndroidViewControllers.bindLocalizedEmptyMessage(fragment, arrayViewModel);
 
-        arrayViewModel.getLocalizedEmptyMessage().setValue("TestEmptyMessage");
+        arrayViewModel.localizedEmptyMessage().setValue("TestEmptyMessage");
         verify(fragment).lifecycle();
         verify(fragment).setLocalizedEmptyMessage(null);
         verify(fragment).setLocalizedEmptyMessage("TestEmptyMessage");
 
         subscription.unsubscribe();
-        arrayViewModel.getLocalizedEmptyMessage().setValue("NotSent");
+        arrayViewModel.localizedEmptyMessage().setValue("NotSent");
         verifyNoMoreInteractions(fragment);
     }
 
@@ -342,7 +342,7 @@ public class AndroidViewControllersTest extends AndroidTestCase {
 
         for (int i = 1; i <= count; i++) {
             AndroidViewModel viewModel = new AndroidViewModel(getContext());
-            viewModel.getTitle().setValue(Integer.toString(i + start));
+            viewModel.title().setValue(Integer.toString(i + start));
             viewModels.add(viewModel);
         }
 

@@ -19,7 +19,7 @@ public class RsAdapter<E extends IAndroidViewModel, AVM extends IArrayViewModel<
 
     @Override
     public int getCount() {
-        return arrayViewModel.getCount().getValue();
+        return arrayViewModel.count().getValue();
     }
 
     @Override

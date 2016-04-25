@@ -15,7 +15,7 @@ public class AndroidArrayViewModelTest extends AndroidTestCase {
         List<AndroidViewModel> viewModels = new ArrayList<>();
         for (int i = 0; i < count; i++) {
             AndroidViewModel viewModel = new AndroidViewModel(getContext());
-            viewModel.getTitle().setValue("Test" + i);
+            viewModel.title().setValue("Test" + i);
             viewModels.add(viewModel);
         }
         return viewModels;
@@ -23,8 +23,8 @@ public class AndroidArrayViewModelTest extends AndroidTestCase {
 
     public void testWriteToParcel() throws Exception {
         AndroidArrayViewModel<AndroidViewModel> viewModel = new TestAndroidArrayViewModel(getContext(), generateViewModels(3));
-        viewModel.getTitle().setValue("TestTitle");
-        viewModel.getLocalizedEmptyMessage().setValue("Message");
+        viewModel.title().setValue("TestTitle");
+        viewModel.localizedEmptyMessage().setValue("Message");
 
         Parcel parcel = Parcel.obtain();
         parcel.writeParcelable(viewModel, 0);
@@ -35,12 +35,12 @@ public class AndroidArrayViewModelTest extends AndroidTestCase {
         parcel.recycle();
 
         assertNotNull(viewModel1);
-        assertEquals("TestTitle", viewModel1.getTitle().getValue());
-        assertEquals("Message", viewModel1.getLocalizedEmptyMessage().getValue());
-        assertEquals((Integer) 3, viewModel1.getCount().getValue());
+        assertEquals("TestTitle", viewModel1.title().getValue());
+        assertEquals("Message", viewModel1.localizedEmptyMessage().getValue());
+        assertEquals((Integer) 3, viewModel1.count().getValue());
 
-        assertEquals("Test0", viewModel.getViewModel(0).getTitle().getValue());
-        assertEquals("Test1", viewModel.getViewModel(1).getTitle().getValue());
-        assertEquals("Test2", viewModel.getViewModel(2).getTitle().getValue());
+        assertEquals("Test0", viewModel.getViewModel(0).title().getValue());
+        assertEquals("Test1", viewModel.getViewModel(1).title().getValue());
+        assertEquals("Test2", viewModel.getViewModel(2).title().getValue());
     }
 }

@@ -11,7 +11,7 @@ public class AndroidViewModelTest extends AndroidTestCase {
     public void testWriteToParcel() throws Exception {
         Parcel parcel = Parcel.obtain();
         AndroidViewModel viewModel = new AndroidViewModel(getContext());
-        viewModel.getTitle().setValue("Test Title1");
+        viewModel.title().setValue("Test Title1");
         parcel.writeParcelable(viewModel, 0);
 
         // Must reset position to 0 for reading
@@ -20,6 +20,6 @@ public class AndroidViewModelTest extends AndroidTestCase {
         parcel.recycle();
 
         assertNotNull(viewModel1);
-        assertEquals("Test Title1", viewModel1.getTitle().getValue());
+        assertEquals("Test Title1", viewModel1.title().getValue());
     }
 }

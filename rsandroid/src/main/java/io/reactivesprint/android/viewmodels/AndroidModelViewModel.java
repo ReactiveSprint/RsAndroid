@@ -7,8 +7,9 @@ import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 
 import io.reactivesprint.android.models.IAndroidModel;
+import io.reactivesprint.viewmodels.ConstantModelViewModel;
+import io.reactivesprint.viewmodels.IModelViewModel;
 import io.reactivesprint.viewmodels.IViewModel;
-import io.reactivesprint.viewmodels.ModelViewModel;
 
 import static io.reactivesprint.Preconditions.checkNotNull;
 
@@ -17,11 +18,11 @@ import static io.reactivesprint.Preconditions.checkNotNull;
  * <p/>
  * <dl>
  * <dt><b>Parcel Written Fields:</b></dt>
- * <dd>{@link IViewModel#getTitle()}</dd>
- * <dd>{@link ModelViewModel#getModel()}</dd>
+ * <dd>{@link IViewModel#title()}</dd>
+ * <dd>{@link IModelViewModel#getModel()}</dd>
  * </dl>
  */
-public abstract class AndroidModelViewModel<M extends IAndroidModel> extends ModelViewModel<M> implements IAndroidViewModel {
+public abstract class AndroidModelViewModel<M extends IAndroidModel> extends ConstantModelViewModel<M> implements IAndroidViewModel {
     //region Fields
 
     @Nullable
@@ -40,7 +41,7 @@ public abstract class AndroidModelViewModel<M extends IAndroidModel> extends Mod
 
     protected AndroidModelViewModel(Parcel in) {
         super();
-        getTitle().setValue(in.readString());
+        title().setValue(in.readString());
         M model = in.readParcelable(getModelClassLoader());
         setModel(model);
     }
@@ -96,7 +97,7 @@ public abstract class AndroidModelViewModel<M extends IAndroidModel> extends Mod
 
     @Override
     public void writeToParcel(Parcel dest, int flags) {
-        String title = getTitle().getValue() == null ? null : getTitle().getValue().toString();
+        String title = title().getValue() == null ? null : title().getValue().toString();
         dest.writeString(title);
         dest.writeParcelable(getModel(), flags);
     }

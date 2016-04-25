@@ -8,7 +8,7 @@ import android.support.annotation.Nullable;
 
 import java.util.Collection;
 
-import io.reactivesprint.viewmodels.ArrayViewModel;
+import io.reactivesprint.viewmodels.ConstantArrayViewModel;
 import io.reactivesprint.viewmodels.IArrayViewModel;
 import io.reactivesprint.viewmodels.IViewModel;
 
@@ -19,12 +19,12 @@ import static io.reactivesprint.Preconditions.checkNotNull;
  * <p/>
  * <dl>
  * <dt><b>Parcel Written Fields:</b></dt>
- * <dd>{@link IViewModel#getTitle()}</dd>
- * <dd>{@link IArrayViewModel#getLocalizedEmptyMessage()}</dd>
+ * <dd>{@link IViewModel#title()}</dd>
+ * <dd>{@link IArrayViewModel#localizedEmptyMessage()}</dd>
  * <dd>{@link IArrayViewModel#getViewModels()}</dd>
  * </dl>
  */
-public abstract class AndroidArrayViewModel<E extends IAndroidViewModel> extends ArrayViewModel<E> implements IAndroidViewModel {
+public abstract class AndroidArrayViewModel<E extends IAndroidViewModel> extends ConstantArrayViewModel<E> implements IAndroidViewModel {
     //region Fields
 
     @Nullable
@@ -43,8 +43,8 @@ public abstract class AndroidArrayViewModel<E extends IAndroidViewModel> extends
 
     @SuppressWarnings("unchecked")
     protected AndroidArrayViewModel(Parcel in) {
-        getTitle().setValue(in.readString());
-        getLocalizedEmptyMessage().setValue(in.readString());
+        title().setValue(in.readString());
+        localizedEmptyMessage().setValue(in.readString());
         setViewModels(in.readArrayList(getArrayClassLoader()));
     }
 
@@ -99,10 +99,10 @@ public abstract class AndroidArrayViewModel<E extends IAndroidViewModel> extends
 
     @Override
     public void writeToParcel(Parcel dest, int flags) {
-        String title = getTitle().getValue() == null ? null : getTitle().getValue().toString();
+        String title = title().getValue() == null ? null : title().getValue().toString();
         dest.writeString(title);
 
-        String message = getLocalizedEmptyMessage().getValue() == null ? null : getLocalizedEmptyMessage().getValue().toString();
+        String message = localizedEmptyMessage().getValue() == null ? null : localizedEmptyMessage().getValue().toString();
         dest.writeString(message);
 
         dest.writeList(getViewModels());

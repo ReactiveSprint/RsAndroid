@@ -20,8 +20,8 @@ import static io.reactivesprint.Preconditions.checkNotNull;
  * <p/>
  * <dl>
  * <dt><b>Parcel Written Fields:</b></dt>
- * <dd>{@link IViewModel#getTitle()}</dd>
- * <dd>{@link IArrayViewModel#getLocalizedEmptyMessage()}</dd>
+ * <dd>{@link IViewModel#title()}</dd>
+ * <dd>{@link IArrayViewModel#localizedEmptyMessage()}</dd>
  * <dd>{@link IArrayViewModel#getViewModels()}</dd>
  * <dd>{@link IFetchedArrayViewModel#getNextPage()}</dd>
  *
@@ -48,8 +48,8 @@ public abstract class AndroidFetchedArrayViewModel<E extends IAndroidViewModel, 
 
     @SuppressWarnings("unchecked")
     protected AndroidFetchedArrayViewModel(Parcel in) {
-        getTitle().setValue(in.readString());
-        getLocalizedEmptyMessage().setValue(in.readString());
+        title().setValue(in.readString());
+        localizedEmptyMessage().setValue(in.readString());
         setViewModels(in.readArrayList(getArrayClassLoader()));
         setNextPage((P) in.readValue(getPageClassLoader()));
     }
@@ -109,10 +109,10 @@ public abstract class AndroidFetchedArrayViewModel<E extends IAndroidViewModel, 
 
     @Override
     public void writeToParcel(Parcel dest, int flags) {
-        String title = getTitle().getValue() == null ? null : getTitle().getValue().toString();
+        String title = title().getValue() == null ? null : title().getValue().toString();
         dest.writeString(title);
 
-        String message = getLocalizedEmptyMessage().getValue() == null ? null : getLocalizedEmptyMessage().getValue().toString();
+        String message = localizedEmptyMessage().getValue() == null ? null : localizedEmptyMessage().getValue().toString();
         dest.writeString(message);
 
         dest.writeList(getViewModels());

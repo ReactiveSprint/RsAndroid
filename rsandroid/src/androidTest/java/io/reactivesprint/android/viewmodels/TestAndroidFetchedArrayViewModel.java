@@ -39,7 +39,7 @@ public class TestAndroidFetchedArrayViewModel extends AndroidFetchedArrayViewMod
         List<AndroidViewModel> viewModels = new ArrayList<>();
         for (int i = 0; i < count; i++) {
             AndroidViewModel viewModel = new AndroidViewModel(getContext());
-            viewModel.getTitle().setValue("Test" + i);
+            viewModel.title().setValue("Test" + i);
             viewModels.add(viewModel);
         }
         return viewModels;

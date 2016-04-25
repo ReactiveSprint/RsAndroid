@@ -11,7 +11,7 @@ android {
 
 dependencies {
     compile fileTree(include: ['*.jar'], dir: 'libs')
-    compile 'com.github.reactivesprint:rsjava:0.1.0'
+    compile 'com.github.reactivesprint:rsjava:0.2.0'
     compile supportAnnotations
     compile rootProject.ext.rxLifecycle
     compile rootProject.ext.rxLifecycleComponents

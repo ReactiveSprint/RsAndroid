@@ -13,7 +13,7 @@ public class AndroidModelViewModelTest extends AndroidTestCase {
     public void testWriteToParcel() throws Exception {
         TestAndroidModel model = new TestAndroidModel("TestModel");
         AndroidModelViewModel<TestAndroidModel> viewModel = new TestAndroidModelViewModel(getContext(), model);
-        viewModel.getTitle().setValue("TestTitle");
+        viewModel.title().setValue("TestTitle");
         Parcel parcel = Parcel.obtain();
         parcel.writeParcelable(viewModel, 0);
 
@@ -24,7 +24,7 @@ public class AndroidModelViewModelTest extends AndroidTestCase {
 
         assertNotNull(viewModel1);
         assertNotNull(viewModel1.getModel());
-        assertEquals("TestTitle", viewModel1.getTitle().getValue());
+        assertEquals("TestTitle", viewModel1.title().getValue());
         assertEquals("TestModel", viewModel1.getModel().getTitle());
     }
 }
