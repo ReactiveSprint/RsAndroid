@@ -54,7 +54,7 @@ public class RsViewTest extends AndroidTestCase {
                                 });
                             }
                         });
-                        RsView.bindCommand(button, command);
+                        Subscription subscription = RsView.bindCommand(button, command);
 
                         assertFalse(button.isEnabled());
                         assertEquals(0, calls);
@@ -76,6 +76,15 @@ public class RsViewTest extends AndroidTestCase {
                         assertEquals(2, calls);
 
                         applySubject.onCompleted();
+                        assertTrue(button.isEnabled());
+                        assertEquals(2, calls);
+
+                        subscription.unsubscribe();
+                        enabledProperty.setValue(false);
+                        assertTrue(button.isEnabled());
+                        assertEquals(2, calls);
+
+                        button.performClick();
                         assertTrue(button.isEnabled());
                         assertEquals(2, calls);
 

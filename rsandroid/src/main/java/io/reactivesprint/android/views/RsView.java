@@ -7,8 +7,10 @@ import com.jakewharton.rxbinding.view.RxView;
 
 import io.reactivesprint.rx.ICommand;
 import rx.Observable;
+import rx.Subscription;
 import rx.functions.Action1;
 import rx.functions.Func1;
+import rx.internal.util.SubscriptionList;
 
 import static io.reactivesprint.Preconditions.checkNotNull;
 import static io.reactivesprint.android.Preconditions.checkUiThread;
@@ -29,9 +31,10 @@ public final class RsView {
      * @param view    View to bind its click.
      * @param command Command to forward clicks to.
      * @param <R>     Type of {@code command} Output.
+     * @return a {@link Subscription} reference with which ends the binding.
      */
-    public static <R> void bindCommand(@NonNull View view, @NonNull final ICommand<Void, R> command) {
-        bindCommand(view, command, (Void) null);
+    public static <R> Subscription bindCommand(@NonNull View view, @NonNull final ICommand<Void, R> command) {
+        return bindCommand(view, command, (Void) null);
     }
 
     /**
@@ -42,9 +45,10 @@ public final class RsView {
      * @param input   Input value which is always used to apply {@code command}.
      * @param <T>     Type of {@code command} Input.
      * @param <R>     Type of {@code command} Output.
+     * @return a {@link Subscription} reference with which ends the binding.
      */
-    public static <T, R> void bindCommand(@NonNull View view, @NonNull ICommand<T, R> command, final T input) {
-        bindCommand(view, command, new Func1<Void, T>() {
+    public static <T, R> Subscription bindCommand(@NonNull View view, @NonNull ICommand<T, R> command, final T input) {
+        return bindCommand(view, command, new Func1<Void, T>() {
             @Override
             public T call(Void aVoid) {
                 return input;
@@ -65,9 +69,10 @@ public final class RsView {
      *                      to other to {@code command} input values.
      * @param <T>           Type of {@code command} Input.
      * @param <R>           Type of {@code command} Output.
+     * @return a {@link Subscription} reference with which ends the binding.
      */
-    public static <T, R> void bindCommand(@NonNull View view, final @NonNull ICommand<T, R> command,
-                                          @NonNull final Func1<Void, T> inputFunction) {
+    public static <T, R> Subscription bindCommand(@NonNull View view, final @NonNull ICommand<T, R> command,
+                                                  @NonNull final Func1<Void, T> inputFunction) {
         checkNotNull(view, "view");
         checkNotNull(command, "command");
         checkNotNull(inputFunction, "inputFunction");
@@ -75,18 +80,21 @@ public final class RsView {
 
         Observable<Void> untilObservable = RxView.detaches(view).take(1);
 
-        command.isEnabled().getObservable()
+        final SubscriptionList subscriptionList = new SubscriptionList();
+        subscriptionList.add(command.isEnabled().getObservable()
                 .takeUntil(untilObservable)
-                .subscribe(RxView.enabled(view));
+                .subscribe(RxView.enabled(view)));
 
-        RxView.clicks(view)
+        subscriptionList.add(RxView.clicks(view)
                 .takeUntil(untilObservable)
                 .takeUntil(command.getNotifications().ignoreElements())
                 .subscribe(new Action1<Void>() {
                     @Override
                     public void call(Void aVoid) {
-                        command.apply(inputFunction.call(aVoid)).subscribe();
+                        subscriptionList.add(command.apply(inputFunction.call(aVoid)).subscribe());
                     }
-                });
+                }));
+
+        return subscriptionList;
     }
 }
