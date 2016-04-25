@@ -30,7 +30,7 @@ public class ConstantArrayViewModel<E extends IViewModel> extends ViewModel impl
 
     private List<E> viewModels;
 
-    private IMutableProperty<CharSequence> localizedEmptyMessage = new MutableProperty<>(null);
+    private final IMutableProperty<CharSequence> localizedEmptyMessage = new MutableProperty<>(null);
 
     //endregion
 
@@ -52,7 +52,7 @@ public class ConstantArrayViewModel<E extends IViewModel> extends ViewModel impl
     //region Iterable
 
     @Override
-    public Iterator<E> iterator() {
+    public final Iterator<E> iterator() {
         synchronized (lock) {
             return viewModels.iterator();
         }
@@ -63,12 +63,12 @@ public class ConstantArrayViewModel<E extends IViewModel> extends ViewModel impl
     //region IArrayViewModel
 
     @Override
-    public IProperty<Integer> count() {
+    public final IProperty<Integer> count() {
         return count;
     }
 
     @Override
-    public IProperty<Boolean> empty() {
+    public final IProperty<Boolean> empty() {
         return empty;
     }
 
@@ -88,14 +88,14 @@ public class ConstantArrayViewModel<E extends IViewModel> extends ViewModel impl
     }
 
     @Override
-    public List<E> getViewModels() {
+    public final List<E> getViewModels() {
         synchronized (lock) {
             return viewModels;
         }
     }
 
     @Override
-    public int indexOf(E element) {
+    public final int indexOf(E element) {
         checkNotNull(element, "element");
         synchronized (lock) {
             return viewModels.indexOf(element);
@@ -103,7 +103,7 @@ public class ConstantArrayViewModel<E extends IViewModel> extends ViewModel impl
     }
 
     @Override
-    public E getViewModel(int index) {
+    public final E getViewModel(int index) {
         synchronized (lock) {
             return viewModels.get(index);
         }
