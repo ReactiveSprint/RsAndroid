@@ -21,6 +21,7 @@ import rx.subjects.PublishSubject;
  */
 public class RsViewTest extends AndroidTestCase {
     int calls;
+    Object sentValue;
     PublishSubject<Void> applySubject;
     MutableProperty<Boolean> enabledProperty;
     Button button;
@@ -30,6 +31,7 @@ public class RsViewTest extends AndroidTestCase {
         super.setUp();
         calls = 0;
         applySubject = null;
+        sentValue = null;
         enabledProperty = new MutableProperty<>(false);
         button = new Button(getContext());
     }
@@ -95,8 +97,80 @@ public class RsViewTest extends AndroidTestCase {
         });
     }
 
-    public void testBindCommandWithInput() throws Exception {
+    public void testBindCommandMap() throws Exception {
+        testOnUiThread(new Func1<Action0, Action0>() {
+            @Override
+            public Action0 call(final Action0 doneAction) {
+                return new Action0() {
+                    @Override
+                    public void call() {
+                        ICommand<Integer, Void> command = new Command<>(enabledProperty, new Func1<Integer, Observable<Void>>() {
+                            @Override
+                            public Observable<Void> call(Integer integer) {
+                                sentValue = integer;
+                                return Observable.defer(new Func0<Observable<Void>>() {
+                                    @Override
+                                    public Observable<Void> call() {
+                                        calls++;
+                                        applySubject = PublishSubject.create();
+                                        return applySubject;
+                                    }
+                                });
+                            }
+                        });
+                        Subscription subscription = RsView.bindCommand(button, command, new Func1<Void, Integer>() {
+                            @Override
+                            public Integer call(Void aVoid) {
+                                if (sentValue == null) {
+                                    return 1;
+                                }
+                                return (Integer) sentValue + 1;
+                            }
+                        });
 
+                        assertFalse(button.isEnabled());
+                        assertEquals(0, calls);
+
+                        enabledProperty.setValue(true);
+                        assertTrue(button.isEnabled());
+                        assertEquals(0, calls);
+
+                        button.performClick();
+                        assertFalse(button.isEnabled());
+                        assertEquals(1, calls);
+                        assertEquals(1, sentValue);
+
+                        applySubject.onCompleted();
+                        assertTrue(button.isEnabled());
+                        assertEquals(1, calls);
+                        assertEquals(1, sentValue);
+
+                        button.performClick();
+                        assertFalse(button.isEnabled());
+                        assertEquals(2, calls);
+                        assertEquals(2, sentValue);
+
+                        applySubject.onCompleted();
+                        assertTrue(button.isEnabled());
+                        assertEquals(2, calls);
+                        assertEquals(2, sentValue);
+
+                        subscription.unsubscribe();
+                        enabledProperty.setValue(false);
+                        assertTrue(button.isEnabled());
+                        assertEquals(2, calls);
+                        assertEquals(2, sentValue);
+
+                        button.performClick();
+                        assertTrue(button.isEnabled());
+                        assertEquals(2, calls);
+                        assertEquals(2, sentValue);
+
+                        doneAction.call();
+                    }
+                };
+            }
+        });
     }
 
     void testOnUiThread(Func1<Action0, Action0> testAction) throws Exception {
