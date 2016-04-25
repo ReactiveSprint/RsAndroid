@@ -35,4 +35,9 @@ public class TestAndroidArrayViewModel extends AndroidArrayViewModel<AndroidView
     protected ClassLoader getArrayClassLoader() {
         return AndroidViewModel.class.getClassLoader();
     }
+
+    @Override
+    public void setViewModels(Collection<AndroidViewModel> viewModels) {
+        super.setViewModels(viewModels);
+    }
 }

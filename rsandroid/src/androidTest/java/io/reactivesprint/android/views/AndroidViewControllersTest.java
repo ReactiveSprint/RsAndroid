@@ -9,7 +9,6 @@ import java.util.ArrayList;
 import java.util.Collection;
 import java.util.List;
 
-import io.reactivesprint.android.viewmodels.AndroidArrayViewModel;
 import io.reactivesprint.android.viewmodels.AndroidFetchedArrayViewModel;
 import io.reactivesprint.android.viewmodels.AndroidViewModel;
 import io.reactivesprint.android.viewmodels.TestAndroidArrayViewModel;
@@ -122,17 +121,21 @@ public class AndroidViewControllersTest extends AndroidTestCase {
     }
 
     public void testBindCountActivity() throws Exception {
-        AndroidArrayViewModel<AndroidViewModel> arrayViewModel = new TestAndroidArrayViewModel(getContext(), generateViewModels(3));
+        TestAndroidArrayViewModel arrayViewModel = new TestAndroidArrayViewModel(getContext(), generateViewModels(3));
         TestArrayActivity activity = mockActivity(TestArrayActivity.class);
 
         Subscription subscription = AndroidViewControllers.bindCount(activity, arrayViewModel);
 
         verify(activity).lifecycle();
         verify(activity).onDataSetChanged();
+
+        subscription.unsubscribe();
+        arrayViewModel.setViewModels(generateViewModels(4));
+        verifyNoMoreInteractions(activity);
     }
 
     public void testBindLocalizedEmptyMessageActivity() throws Exception {
-        AndroidArrayViewModel<AndroidViewModel> arrayViewModel = new TestAndroidArrayViewModel(getContext(), generateViewModels(3));
+        TestAndroidArrayViewModel arrayViewModel = new TestAndroidArrayViewModel(getContext(), generateViewModels(3));
         TestArrayActivity activity = mockActivity(TestArrayActivity.class);
 
         Subscription subscription = AndroidViewControllers.bindLocalizedEmptyMessage(activity, arrayViewModel);
@@ -250,18 +253,21 @@ public class AndroidViewControllersTest extends AndroidTestCase {
     }
 
     public void testBindCountFragment() throws Exception {
-        AndroidArrayViewModel<AndroidViewModel> arrayViewModel = new TestAndroidArrayViewModel(getContext(), generateViewModels(3));
+        TestAndroidArrayViewModel arrayViewModel = new TestAndroidArrayViewModel(getContext(), generateViewModels(3));
         TestArrayFragment fragment = mockFragment(TestArrayFragment.class);
 
         Subscription subscription = AndroidViewControllers.bindCount(fragment, arrayViewModel);
 
         verify(fragment).lifecycle();
         verify(fragment).onDataSetChanged();
+
+        subscription.unsubscribe();
+        arrayViewModel.setViewModels(generateViewModels(4));
         verifyNoMoreInteractions(fragment);
     }
 
     public void testBindLocalizedEmptyMessageFragment() throws Exception {
-        AndroidArrayViewModel<AndroidViewModel> arrayViewModel = new TestAndroidArrayViewModel(getContext(), generateViewModels(3));
+        TestAndroidArrayViewModel arrayViewModel = new TestAndroidArrayViewModel(getContext(), generateViewModels(3));
         TestArrayFragment fragment = mockFragment(TestArrayFragment.class);
 
         Subscription subscription = AndroidViewControllers.bindLocalizedEmptyMessage(fragment, arrayViewModel);
@@ -354,10 +360,10 @@ public class AndroidViewControllersTest extends AndroidTestCase {
     //region Test Interfaces
     /// Interfaces for generic insanity
 
-    private interface TestArrayActivity extends IActivity<AndroidViewModel>, IArrayViewController<AndroidViewModel, AndroidArrayViewModel<AndroidViewModel>> {
+    private interface TestArrayActivity extends IActivity<AndroidViewModel>, IArrayViewController<AndroidViewModel, TestAndroidArrayViewModel> {
     }
 
-    private interface TestArrayFragment extends IFragment<AndroidViewModel>, IArrayViewController<AndroidViewModel, AndroidArrayViewModel<AndroidViewModel>> {
+    private interface TestArrayFragment extends IFragment<AndroidViewModel>, IArrayViewController<AndroidViewModel, TestAndroidArrayViewModel> {
     }
 
     private interface TestFetchedArrayActivity extends IActivity<AndroidViewModel>,
