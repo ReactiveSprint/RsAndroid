@@ -15,7 +15,7 @@ public class MutableArrayViewModel<E extends IViewModel> extends ConstantArrayVi
     }
 
     @Override
-    public final void setViewModels(Collection<E> viewModels) {
+    public void setViewModels(Collection<E> viewModels) {
         super.setViewModels(viewModels);
     }
 }
