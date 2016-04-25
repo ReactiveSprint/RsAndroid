@@ -61,27 +61,27 @@ public class ViewModel implements IViewModel {
     //region Properties
 
     @Override
-    public IMutableProperty<Boolean> getActive() {
+    public IMutableProperty<Boolean> active() {
         return active;
     }
 
     @Override
-    public IMutableProperty<CharSequence> getTitle() {
+    public IMutableProperty<CharSequence> title() {
         return title;
     }
 
     @Override
-    public IProperty<Boolean> isLoading() {
+    public IProperty<Boolean> loading() {
         return loading;
     }
 
     @Override
-    public Observable<IViewModelException> getErrors() {
+    public Observable<IViewModelException> errors() {
         return errors;
     }
 
     @Override
-    public IProperty<Boolean> isEnabled() {
+    public IProperty<Boolean> enabled() {
         return enabled;
     }
 

@@ -13,27 +13,27 @@ public interface IViewModel {
     /**
      * @return Whether the receiver is active.
      */
-    IMutableProperty<Boolean> getActive();
+    IMutableProperty<Boolean> active();
 
     /**
      * @return General title of the receiver.
      */
-    IProperty<CharSequence> getTitle();
+    IProperty<CharSequence> title();
 
     /**
      * @return Whether the receiver is loading.
      */
-    IProperty<Boolean> isLoading();
+    IProperty<Boolean> loading();
 
     /**
      * @return Whether the receiver is enabled.
      */
-    IProperty<Boolean> isEnabled();
+    IProperty<Boolean> enabled();
 
     /**
      * An Observable of all errors that occur in the receiver.
      */
-    Observable<IViewModelException> getErrors();
+    Observable<IViewModelException> errors();
 
     /**
      * Binds {@code loadingObservable} to the receiver.

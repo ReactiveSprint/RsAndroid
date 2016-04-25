@@ -11,7 +11,7 @@ public interface IFetchedArrayViewController
         <VM extends IViewModel, AVM extends IFetchedArrayViewModel>
         extends IArrayViewController<VM, AVM> {
     /**
-     * Binds {@link IFetchedArrayViewModel#isRefreshing()} to {@link #presentRefreshing(boolean)}
+     * Binds {@link IFetchedArrayViewModel#refreshing()} to {@link #presentRefreshing(boolean)}
      */
     void bindRefreshing(AVM arrayViewModel);
 
@@ -21,7 +21,7 @@ public interface IFetchedArrayViewController
     void presentRefreshing(boolean refreshing);
 
     /**
-     * Binds {@link IFetchedArrayViewModel#isFetchingNextPage()} to {@link #presentFetchingNextPage(boolean)}
+     * Binds {@link IFetchedArrayViewModel#fetchingNextPage()} to {@link #presentFetchingNextPage(boolean)}
      */
     void bindFetchingNextPage(AVM arrayViewModel);
 

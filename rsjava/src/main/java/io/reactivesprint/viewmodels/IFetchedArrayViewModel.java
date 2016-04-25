@@ -17,7 +17,7 @@ public interface IFetchedArrayViewModel<E extends IViewModel, P, I, R> extends I
     /**
      * @return Whether the receiver is refreshing.
      */
-    IProperty<Boolean> isRefreshing();
+    IProperty<Boolean> refreshing();
 
     /**
      * @return An object representing next page.
@@ -27,7 +27,7 @@ public interface IFetchedArrayViewModel<E extends IViewModel, P, I, R> extends I
     /**
      * @return Whether the receiver is fetching next page.
      */
-    IProperty<Boolean> isFetchingNextPage();
+    IProperty<Boolean> fetchingNextPage();
 
     /**
      * @return Next Page

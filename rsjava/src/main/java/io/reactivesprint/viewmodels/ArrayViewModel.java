@@ -46,13 +46,13 @@ public class ArrayViewModel<E extends IViewModel> extends ViewModel implements I
 
     public ArrayViewModel(Collection<E> viewModels, String title) {
         this(viewModels);
-        getTitle().setValue(title);
+        title().setValue(title);
     }
 
     public ArrayViewModel(Collection<E> viewModels, String title, String localizedEmptyMessage) {
         this(viewModels);
-        getTitle().setValue(title);
-        getLocalizedEmptyMessage().setValue(localizedEmptyMessage);
+        title().setValue(title);
+        localizedEmptyMessage().setValue(localizedEmptyMessage);
     }
 
     //endregion
@@ -69,17 +69,17 @@ public class ArrayViewModel<E extends IViewModel> extends ViewModel implements I
     //region IArrayViewModel
 
     @Override
-    public IProperty<Integer> getCount() {
+    public IProperty<Integer> count() {
         return count;
     }
 
     @Override
-    public IProperty<Boolean> isEmpty() {
+    public IProperty<Boolean> empty() {
         return empty;
     }
 
     @Override
-    public IMutableProperty<CharSequence> getLocalizedEmptyMessage() {
+    public IMutableProperty<CharSequence> localizedEmptyMessage() {
         return localizedEmptyMessage;
     }
 

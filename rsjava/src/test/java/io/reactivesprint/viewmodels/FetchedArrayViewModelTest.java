@@ -63,93 +63,93 @@ public class FetchedArrayViewModelTest extends TestCase {
 
         viewModel.getFetchCommand().apply().subscribe(createSubscriber());
 
-        assertThat(viewModel.isLoading().getValue()).isTrue();
-        assertThat(viewModel.isRefreshing().getValue()).isTrue();
-        assertThat(viewModel.isFetchingNextPage().getValue()).isFalse();
+        assertThat(viewModel.loading().getValue()).isTrue();
+        assertThat(viewModel.refreshing().getValue()).isTrue();
+        assertThat(viewModel.fetchingNextPage().getValue()).isFalse();
 
         subject.onNext(new Pair<Integer, Collection<ViewModel>>(null, viewModels));
         subject.onCompleted();
 
-        assertThat(viewModel.getCount().getValue()).isEqualTo(4);
+        assertThat(viewModel.count().getValue()).isEqualTo(4);
         assertThat(viewModel.getViewModels()).hasSameElementsAs(viewModels);
         assertThat(receivedViewModels).hasSameElementsAs(viewModels);
-        assertThat(viewModel.isLoading().getValue()).isFalse();
-        assertThat(viewModel.isRefreshing().getValue()).isFalse();
-        assertThat(viewModel.isFetchingNextPage().getValue()).isFalse();
+        assertThat(viewModel.loading().getValue()).isFalse();
+        assertThat(viewModel.refreshing().getValue()).isFalse();
+        assertThat(viewModel.fetchingNextPage().getValue()).isFalse();
 
         completed = false;
 
         viewModel.getFetchCommand().apply().subscribe(createSubscriber());
 
-        assertThat(viewModel.isLoading().getValue()).isTrue();
-        assertThat(viewModel.isRefreshing().getValue()).isTrue();
-        assertThat(viewModel.isFetchingNextPage().getValue()).isFalse();
+        assertThat(viewModel.loading().getValue()).isTrue();
+        assertThat(viewModel.refreshing().getValue()).isTrue();
+        assertThat(viewModel.fetchingNextPage().getValue()).isFalse();
 
         subject.onNext(new Pair<Integer, Collection<ViewModel>>(null, viewModels));
         subject.onCompleted();
 
-        assertThat(viewModel.getCount().getValue()).isEqualTo(4);
+        assertThat(viewModel.count().getValue()).isEqualTo(4);
         assertThat(viewModel.getViewModels()).containsExactlyElementsOf(viewModels);
-        assertThat(viewModel.isLoading().getValue()).isFalse();
-        assertThat(viewModel.isRefreshing().getValue()).isFalse();
-        assertThat(viewModel.isFetchingNextPage().getValue()).isFalse();
+        assertThat(viewModel.loading().getValue()).isFalse();
+        assertThat(viewModel.refreshing().getValue()).isFalse();
+        assertThat(viewModel.fetchingNextPage().getValue()).isFalse();
     }
 
     public void testFetchWithPagination() throws Exception {
         Collection<ViewModel> viewModels = generateViewModels(4);
         viewModel.getFetchCommand().apply().subscribe(createSubscriber());
 
-        assertThat(viewModel.isRefreshing().getValue()).isTrue();
-        assertThat(viewModel.isLoading().getValue()).isTrue();
-        assertThat(viewModel.isFetchingNextPage().getValue()).isFalse();
+        assertThat(viewModel.refreshing().getValue()).isTrue();
+        assertThat(viewModel.loading().getValue()).isTrue();
+        assertThat(viewModel.fetchingNextPage().getValue()).isFalse();
 
         subject.onNext(new Pair<>(1, viewModels));
         subject.onCompleted();
 
-        assertThat(viewModel.getCount().getValue()).isEqualTo(4);
+        assertThat(viewModel.count().getValue()).isEqualTo(4);
         assertThat(viewModel.getViewModels()).hasSameElementsAs(viewModels);
         assertThat(receivedViewModels).hasSameElementsAs(viewModels);
-        assertThat(viewModel.isLoading().getValue()).isFalse();
-        assertThat(viewModel.isRefreshing().getValue()).isFalse();
-        assertThat(viewModel.isFetchingNextPage().getValue()).isFalse();
+        assertThat(viewModel.loading().getValue()).isFalse();
+        assertThat(viewModel.refreshing().getValue()).isFalse();
+        assertThat(viewModel.fetchingNextPage().getValue()).isFalse();
 
         /**
          * Fetching next page
          */
         viewModel.getFetchCommand().apply().subscribe(createSubscriber());
 
-        assertThat(viewModel.isRefreshing().getValue()).isFalse();
-        assertThat(viewModel.isLoading().getValue()).isTrue();
-        assertThat(viewModel.isFetchingNextPage().getValue()).isTrue();
+        assertThat(viewModel.refreshing().getValue()).isFalse();
+        assertThat(viewModel.loading().getValue()).isTrue();
+        assertThat(viewModel.fetchingNextPage().getValue()).isTrue();
 
         viewModels = generateViewModels(4, 4);
         subject.onNext(new Pair<>(2, viewModels));
         subject.onCompleted();
 
-        assertThat(viewModel.getCount().getValue()).isEqualTo(8);
+        assertThat(viewModel.count().getValue()).isEqualTo(8);
         assertThat(receivedViewModels).hasSameElementsAs(viewModels);
-        assertThat(viewModel.isLoading().getValue()).isFalse();
-        assertThat(viewModel.isRefreshing().getValue()).isFalse();
-        assertThat(viewModel.isFetchingNextPage().getValue()).isFalse();
+        assertThat(viewModel.loading().getValue()).isFalse();
+        assertThat(viewModel.refreshing().getValue()).isFalse();
+        assertThat(viewModel.fetchingNextPage().getValue()).isFalse();
 
         /**
          * Fetch If Needed Command
          */
         viewModel.getFetchIfNeededCommand().apply().subscribe(createSubscriber());
 
-        assertThat(viewModel.isRefreshing().getValue()).isFalse();
-        assertThat(viewModel.isLoading().getValue()).isTrue();
-        assertThat(viewModel.isFetchingNextPage().getValue()).isTrue();
+        assertThat(viewModel.refreshing().getValue()).isFalse();
+        assertThat(viewModel.loading().getValue()).isTrue();
+        assertThat(viewModel.fetchingNextPage().getValue()).isTrue();
 
         viewModels = generateViewModels(4, 8);
         subject.onNext(new Pair<>(3, viewModels));
         subject.onCompleted();
 
-        assertThat(viewModel.getCount().getValue()).isEqualTo(12);
+        assertThat(viewModel.count().getValue()).isEqualTo(12);
         assertThat(receivedViewModels).hasSameElementsAs(viewModels);
-        assertThat(viewModel.isLoading().getValue()).isFalse();
-        assertThat(viewModel.isRefreshing().getValue()).isFalse();
-        assertThat(viewModel.isFetchingNextPage().getValue()).isFalse();
+        assertThat(viewModel.loading().getValue()).isFalse();
+        assertThat(viewModel.refreshing().getValue()).isFalse();
+        assertThat(viewModel.fetchingNextPage().getValue()).isFalse();
 
         /**
          * Refresh
@@ -158,18 +158,18 @@ public class FetchedArrayViewModelTest extends TestCase {
         viewModels = generateViewModels(4);
         viewModel.getFetchCommand().apply().subscribe(createSubscriber());
 
-        assertThat(viewModel.isRefreshing().getValue()).isTrue();
-        assertThat(viewModel.isLoading().getValue()).isTrue();
-        assertThat(viewModel.isFetchingNextPage().getValue()).isFalse();
+        assertThat(viewModel.refreshing().getValue()).isTrue();
+        assertThat(viewModel.loading().getValue()).isTrue();
+        assertThat(viewModel.fetchingNextPage().getValue()).isFalse();
 
         subject.onNext(new Pair<>(1, viewModels));
         subject.onCompleted();
 
-        assertThat(viewModel.getCount().getValue()).isEqualTo(4);
+        assertThat(viewModel.count().getValue()).isEqualTo(4);
         assertThat(viewModel.getViewModels()).hasSameElementsAs(viewModels);
         assertThat(receivedViewModels).hasSameElementsAs(viewModels);
-        assertThat(viewModel.isLoading().getValue()).isFalse();
-        assertThat(viewModel.isRefreshing().getValue()).isFalse();
-        assertThat(viewModel.isFetchingNextPage().getValue()).isFalse();
+        assertThat(viewModel.loading().getValue()).isFalse();
+        assertThat(viewModel.refreshing().getValue()).isFalse();
+        assertThat(viewModel.fetchingNextPage().getValue()).isFalse();
     }
 }

@@ -93,17 +93,17 @@ public abstract class FetchedArrayViewModel<E extends IViewModel, P> extends Vie
     //region IArrayViewModel
 
     @Override
-    public IProperty<Integer> getCount() {
+    public IProperty<Integer> count() {
         return count;
     }
 
     @Override
-    public IProperty<Boolean> isEmpty() {
+    public IProperty<Boolean> empty() {
         return empty;
     }
 
     @Override
-    public IMutableProperty<CharSequence> getLocalizedEmptyMessage() {
+    public IMutableProperty<CharSequence> localizedEmptyMessage() {
         return localizedEmptyMessage;
     }
 
@@ -132,7 +132,7 @@ public abstract class FetchedArrayViewModel<E extends IViewModel, P> extends Vie
     //region IFetchedArrayViewModel
 
     @Override
-    public IProperty<Boolean> isRefreshing() {
+    public IProperty<Boolean> refreshing() {
         return new Property<>(refreshing);
     }
 
@@ -146,7 +146,7 @@ public abstract class FetchedArrayViewModel<E extends IViewModel, P> extends Vie
     }
 
     @Override
-    public IProperty<Boolean> isFetchingNextPage() {
+    public IProperty<Boolean> fetchingNextPage() {
         return new Property<>(fetchingNextPage);
     }
 
@@ -175,7 +175,7 @@ public abstract class FetchedArrayViewModel<E extends IViewModel, P> extends Vie
     //region Create Commands
 
     protected ICommand<Void, Collection<E>> createRefreshCommand() {
-        Command<Void, Collection<E>> command = new Command<>(isEnabled(), new Func1<Void, Observable<Collection<E>>>() {
+        Command<Void, Collection<E>> command = new Command<>(enabled(), new Func1<Void, Observable<Collection<E>>>() {
             @Override
             public Observable<Collection<E>> call(Void aVoid) {
                 refreshing.setValue(true);
@@ -189,7 +189,7 @@ public abstract class FetchedArrayViewModel<E extends IViewModel, P> extends Vie
     }
 
     protected ICommand<Void, Collection<E>> createFetchCommand() {
-        Command<Void, Collection<E>> command = new Command<>(isEnabled(), new Func1<Void, Observable<Collection<E>>>() {
+        Command<Void, Collection<E>> command = new Command<>(enabled(), new Func1<Void, Observable<Collection<E>>>() {
             @Override
             public Observable<Collection<E>> call(Void aVoid) {
                 if (nextPage != null) {
@@ -207,7 +207,7 @@ public abstract class FetchedArrayViewModel<E extends IViewModel, P> extends Vie
     }
 
     protected ICommand<Void, Collection<E>> createFetchIfNeededCommand() {
-        return new Command<>(isEnabled(), new Func1<Void, Observable<Collection<E>>>() {
+        return new Command<>(enabled(), new Func1<Void, Observable<Collection<E>>>() {
             @Override
             public Observable<Collection<E>> call(Void input) {
                 if (getNextPage() != null && hasNextPage().getValue()) {

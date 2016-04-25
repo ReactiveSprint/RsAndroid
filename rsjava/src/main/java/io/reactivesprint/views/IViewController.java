@@ -9,7 +9,7 @@ import io.reactivesprint.viewmodels.IViewModelException;
  */
 public interface IViewController<VM extends IViewModel> extends IView<VM> {
     /**
-     * Binds {@link IViewModel#getTitle()} to the receiver title.
+     * Binds {@link IViewModel#title()} to the receiver title.
      */
     void bindTitle(VM viewModel);
 
@@ -19,7 +19,7 @@ public interface IViewController<VM extends IViewModel> extends IView<VM> {
     void setTitle(CharSequence title);
 
     /**
-     * Binds {@link IViewModel#isLoading()} to {@link #presentLoading(boolean)}
+     * Binds {@link IViewModel#loading()} to {@link #presentLoading(boolean)}
      */
     void bindLoading(VM viewModel);
 
@@ -29,7 +29,7 @@ public interface IViewController<VM extends IViewModel> extends IView<VM> {
     void presentLoading(boolean loading);
 
     /**
-     * Binds {@link IViewModel#getErrors()} to {@link #presentError(IViewModelException)}
+     * Binds {@link IViewModel#errors()} to {@link #presentError(IViewModelException)}
      */
     void bindErrors(VM viewModel);
 

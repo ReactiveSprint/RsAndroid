@@ -33,7 +33,7 @@ public class ViewModelTest extends TestCase {
     }
 
     public void testTitle() {
-        assertThat(viewModel.getTitle().getValue()).isEqualTo(TEST_TITLE);
+        assertThat(viewModel.title().getValue()).isEqualTo(TEST_TITLE);
     }
 
     Subscriber<IViewModelException> createErrorsSubscriber() {
@@ -58,7 +58,7 @@ public class ViewModelTest extends TestCase {
     public void testBindErrorsFromObservable() throws Exception {
         PublishSubject<IViewModelException> subject = PublishSubject.create();
 
-        viewModel.getErrors().subscribe(createErrorsSubscriber());
+        viewModel.errors().subscribe(createErrorsSubscriber());
 
         viewModel.bindErrors(subject);
 
@@ -79,7 +79,7 @@ public class ViewModelTest extends TestCase {
 
         viewModel.bindErrors(subject);
 
-        viewModel.getErrors().subscribe(createErrorsSubscriber());
+        viewModel.errors().subscribe(createErrorsSubscriber());
 
         assertThat(receivedThrowable).isNull();
 
@@ -101,7 +101,7 @@ public class ViewModelTest extends TestCase {
             }
         });
 
-        viewModel.getErrors().subscribe(createErrorsSubscriber());
+        viewModel.errors().subscribe(createErrorsSubscriber());
 
         viewModel.bindCommand(command);
 
@@ -132,35 +132,35 @@ public class ViewModelTest extends TestCase {
         viewModel.bindLoading(otherSubject);
 
         //Binding should not affect initial state.
-        assertThat(viewModel.isLoading().getValue()).isFalse();
-        assertThat(viewModel.isEnabled().getValue()).isTrue();
+        assertThat(viewModel.loading().getValue()).isFalse();
+        assertThat(viewModel.enabled().getValue()).isTrue();
 
         subject.onNext(true);
-        assertThat(viewModel.isLoading().getValue()).isTrue();
-        assertThat(viewModel.isEnabled().getValue()).isFalse();
+        assertThat(viewModel.loading().getValue()).isTrue();
+        assertThat(viewModel.enabled().getValue()).isFalse();
 
         //Sending true again should no do anything
         subject.onNext(true);
-        assertThat(viewModel.isLoading().getValue()).isTrue();
-        assertThat(viewModel.isEnabled().getValue()).isFalse();
+        assertThat(viewModel.loading().getValue()).isTrue();
+        assertThat(viewModel.enabled().getValue()).isFalse();
 
         //Sending false should stop loading
         subject.onNext(false);
-        assertThat(viewModel.isLoading().getValue()).isFalse();
-        assertThat(viewModel.isEnabled().getValue()).isTrue();
+        assertThat(viewModel.loading().getValue()).isFalse();
+        assertThat(viewModel.enabled().getValue()).isTrue();
 
         otherSubject.onNext(true);
-        assertThat(viewModel.isLoading().getValue()).isTrue();
-        assertThat(viewModel.isEnabled().getValue()).isFalse();
+        assertThat(viewModel.loading().getValue()).isTrue();
+        assertThat(viewModel.enabled().getValue()).isFalse();
 
         //Sending false from first subject, should still be loading
         subject.onNext(false);
-        assertThat(viewModel.isLoading().getValue()).isTrue();
-        assertThat(viewModel.isEnabled().getValue()).isFalse();
+        assertThat(viewModel.loading().getValue()).isTrue();
+        assertThat(viewModel.enabled().getValue()).isFalse();
 
         otherSubject.onNext(false);
-        assertThat(viewModel.isLoading().getValue()).isFalse();
-        assertThat(viewModel.isEnabled().getValue()).isTrue();
+        assertThat(viewModel.loading().getValue()).isFalse();
+        assertThat(viewModel.enabled().getValue()).isTrue();
     }
 
     public void testBindLoadingFromObservableWithError() throws Exception {
@@ -169,13 +169,13 @@ public class ViewModelTest extends TestCase {
         viewModel.bindLoading(subject);
 
         subject.onNext(true);
-        assertThat(viewModel.isLoading().getValue()).isTrue();
-        assertThat(viewModel.isEnabled().getValue()).isFalse();
+        assertThat(viewModel.loading().getValue()).isTrue();
+        assertThat(viewModel.enabled().getValue()).isFalse();
 
         //unexpected loading error should stop loading
         subject.onError(new RuntimeException());
-        assertThat(viewModel.isLoading().getValue()).isFalse();
-        assertThat(viewModel.isEnabled().getValue()).isTrue();
+        assertThat(viewModel.loading().getValue()).isFalse();
+        assertThat(viewModel.enabled().getValue()).isTrue();
     }
 
     public void testBindLoadingFromObservableWithCompleted() throws Exception {
@@ -184,26 +184,26 @@ public class ViewModelTest extends TestCase {
         viewModel.bindLoading(subject);
 
         subject.onNext(true);
-        assertThat(viewModel.isLoading().getValue()).isTrue();
-        assertThat(viewModel.isEnabled().getValue()).isFalse();
+        assertThat(viewModel.loading().getValue()).isTrue();
+        assertThat(viewModel.enabled().getValue()).isFalse();
 
         //unexpected loading onCompleted should stop loading
         subject.onCompleted();
-        assertThat(viewModel.isLoading().getValue()).isFalse();
-        assertThat(viewModel.isEnabled().getValue()).isTrue();
+        assertThat(viewModel.loading().getValue()).isFalse();
+        assertThat(viewModel.enabled().getValue()).isTrue();
     }
 
     public void testBindLoadingFromCommand() throws Exception {
         final PublishSubject<Void> subject = PublishSubject.create();
         final PublishSubject<Void> otherSubject = PublishSubject.create();
-        final Command<Void, Void> command = new Command<>(viewModel.isEnabled(), new Func1<Void, Observable<Void>>() {
+        final Command<Void, Void> command = new Command<>(viewModel.enabled(), new Func1<Void, Observable<Void>>() {
             @Override
             public Observable<Void> call(Void aVoid) {
                 return subject;
             }
         });
 
-        final Command<Void, Void> otherCommand = new Command<Void, Void>(viewModel.isEnabled(), new Func1<Void, Observable<Void>>() {
+        final Command<Void, Void> otherCommand = new Command<Void, Void>(viewModel.enabled(), new Func1<Void, Observable<Void>>() {
             @Override
             public Observable<Void> call(Void aVoid) {
                 return otherSubject;
@@ -214,32 +214,32 @@ public class ViewModelTest extends TestCase {
         viewModel.bindCommand(otherCommand);
 
         //after binding, nothing should change
-        assertThat(viewModel.isLoading().getValue()).isFalse();
-        assertThat(viewModel.isEnabled().getValue()).isTrue();
+        assertThat(viewModel.loading().getValue()).isFalse();
+        assertThat(viewModel.enabled().getValue()).isTrue();
         assertThat(command.isEnabled().getValue()).isTrue();
         assertThat(otherCommand.isEnabled().getValue()).isTrue();
 
         command.apply().subscribe();
-        assertThat(viewModel.isLoading().getValue()).isTrue();
-        assertThat(viewModel.isEnabled().getValue()).isFalse();
+        assertThat(viewModel.loading().getValue()).isTrue();
+        assertThat(viewModel.enabled().getValue()).isFalse();
         assertThat(command.isEnabled().getValue()).isFalse();
         assertThat(otherCommand.isEnabled().getValue()).isFalse();
 
         subject.onCompleted();
-        assertThat(viewModel.isLoading().getValue()).isFalse();
-        assertThat(viewModel.isEnabled().getValue()).isTrue();
+        assertThat(viewModel.loading().getValue()).isFalse();
+        assertThat(viewModel.enabled().getValue()).isTrue();
         assertThat(command.isEnabled().getValue()).isTrue();
         assertThat(otherCommand.isEnabled().getValue()).isTrue();
 
         otherCommand.apply().subscribe();
-        assertThat(viewModel.isLoading().getValue()).isTrue();
-        assertThat(viewModel.isEnabled().getValue()).isFalse();
+        assertThat(viewModel.loading().getValue()).isTrue();
+        assertThat(viewModel.enabled().getValue()).isFalse();
         assertThat(command.isEnabled().getValue()).isFalse();
         assertThat(otherCommand.isEnabled().getValue()).isFalse();
 
         otherSubject.onCompleted();
-        assertThat(viewModel.isLoading().getValue()).isFalse();
-        assertThat(viewModel.isEnabled().getValue()).isTrue();
+        assertThat(viewModel.loading().getValue()).isFalse();
+        assertThat(viewModel.enabled().getValue()).isTrue();
         assertThat(command.isEnabled().getValue()).isTrue();
         assertThat(otherCommand.isEnabled().getValue()).isTrue();
     }

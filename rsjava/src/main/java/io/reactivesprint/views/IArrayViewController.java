@@ -15,7 +15,7 @@ public interface IArrayViewController<VM extends IViewModel, AVM extends IArrayV
     AVM getArrayViewModel();
 
     /**
-     * Binds {@link IArrayViewModel#getCount()} to {@link #onDataSetChanged()}
+     * Binds {@link IArrayViewModel#count()} to {@link #onDataSetChanged()}
      */
     void bindCount(AVM arrayViewModel);
 
@@ -25,7 +25,7 @@ public interface IArrayViewController<VM extends IViewModel, AVM extends IArrayV
     void onDataSetChanged();
 
     /**
-     * Binds {@link IArrayViewModel#getLocalizedEmptyMessage()} to {@link #setLocalizedEmptyMessage(CharSequence)}
+     * Binds {@link IArrayViewModel#localizedEmptyMessage()} to {@link #setLocalizedEmptyMessage(CharSequence)}
      */
     void bindLocalizedEmptyMessage(AVM arrayViewModel);
 

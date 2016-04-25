@@ -19,17 +19,17 @@ public interface IArrayViewModel<E extends IViewModel> extends IViewModel, Itera
     /**
      * @return Count of wrapped elements.
      */
-    IProperty<Integer> getCount();
+    IProperty<Integer> count();
 
     /**
      * @return true if Array is empty, false otherwise.
      */
-    IProperty<Boolean> isEmpty();
+    IProperty<Boolean> empty();
 
     /**
      * @return localized message to be used when the array is empty.
      */
-    IProperty<CharSequence> getLocalizedEmptyMessage();
+    IProperty<CharSequence> localizedEmptyMessage();
 
     /**
      * Access the indexth element.

@@ -27,20 +27,20 @@ public class ArrayViewModelTest extends TestCase {
     public void testDefaultValues() throws Exception {
         arrayViewModel = new ArrayViewModel<>(Collections.<ViewModel>emptyList());
 
-        assertThat(arrayViewModel.getTitle().getValue()).isNull();
-        assertThat(arrayViewModel.getLocalizedEmptyMessage().getValue()).isNull();
-        assertThat(arrayViewModel.getCount().getValue()).isZero();
-        assertThat(arrayViewModel.isEmpty().getValue()).isTrue();
+        assertThat(arrayViewModel.title().getValue()).isNull();
+        assertThat(arrayViewModel.localizedEmptyMessage().getValue()).isNull();
+        assertThat(arrayViewModel.count().getValue()).isZero();
+        assertThat(arrayViewModel.empty().getValue()).isTrue();
     }
 
     public void testGetViewModel() throws Exception {
         arrayViewModel = new ArrayViewModel<>(viewModels);
 
-        assertThat(arrayViewModel.getViewModel(0).getTitle().getValue())
+        assertThat(arrayViewModel.getViewModel(0).title().getValue())
                 .isEqualTo("1");
-        assertThat(arrayViewModel.getViewModel(1).getTitle().getValue())
+        assertThat(arrayViewModel.getViewModel(1).title().getValue())
                 .isEqualTo("2");
-        assertThat(arrayViewModel.getViewModel(2).getTitle().getValue())
+        assertThat(arrayViewModel.getViewModel(2).title().getValue())
                 .isEqualTo("3");
     }
 
