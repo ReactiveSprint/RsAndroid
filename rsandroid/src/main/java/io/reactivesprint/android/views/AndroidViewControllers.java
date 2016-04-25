@@ -121,19 +121,6 @@ public final class AndroidViewControllers {
 
     //region Fragments
 
-    public static <VM extends IAndroidViewModel, F extends Fragment & IFragment<VM>>
-    F instantiateFragment(Class<F> fragmentClass, VM viewModel) {
-        try {
-            F fragment = fragmentClass.newInstance();
-            Bundle bundle = new Bundle();
-            onSaveInstanceState(viewModel, bundle);
-            fragment.setArguments(bundle);
-            return fragment;
-        } catch (Exception e) {
-            throw new RuntimeException(e);
-        }
-    }
-
     public static <VM extends IAndroidViewModel, T> Subscription bind(final IFragment<VM> fragment, Observable<T> observable, Action1<T> bindAction) {
         return observable.compose(RxLifecycle.<T>bindFragment(fragment.lifecycle()))
                 .subscribe(bindAction);
