@@ -9,14 +9,14 @@ import static io.reactivesprint.Preconditions.checkNotNull;
  * <p/>
  * Implementation of {@link IModelViewModel} which has a constant {@link IModel}.
  */
-public class ConstantModelViewModel<M extends IModel> extends ViewModel implements IModelViewModel<M> {
+public class ModelViewModel<M extends IModel> extends ViewModel implements IModelViewModel<M> {
     private M model;
 
-    protected ConstantModelViewModel() {
+    protected ModelViewModel() {
 
     }
 
-    public ConstantModelViewModel(M model) {
+    public ModelViewModel(M model) {
         setModel(model);
     }
 

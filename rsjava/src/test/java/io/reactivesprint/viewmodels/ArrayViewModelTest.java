@@ -11,7 +11,7 @@ import static org.assertj.core.api.Assertions.assertThat;
 /**
  * Created by Ahmad Baraka on 4/7/16.
  */
-public class ConstantArrayViewModelTest extends TestCase {
+public class ArrayViewModelTest extends TestCase {
     MutableArrayViewModel<ViewModel> mutableArrayViewModel;
     List<ViewModel> viewModels;
     static final String TEST_TITLE = "TestTitle";

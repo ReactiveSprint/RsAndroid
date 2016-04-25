@@ -4,9 +4,9 @@ import java.util.Collection;
 
 /**
  * Created by Ahmad Baraka on 4/1/16.
- * {@link ConstantArrayViewModel} implementation that allows {@link #setViewModels(Collection)}
+ * {@link ArrayViewModel} implementation that allows {@link #setViewModels(Collection)}
  */
-public class MutableArrayViewModel<E extends IViewModel> extends ConstantArrayViewModel<E> {
+public class MutableArrayViewModel<E extends IViewModel> extends ArrayViewModel<E> {
     public MutableArrayViewModel() {
     }
 

@@ -19,7 +19,7 @@ import static io.reactivesprint.Preconditions.checkNotNull;
  * Created by Ahmad Baraka on 4/25/16.
  * {@link IArrayViewModel} implementation that has a constant {@code List<ViewModel>}
  */
-public class ConstantArrayViewModel<E extends IViewModel> extends ViewModel implements IArrayViewModel<E> {
+public class ArrayViewModel<E extends IViewModel> extends ViewModel implements IArrayViewModel<E> {
     //region Fields
 
     private final Object lock = new Object();
@@ -36,12 +36,12 @@ public class ConstantArrayViewModel<E extends IViewModel> extends ViewModel impl
 
     //region Constructors
 
-    protected ConstantArrayViewModel() {
+    protected ArrayViewModel() {
         empty = new Property<>(count.getValue() <= 0, count.getObservable().skip(1)
                 .distinctUntilChanged().map(new Func1Comparable<>(Func1Comparator.LESS_THAN_OR_EQUAL, 0)));
     }
 
-    public ConstantArrayViewModel(Collection<E> viewModels) {
+    public ArrayViewModel(Collection<E> viewModels) {
         this();
         checkNotNull(viewModels, "viewModels");
         setViewModels(viewModels);

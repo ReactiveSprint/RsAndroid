@@ -18,7 +18,7 @@ import rx.functions.Func1;
  * Created by Ahmad Baraka on 4/2/16.
  * An implementation of {@link IFetchedArrayViewModel} that fetches ViewModels by calling {@link #onFetch(Object)}
  */
-public abstract class FetchedArrayViewModel<E extends IViewModel, P> extends ConstantArrayViewModel<E>
+public abstract class FetchedArrayViewModel<E extends IViewModel, P> extends ArrayViewModel<E>
         implements IFetchedArrayViewModel<E, P, Void, Collection<E>> {
     //region Fields
 

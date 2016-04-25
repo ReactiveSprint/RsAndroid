@@ -5,9 +5,9 @@ import io.reactivesprint.models.IModel;
 /**
  * Created by Ahmad Baraka on 4/25/16.
  * <p/>
- * {@link ConstantModelViewModel} subclass which allows {@link #setModel(IModel)}
+ * {@link ModelViewModel} subclass which allows {@link #setModel(IModel)}
  */
-public class MutableModelViewModel<M extends IModel> extends ConstantModelViewModel<M> {
+public class MutableModelViewModel<M extends IModel> extends ModelViewModel<M> {
     public MutableModelViewModel() {
     }
 
