@@ -7,9 +7,9 @@ import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 
 import io.reactivesprint.android.models.IAndroidModel;
-import io.reactivesprint.viewmodels.ConstantModelViewModel;
 import io.reactivesprint.viewmodels.IModelViewModel;
 import io.reactivesprint.viewmodels.IViewModel;
+import io.reactivesprint.viewmodels.ModelViewModel;
 
 import static io.reactivesprint.Preconditions.checkNotNull;
 
@@ -22,7 +22,7 @@ import static io.reactivesprint.Preconditions.checkNotNull;
  * <dd>{@link IModelViewModel#getModel()}</dd>
  * </dl>
  */
-public abstract class AndroidModelViewModel<M extends IAndroidModel> extends ConstantModelViewModel<M> implements IAndroidViewModel {
+public abstract class AndroidModelViewModel<M extends IAndroidModel> extends ModelViewModel<M> implements IAndroidViewModel {
     //region Fields
 
     @Nullable

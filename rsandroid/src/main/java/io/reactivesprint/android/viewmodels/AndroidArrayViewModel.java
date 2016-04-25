@@ -8,7 +8,7 @@ import android.support.annotation.Nullable;
 
 import java.util.Collection;
 
-import io.reactivesprint.viewmodels.ConstantArrayViewModel;
+import io.reactivesprint.viewmodels.ArrayViewModel;
 import io.reactivesprint.viewmodels.IArrayViewModel;
 import io.reactivesprint.viewmodels.IViewModel;
 
@@ -24,7 +24,7 @@ import static io.reactivesprint.Preconditions.checkNotNull;
  * <dd>{@link IArrayViewModel#getViewModels()}</dd>
  * </dl>
  */
-public abstract class AndroidArrayViewModel<E extends IAndroidViewModel> extends ConstantArrayViewModel<E> implements IAndroidViewModel {
+public abstract class AndroidArrayViewModel<E extends IAndroidViewModel> extends ArrayViewModel<E> implements IAndroidViewModel {
     //region Fields
 
     @Nullable
