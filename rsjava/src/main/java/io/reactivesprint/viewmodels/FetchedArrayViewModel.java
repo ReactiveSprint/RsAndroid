@@ -56,7 +56,7 @@ public abstract class FetchedArrayViewModel<E extends IViewModel, P> extends Con
     //region IFetchedArrayViewModel
 
     @Override
-    public IProperty<Boolean> refreshing() {
+    public final IProperty<Boolean> refreshing() {
         return new Property<>(refreshing);
     }
 
@@ -70,27 +70,27 @@ public abstract class FetchedArrayViewModel<E extends IViewModel, P> extends Con
     }
 
     @Override
-    public IProperty<Boolean> fetchingNextPage() {
+    public final IProperty<Boolean> fetchingNextPage() {
         return new Property<>(fetchingNextPage);
     }
 
     @Override
-    public IProperty<Boolean> hasNextPage() {
+    public final IProperty<Boolean> hasNextPage() {
         return new Property<>(hasNextPage);
     }
 
     @Override
-    public ICommand<Void, Collection<E>> getRefreshCommand() {
+    public final ICommand<Void, Collection<E>> getRefreshCommand() {
         return refreshCommand;
     }
 
     @Override
-    public ICommand<Void, Collection<E>> getFetchCommand() {
+    public final ICommand<Void, Collection<E>> getFetchCommand() {
         return fetchCommand;
     }
 
     @Override
-    public ICommand<Void, Collection<E>> getFetchIfNeededCommand() {
+    public final ICommand<Void, Collection<E>> getFetchIfNeededCommand() {
         return fetchIfNeededCommand;
     }
 
