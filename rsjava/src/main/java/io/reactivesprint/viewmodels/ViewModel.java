@@ -61,27 +61,27 @@ public class ViewModel implements IViewModel {
     //region Properties
 
     @Override
-    public IMutableProperty<Boolean> active() {
+    public final IMutableProperty<Boolean> active() {
         return active;
     }
 
     @Override
-    public IMutableProperty<CharSequence> title() {
+    public final IMutableProperty<CharSequence> title() {
         return title;
     }
 
     @Override
-    public IProperty<Boolean> loading() {
+    public final IProperty<Boolean> loading() {
         return loading;
     }
 
     @Override
-    public Observable<IViewModelException> errors() {
+    public final Observable<IViewModelException> errors() {
         return errors;
     }
 
     @Override
-    public IProperty<Boolean> enabled() {
+    public final IProperty<Boolean> enabled() {
         return enabled;
     }
 
@@ -90,7 +90,7 @@ public class ViewModel implements IViewModel {
     //region Binding
 
     @Override
-    public void bindLoading(Observable<Boolean> loadingObservable) {
+    public final void bindLoading(Observable<Boolean> loadingObservable) {
         checkNotNull(loadingObservable, "loadingObservable");
         loadingSubject.onNext(loadingObservable
                 .concatWith(Observable.just(false))
@@ -99,13 +99,13 @@ public class ViewModel implements IViewModel {
     }
 
     @Override
-    public void bindErrors(Observable<IViewModelException> errorObservable) {
+    public final void bindErrors(Observable<IViewModelException> errorObservable) {
         checkNotNull(errorObservable, "errorObservable");
         errorsSubject.onNext(errorObservable.onErrorResumeNext(Observable.<IViewModelException>empty()));
     }
 
     @Override
-    public <I, R> void bindCommand(ICommand<I, R> command) {
+    public final <I, R> void bindCommand(ICommand<I, R> command) {
         checkNotNull(command, "command");
         bindLoading(command.isExecuting().getObservable());
 
