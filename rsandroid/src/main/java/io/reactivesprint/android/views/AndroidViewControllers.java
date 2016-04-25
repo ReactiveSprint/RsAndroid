@@ -14,6 +14,7 @@ import io.reactivesprint.viewmodels.IFetchedArrayViewModel;
 import io.reactivesprint.views.IArrayViewController;
 import io.reactivesprint.views.IFetchedArrayViewController;
 import rx.Observable;
+import rx.Subscription;
 import rx.functions.Action1;
 
 import static io.reactivesprint.views.ViewControllers.onDataSetChanged;
@@ -69,51 +70,51 @@ public final class AndroidViewControllers {
         return intent;
     }
 
-    public static <VM extends IAndroidViewModel, T> void bind(final IActivity<VM> activity, Observable<T> observable, Action1<T> bindAction) {
-        observable.compose(RxLifecycle.<T>bindActivity(activity.lifecycle()))
+    public static <VM extends IAndroidViewModel, T> Subscription bind(final IActivity<VM> activity, Observable<T> observable, Action1<T> bindAction) {
+        return observable.compose(RxLifecycle.<T>bindActivity(activity.lifecycle()))
                 .subscribe(bindAction);
     }
 
-    public static <VM extends IAndroidViewModel> void bindTitle(final IActivity<VM> activity, VM viewModel) {
-        bind(activity, viewModel.getTitle().getObservable(), setTitle(activity));
+    public static <VM extends IAndroidViewModel> Subscription bindTitle(final IActivity<VM> activity, VM viewModel) {
+        return bind(activity, viewModel.getTitle().getObservable(), setTitle(activity));
     }
 
-    public static <VM extends IAndroidViewModel> void bindLoading(final IActivity<VM> activity, VM viewModel) {
-        bind(activity, viewModel.isLoading().getObservable(), presentLoading(activity));
+    public static <VM extends IAndroidViewModel> Subscription bindLoading(final IActivity<VM> activity, VM viewModel) {
+        return bind(activity, viewModel.isLoading().getObservable(), presentLoading(activity));
     }
 
-    public static <VM extends IAndroidViewModel> void bindErrors(final IActivity<VM> activity, VM viewModel) {
-        bind(activity, viewModel.getErrors(), presentError(activity));
-    }
-
-    public static <VM extends IAndroidViewModel,
-            E extends IAndroidViewModel,
-            AVM extends IArrayViewModel<E> & IAndroidViewModel,
-            A extends IActivity<VM> & IArrayViewController<VM, AVM>> void bindCount(final A activity, AVM arrayViewModel) {
-        bind(activity, arrayViewModel.getCount().getObservable(), onDataSetChanged(activity));
+    public static <VM extends IAndroidViewModel> Subscription bindErrors(final IActivity<VM> activity, VM viewModel) {
+        return bind(activity, viewModel.getErrors(), presentError(activity));
     }
 
     public static <VM extends IAndroidViewModel,
             E extends IAndroidViewModel,
             AVM extends IArrayViewModel<E> & IAndroidViewModel,
-            A extends IActivity<VM> & IArrayViewController<VM, AVM>> void bindLocalizedEmptyMessage(final A activity, AVM arrayViewModel) {
-        bind(activity, arrayViewModel.getLocalizedEmptyMessage().getObservable(), setLocalizedEmptyMessage(activity));
+            A extends IActivity<VM> & IArrayViewController<VM, AVM>> Subscription bindCount(final A activity, AVM arrayViewModel) {
+        return bind(activity, arrayViewModel.getCount().getObservable(), onDataSetChanged(activity));
+    }
+
+    public static <VM extends IAndroidViewModel,
+            E extends IAndroidViewModel,
+            AVM extends IArrayViewModel<E> & IAndroidViewModel,
+            A extends IActivity<VM> & IArrayViewController<VM, AVM>> Subscription bindLocalizedEmptyMessage(final A activity, AVM arrayViewModel) {
+        return bind(activity, arrayViewModel.getLocalizedEmptyMessage().getObservable(), setLocalizedEmptyMessage(activity));
     }
 
     public static <VM extends IAndroidViewModel,
             E extends IAndroidViewModel,
             P, FI, FO,
             AVM extends IFetchedArrayViewModel<E, P, FI, FO> & IAndroidViewModel,
-            A extends IActivity<VM> & IFetchedArrayViewController<VM, AVM>> void bindRefreshing(final A activity, AVM arrayViewModel) {
-        bind(activity, arrayViewModel.isRefreshing().getObservable(), presentRefreshing(activity));
+            A extends IActivity<VM> & IFetchedArrayViewController<VM, AVM>> Subscription bindRefreshing(final A activity, AVM arrayViewModel) {
+        return bind(activity, arrayViewModel.isRefreshing().getObservable(), presentRefreshing(activity));
     }
 
     public static <VM extends IAndroidViewModel,
             E extends IAndroidViewModel,
             P, FI, FO,
             AVM extends IFetchedArrayViewModel<E, P, FI, FO> & IAndroidViewModel,
-            A extends IActivity<VM> & IFetchedArrayViewController<VM, AVM>> void bindFetchingNextPage(final A activity, AVM arrayViewModel) {
-        bind(activity, arrayViewModel.isRefreshing().getObservable(), presentFetchingNextPage(activity));
+            A extends IActivity<VM> & IFetchedArrayViewController<VM, AVM>> Subscription bindFetchingNextPage(final A activity, AVM arrayViewModel) {
+        return bind(activity, arrayViewModel.isRefreshing().getObservable(), presentFetchingNextPage(activity));
     }
 
     //endregion
@@ -133,51 +134,51 @@ public final class AndroidViewControllers {
         }
     }
 
-    public static <VM extends IAndroidViewModel, T> void bind(final IFragment<VM> fragment, Observable<T> observable, Action1<T> bindAction) {
-        observable.compose(RxLifecycle.<T>bindFragment(fragment.lifecycle()))
+    public static <VM extends IAndroidViewModel, T> Subscription bind(final IFragment<VM> fragment, Observable<T> observable, Action1<T> bindAction) {
+        return observable.compose(RxLifecycle.<T>bindFragment(fragment.lifecycle()))
                 .subscribe(bindAction);
     }
 
-    public static <VM extends IAndroidViewModel> void bindTitle(final IFragment<VM> fragment, VM viewModel) {
-        bind(fragment, viewModel.getTitle().getObservable(), setTitle(fragment));
+    public static <VM extends IAndroidViewModel> Subscription bindTitle(final IFragment<VM> fragment, VM viewModel) {
+        return bind(fragment, viewModel.getTitle().getObservable(), setTitle(fragment));
     }
 
-    public static <VM extends IAndroidViewModel> void bindLoading(final IFragment<VM> fragment, VM viewModel) {
-        bind(fragment, viewModel.isLoading().getObservable(), presentLoading(fragment));
+    public static <VM extends IAndroidViewModel> Subscription bindLoading(final IFragment<VM> fragment, VM viewModel) {
+        return bind(fragment, viewModel.isLoading().getObservable(), presentLoading(fragment));
     }
 
-    public static <VM extends IAndroidViewModel> void bindErrors(final IFragment<VM> fragment, VM viewModel) {
-        bind(fragment, viewModel.getErrors(), presentError(fragment));
-    }
-
-    public static <VM extends IAndroidViewModel,
-            E extends IAndroidViewModel,
-            AVM extends IArrayViewModel<E> & IAndroidViewModel,
-            F extends IFragment<VM> & IArrayViewController<VM, AVM>> void bindCount(final F fragment, AVM arrayViewModel) {
-        bind(fragment, arrayViewModel.getCount().getObservable(), onDataSetChanged(fragment));
+    public static <VM extends IAndroidViewModel> Subscription bindErrors(final IFragment<VM> fragment, VM viewModel) {
+        return bind(fragment, viewModel.getErrors(), presentError(fragment));
     }
 
     public static <VM extends IAndroidViewModel,
             E extends IAndroidViewModel,
             AVM extends IArrayViewModel<E> & IAndroidViewModel,
-            F extends IFragment<VM> & IArrayViewController<VM, AVM>> void bindLocalizedEmptyMessage(final F fragment, AVM arrayViewModel) {
-        bind(fragment, arrayViewModel.getLocalizedEmptyMessage().getObservable(), setLocalizedEmptyMessage(fragment));
+            F extends IFragment<VM> & IArrayViewController<VM, AVM>> Subscription bindCount(final F fragment, AVM arrayViewModel) {
+        return bind(fragment, arrayViewModel.getCount().getObservable(), onDataSetChanged(fragment));
+    }
+
+    public static <VM extends IAndroidViewModel,
+            E extends IAndroidViewModel,
+            AVM extends IArrayViewModel<E> & IAndroidViewModel,
+            F extends IFragment<VM> & IArrayViewController<VM, AVM>> Subscription bindLocalizedEmptyMessage(final F fragment, AVM arrayViewModel) {
+        return bind(fragment, arrayViewModel.getLocalizedEmptyMessage().getObservable(), setLocalizedEmptyMessage(fragment));
     }
 
     public static <VM extends IAndroidViewModel,
             E extends IAndroidViewModel,
             P, FI, FO,
             AVM extends IFetchedArrayViewModel<E, P, FI, FO> & IAndroidViewModel,
-            F extends IFragment<VM> & IFetchedArrayViewController<VM, AVM>> void bindRefreshing(final F fragment, AVM arrayViewModel) {
-        bind(fragment, arrayViewModel.isRefreshing().getObservable(), presentRefreshing(fragment));
+            F extends IFragment<VM> & IFetchedArrayViewController<VM, AVM>> Subscription bindRefreshing(final F fragment, AVM arrayViewModel) {
+        return bind(fragment, arrayViewModel.isRefreshing().getObservable(), presentRefreshing(fragment));
     }
 
     public static <VM extends IAndroidViewModel,
             E extends IAndroidViewModel,
             P, FI, FO,
             AVM extends IFetchedArrayViewModel<E, P, FI, FO> & IAndroidViewModel,
-            F extends IFragment<VM> & IFetchedArrayViewController<VM, AVM>> void bindFetchingNextPage(final F fragment, AVM arrayViewModel) {
-        bind(fragment, arrayViewModel.isRefreshing().getObservable(), presentFetchingNextPage(fragment));
+            F extends IFragment<VM> & IFetchedArrayViewController<VM, AVM>> Subscription bindFetchingNextPage(final F fragment, AVM arrayViewModel) {
+        return bind(fragment, arrayViewModel.isRefreshing().getObservable(), presentFetchingNextPage(fragment));
     }
 
     //endregion
