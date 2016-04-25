@@ -66,7 +66,7 @@ public class ViewModel implements IViewModel {
     }
 
     @Override
-    public final IMutableProperty<CharSequence> title() {
+    public IMutableProperty<CharSequence> title() {
         return title;
     }
 
