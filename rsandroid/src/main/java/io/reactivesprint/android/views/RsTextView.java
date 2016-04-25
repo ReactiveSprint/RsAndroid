@@ -9,6 +9,7 @@ import com.jakewharton.rxbinding.widget.RxTextView;
 
 import io.reactivesprint.rx.IMutableProperty;
 import rx.Observable;
+import rx.Subscription;
 import rx.functions.Func1;
 
 import static io.reactivesprint.Preconditions.checkNotNull;
@@ -32,10 +33,11 @@ public final class RsTextView {
      * @param textView        TextView to observe its changed.
      * @param property        Property to be set with text changes.
      * @param setInitialValue If true, {@code textView} will be set with value of {@code property}
+     * @return a {@link Subscription} reference with which ends the binding.
      */
-    public static void bindTextViewToStringProperty(@NonNull TextView textView,
-                                                    @NonNull IMutableProperty<String> property,
-                                                    boolean setInitialValue) {
+    public static Subscription bindTextViewToStringProperty(@NonNull TextView textView,
+                                                            @NonNull IMutableProperty<String> property,
+                                                            boolean setInitialValue) {
         checkNotNull(textView, "textView");
         checkNotNull(property, "property");
 
@@ -43,7 +45,7 @@ public final class RsTextView {
             textView.setText(property.getValue());
         }
 
-        property.bind(RxTextView.textChanges(textView).map(new Func1<CharSequence, String>() {
+        return property.bind(RxTextView.textChanges(textView).map(new Func1<CharSequence, String>() {
             @Override
             public String call(CharSequence charSequence) {
                 if (charSequence != null) {
@@ -63,10 +65,11 @@ public final class RsTextView {
      * @param textView        TextView to observe its changed.
      * @param property        Property to be set with text changes.
      * @param setInitialValue If true, {@code textView} will be set with value of {@code property}
+     * @return a {@link Subscription} reference with which ends the binding.
      */
-    public static void bindTextViewToCharSequenceProperty(@NonNull TextView textView,
-                                                          @NonNull IMutableProperty<CharSequence> property,
-                                                          boolean setInitialValue) {
+    public static Subscription bindTextViewToCharSequenceProperty(@NonNull TextView textView,
+                                                                  @NonNull IMutableProperty<CharSequence> property,
+                                                                  boolean setInitialValue) {
         checkNotNull(textView, "textView");
         checkNotNull(property, "property");
 
@@ -74,6 +77,6 @@ public final class RsTextView {
             textView.setText(property.getValue());
         }
 
-        property.bind(RxTextView.textChanges(textView).takeUntil(RxView.detaches(textView)));
+        return property.bind(RxTextView.textChanges(textView).takeUntil(RxView.detaches(textView)));
     }
 }
