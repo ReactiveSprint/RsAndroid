@@ -2,14 +2,9 @@ package io.reactivesprint.viewmodels;
 
 import java.util.ArrayList;
 import java.util.Collection;
-import java.util.Collections;
-import java.util.Iterator;
-import java.util.List;
-import java.util.RandomAccess;
 
 import io.reactivesprint.rx.Command;
 import io.reactivesprint.rx.ICommand;
-import io.reactivesprint.rx.IMutableProperty;
 import io.reactivesprint.rx.IProperty;
 import io.reactivesprint.rx.MutableProperty;
 import io.reactivesprint.rx.Pair;
@@ -19,22 +14,13 @@ import rx.functions.Action0;
 import rx.functions.Action1;
 import rx.functions.Func1;
 
-import static io.reactivesprint.Preconditions.checkNotNull;
-
 /**
  * Created by Ahmad Baraka on 4/2/16.
  * An implementation of {@link IFetchedArrayViewModel} that fetches ViewModels by calling {@link #onFetch(Object)}
  */
-public abstract class FetchedArrayViewModel<E extends IViewModel, P> extends ViewModel
-        implements IFetchedArrayViewModel<E, P, Void, Collection<E>>, RandomAccess {
+public abstract class FetchedArrayViewModel<E extends IViewModel, P> extends ConstantArrayViewModel<E>
+        implements IFetchedArrayViewModel<E, P, Void, Collection<E>> {
     //region Fields
-
-    private MutableProperty<List<E>> viewModels = new MutableProperty<>(Collections.<E>emptyList());
-
-    private final IProperty<Integer> count;
-    private final IProperty<Boolean> empty;
-
-    private final IMutableProperty<CharSequence> localizedEmptyMessage = new MutableProperty<>(null);
 
     private final MutableProperty<Boolean> refreshing = new MutableProperty<>(false);
     private final MutableProperty<Boolean> fetchingNextPage = new MutableProperty<>(false);
@@ -51,20 +37,6 @@ public abstract class FetchedArrayViewModel<E extends IViewModel, P> extends Vie
     //region Constructors
 
     public FetchedArrayViewModel() {
-        count = new Property<>(0, viewModels.getObservable().map(new Func1<List<E>, Integer>() {
-            @Override
-            public Integer call(List<E> elements) {
-                return elements.size();
-            }
-        }));
-
-        empty = new Property<>(count.getValue() <= 0, count.getObservable().map(new Func1<Integer, Boolean>() {
-            @Override
-            public Boolean call(Integer integer) {
-                return integer <= 0;
-            }
-        }));
-
         fetchCommand = createFetchCommand();
         refreshCommand = createRefreshCommand();
         fetchIfNeededCommand = createFetchIfNeededCommand();
@@ -78,54 +50,6 @@ public abstract class FetchedArrayViewModel<E extends IViewModel, P> extends Vie
      * Implement this method to fetch ViewModels at {@code page}
      */
     protected abstract Observable<Pair<P, Collection<E>>> onFetch(P page);
-
-    //endregion
-
-    //region Iterable
-
-    @Override
-    public Iterator<E> iterator() {
-        return viewModels.getValue().iterator();
-    }
-
-    //endregion
-
-    //region IArrayViewModel
-
-    @Override
-    public IProperty<Integer> count() {
-        return count;
-    }
-
-    @Override
-    public IProperty<Boolean> empty() {
-        return empty;
-    }
-
-    @Override
-    public IMutableProperty<CharSequence> localizedEmptyMessage() {
-        return localizedEmptyMessage;
-    }
-
-    @Override
-    public List<E> getViewModels() {
-        return viewModels.getValue();
-    }
-
-    protected void setViewModels(Collection<E> viewModels) {
-        this.viewModels.setValue(new ArrayList<E>(viewModels));
-    }
-
-    @Override
-    public int indexOf(E element) {
-        checkNotNull(element, "element");
-        return viewModels.getValue().indexOf(element);
-    }
-
-    @Override
-    public E getViewModel(int index) {
-        return viewModels.getValue().get(index);
-    }
 
     //endregion
 
@@ -226,12 +150,12 @@ public abstract class FetchedArrayViewModel<E extends IViewModel, P> extends Vie
                     public void call(Pair<P, Collection<E>> objects) {
                         ArrayList<E> newViewModels = new ArrayList<>();
                         if (!refreshing.getValue()) {
-                            newViewModels.addAll(viewModels.getValue());
+                            newViewModels.addAll(getViewModels());
                         }
 
                         newViewModels.addAll(objects.getValue1());
 
-                        viewModels.setValue(newViewModels);
+                        setViewModels(newViewModels);
 
                         hasNextPage.setValue(!objects.getValue1().isEmpty());
 

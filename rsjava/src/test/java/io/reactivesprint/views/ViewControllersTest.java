@@ -2,7 +2,7 @@ package io.reactivesprint.views;
 
 import junit.framework.TestCase;
 
-import io.reactivesprint.viewmodels.ArrayViewModel;
+import io.reactivesprint.viewmodels.MutableArrayViewModel;
 import io.reactivesprint.viewmodels.FetchedArrayViewModel;
 import io.reactivesprint.viewmodels.ViewModel;
 import io.reactivesprint.viewmodels.ViewModelException;
@@ -38,13 +38,13 @@ public class ViewControllersTest extends TestCase {
     }
 
     public void testOnDataSetChanged() throws Exception {
-        IArrayViewController<ViewModel, ArrayViewModel<ViewModel>> viewController = mock(IArrayViewController.class);
+        IArrayViewController<ViewModel, MutableArrayViewModel<ViewModel>> viewController = mock(IArrayViewController.class);
         ViewControllers.onDataSetChanged(viewController).call(0);
         verify(viewController).onDataSetChanged();
     }
 
     public void testSetLocalizedEmptyMessage() throws Exception {
-        IArrayViewController<ViewModel, ArrayViewModel<ViewModel>> viewController = mock(IArrayViewController.class);
+        IArrayViewController<ViewModel, MutableArrayViewModel<ViewModel>> viewController = mock(IArrayViewController.class);
         ViewControllers.setLocalizedEmptyMessage(viewController).call("Test");
         verify(viewController).setLocalizedEmptyMessage("Test");
     }

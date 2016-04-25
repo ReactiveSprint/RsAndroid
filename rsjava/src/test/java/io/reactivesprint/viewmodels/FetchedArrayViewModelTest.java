@@ -9,7 +9,7 @@ import rx.Observable;
 import rx.Subscriber;
 import rx.subjects.PublishSubject;
 
-import static io.reactivesprint.viewmodels.ArrayViewModelTest.generateViewModels;
+import static io.reactivesprint.viewmodels.ConstantArrayViewModelTest.generateViewModels;
 import static org.assertj.core.api.Assertions.assertThat;
 
 /**

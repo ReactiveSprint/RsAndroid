@@ -11,8 +11,8 @@ import static org.assertj.core.api.Assertions.assertThat;
 /**
  * Created by Ahmad Baraka on 4/7/16.
  */
-public class ArrayViewModelTest extends TestCase {
-    ArrayViewModel<ViewModel> arrayViewModel;
+public class ConstantArrayViewModelTest extends TestCase {
+    MutableArrayViewModel<ViewModel> mutableArrayViewModel;
     List<ViewModel> viewModels;
     static final String TEST_TITLE = "TestTitle";
     static final String TEST_EMPTY_MESSAGE = "No Items Available.";
@@ -21,34 +21,35 @@ public class ArrayViewModelTest extends TestCase {
     protected void setUp() throws Exception {
         super.setUp();
         viewModels = generateViewModels(3);
-        arrayViewModel = null;
+        mutableArrayViewModel = null;
     }
 
     public void testDefaultValues() throws Exception {
-        arrayViewModel = new ArrayViewModel<>(Collections.<ViewModel>emptyList());
+        mutableArrayViewModel = new MutableArrayViewModel<>(Collections.<ViewModel>emptyList());
 
-        assertThat(arrayViewModel.title().getValue()).isNull();
-        assertThat(arrayViewModel.localizedEmptyMessage().getValue()).isNull();
-        assertThat(arrayViewModel.count().getValue()).isZero();
-        assertThat(arrayViewModel.empty().getValue()).isTrue();
+        assertThat(mutableArrayViewModel.title().getValue()).isNull();
+        assertThat(mutableArrayViewModel.localizedEmptyMessage().getValue()).isNull();
+        assertThat(mutableArrayViewModel.count().getValue()).isZero();
+        assertThat(mutableArrayViewModel.empty().getValue()).isTrue();
     }
 
     public void testGetViewModel() throws Exception {
-        arrayViewModel = new ArrayViewModel<>(viewModels);
+        mutableArrayViewModel = new MutableArrayViewModel<>(viewModels);
 
-        assertThat(arrayViewModel.getViewModel(0).title().getValue())
+        assertThat(mutableArrayViewModel.getViewModel(0).title().getValue())
                 .isEqualTo("1");
-        assertThat(arrayViewModel.getViewModel(1).title().getValue())
+        assertThat(mutableArrayViewModel.getViewModel(1).title().getValue())
                 .isEqualTo("2");
-        assertThat(arrayViewModel.getViewModel(2).title().getValue())
+        assertThat(mutableArrayViewModel.getViewModel(2).title().getValue())
                 .isEqualTo("3");
     }
 
     public void testIndexOfObject() throws Exception {
-        arrayViewModel = new ArrayViewModel<>(viewModels);
+        new MutableArrayViewModel<>();
+        mutableArrayViewModel = new MutableArrayViewModel<>(viewModels);
         final ViewModel viewModel = viewModels.get(1);
 
-        assertThat(arrayViewModel.indexOf(viewModel)).isEqualTo(1);
+        assertThat(mutableArrayViewModel.indexOf(viewModel)).isEqualTo(1);
     }
 
     //region Helpers
