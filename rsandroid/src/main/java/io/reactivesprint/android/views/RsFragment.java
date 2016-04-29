@@ -23,13 +23,13 @@ public class RsFragment<VM extends IAndroidViewModel> extends RxFragment impleme
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
 
-        viewModel = AndroidViewControllers.getViewModelFromBundle(savedInstanceState);
+        VM viewModel = AndroidViewControllers.getViewModelFromBundle(savedInstanceState);
 
         if (viewModel == null) {
             viewModel = AndroidViewControllers.getViewModelFromBundle(getArguments());
         }
 
-        if (getViewModel() == null && viewModel != null) {
+        if (viewModel != null && !viewModel.equals(getViewModel())) {
             viewModel.setContext(getActivity().getApplicationContext());
             setViewModel(viewModel);
         }

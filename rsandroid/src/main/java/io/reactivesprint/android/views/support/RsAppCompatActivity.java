@@ -25,13 +25,13 @@ public class RsAppCompatActivity<VM extends IAndroidViewModel> extends RxAppComp
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
 
-        viewModel = AndroidViewControllers.getViewModelFromBundle(savedInstanceState);
+        VM viewModel = AndroidViewControllers.getViewModelFromBundle(savedInstanceState);
 
         if (viewModel == null && getIntent() != null) {
             viewModel = AndroidViewControllers.getViewModelFromBundle(getIntent().getExtras());
         }
 
-        if (getViewModel() == null && viewModel != null) {
+        if (viewModel != null && !viewModel.equals(getViewModel())) {
             viewModel.setContext(getApplicationContext());
             setViewModel(viewModel);
         }
