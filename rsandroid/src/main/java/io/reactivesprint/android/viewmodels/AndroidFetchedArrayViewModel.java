@@ -95,7 +95,10 @@ public abstract class AndroidFetchedArrayViewModel<E extends IAndroidViewModel, 
      */
     @CallSuper
     protected void onContextSet(@NonNull Context context) {
-
+        for (int i = 0; i < count().getValue(); i++) {
+            E viewModel = getViewModel(i);
+            viewModel.setContext(context);
+        }
     }
 
     //endregion

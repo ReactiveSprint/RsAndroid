@@ -31,16 +31,28 @@ public class AndroidArrayViewModelTest extends AndroidTestCase {
 
         // Must reset position to 0 for reading
         parcel.setDataPosition(0);
-        AndroidArrayViewModel<AndroidViewModel> viewModel1 = parcel.readParcelable(TestAndroidArrayViewModel.class.getClassLoader());
+        viewModel = parcel.readParcelable(TestAndroidArrayViewModel.class.getClassLoader());
         parcel.recycle();
 
-        assertNotNull(viewModel1);
-        assertEquals("TestTitle", viewModel1.title().getValue());
-        assertEquals("Message", viewModel1.localizedEmptyMessage().getValue());
-        assertEquals((Integer) 3, viewModel1.count().getValue());
+        assertNotNull(viewModel);
+        assertEquals("TestTitle", viewModel.title().getValue());
+        assertEquals("Message", viewModel.localizedEmptyMessage().getValue());
+        assertEquals((Integer) 3, viewModel.count().getValue());
 
         assertEquals("Test0", viewModel.getViewModel(0).title().getValue());
         assertEquals("Test1", viewModel.getViewModel(1).title().getValue());
         assertEquals("Test2", viewModel.getViewModel(2).title().getValue());
+
+        assertNull(viewModel.getContext());
+        assertNull(viewModel.getViewModel(0).getContext());
+        assertNull(viewModel.getViewModel(1).getContext());
+        assertNull(viewModel.getViewModel(2).getContext());
+
+        viewModel.setContext(getContext());
+
+        assertNotNull(viewModel.getContext());
+        assertNotNull(viewModel.getViewModel(0).getContext());
+        assertNotNull(viewModel.getViewModel(1).getContext());
+        assertNotNull(viewModel.getViewModel(2).getContext());
     }
 }

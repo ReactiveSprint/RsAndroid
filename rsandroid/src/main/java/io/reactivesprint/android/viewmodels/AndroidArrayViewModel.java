@@ -85,7 +85,10 @@ public abstract class AndroidArrayViewModel<E extends IAndroidViewModel> extends
      */
     @CallSuper
     protected void onContextSet(@NonNull Context context) {
-
+        for (int i = 0; i < count().getValue(); i++) {
+            E viewModel = getViewModel(i);
+            viewModel.setContext(context);
+        }
     }
 
     //endregion
