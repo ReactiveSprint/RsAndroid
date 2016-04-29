@@ -101,7 +101,7 @@ public class AndroidViewModel extends ViewModel implements IAndroidViewModel {
 
         @Override
         public AndroidViewModel[] newArray(int size) {
-            return new AndroidViewModel[0];
+            return new AndroidViewModel[size];
         }
     };
 
