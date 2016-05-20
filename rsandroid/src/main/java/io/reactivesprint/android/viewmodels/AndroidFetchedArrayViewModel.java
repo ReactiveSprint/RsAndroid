@@ -32,7 +32,6 @@ public abstract class AndroidFetchedArrayViewModel<E extends IAndroidViewModel, 
         implements IAndroidViewModel {
     //region Fields
 
-    @Nullable
     private Context context;
 
     //endregion
@@ -64,7 +63,6 @@ public abstract class AndroidFetchedArrayViewModel<E extends IAndroidViewModel, 
         return null;
     }
 
-    @Nullable
     @Override
     public final Context getContext() {
         return context;

@@ -18,7 +18,6 @@ public interface IAndroidViewModel extends IViewModel, Parcelable {
     /**
      * @return Wrapped {@link Context} in the receiver.
      */
-    @Nullable
     Context getContext();
 
     /**

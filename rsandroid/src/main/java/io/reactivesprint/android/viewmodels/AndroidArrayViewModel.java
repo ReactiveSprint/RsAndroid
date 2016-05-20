@@ -27,7 +27,6 @@ import static io.reactivesprint.Preconditions.checkNotNull;
 public abstract class AndroidArrayViewModel<E extends IAndroidViewModel> extends ArrayViewModel<E> implements IAndroidViewModel {
     //region Fields
 
-    @Nullable
     private Context context;
 
     //endregion
@@ -54,7 +53,6 @@ public abstract class AndroidArrayViewModel<E extends IAndroidViewModel> extends
 
     protected abstract ClassLoader getArrayClassLoader();
 
-    @Nullable
     @Override
     public final Context getContext() {
         return context;

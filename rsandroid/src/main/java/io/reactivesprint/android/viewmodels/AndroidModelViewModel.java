@@ -25,7 +25,6 @@ import static io.reactivesprint.Preconditions.checkNotNull;
 public abstract class AndroidModelViewModel<M extends IAndroidModel> extends ModelViewModel<M> implements IAndroidViewModel {
     //region Fields
 
-    @Nullable
     private Context context;
 
     //endregion
@@ -52,7 +51,6 @@ public abstract class AndroidModelViewModel<M extends IAndroidModel> extends Mod
 
     protected abstract ClassLoader getModelClassLoader();
 
-    @Nullable
     @Override
     public final Context getContext() {
         return context;
