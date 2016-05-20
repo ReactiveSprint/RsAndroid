@@ -104,6 +104,23 @@ public final class ViewControllers {
     }
 
     /**
+     * Create an action which invokes {@link IArrayViewController#setLocalizedEmptyMessageVisibility(boolean)}
+     * <p/>
+     * <em>Note:</em>  The created action keeps a strong reference to {@code viewController},
+     * so when this is used with {@link rx.Observable}, unsubscribe
+     * to free this reference.
+     */
+    public static <VM extends IViewModel, AVM extends IArrayViewModel> Action1<Boolean> setLocalizedEmptyMessageVisibility(final IArrayViewController<VM, AVM> viewController) {
+        checkNotNull(viewController, "viewController");
+        return new Action1<Boolean>() {
+            @Override
+            public void call(Boolean aBoolean) {
+                viewController.setLocalizedEmptyMessageVisibility(aBoolean);
+            }
+        };
+    }
+
+    /**
      * Create an action which invokes {@link IFetchedArrayViewController#presentRefreshing(boolean)}
      * <p/>
      * <em>Note:</em>  The created action keeps a strong reference to {@code viewController},

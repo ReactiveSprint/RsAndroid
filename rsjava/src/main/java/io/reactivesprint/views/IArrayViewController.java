@@ -33,4 +33,14 @@ public interface IArrayViewController<VM extends IViewModel, AVM extends IArrayV
      * Sets message used when array is empty.
      */
     void setLocalizedEmptyMessage(CharSequence localizedEmptyMessage);
+
+    /**
+     * Bind {@link IArrayViewModel#localizedEmptyMessage()} to {@link #setLocalizedEmptyMessageVisibility(boolean)}
+     */
+    void bindLocalizedEmptyMessageVisibility(AVM arrayViewModel);
+
+    /**
+     * Sets visibility to empty message view.
+     */
+    void setLocalizedEmptyMessageVisibility(boolean visibility);
 }
