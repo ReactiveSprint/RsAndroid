@@ -6,6 +6,8 @@ import rx.Subscription;
 
 /**
  * Created by Ahmad Baraka on 5/21/16.
+ * <p/>
+ * Represents a helper object which binds {@link IViewModel} to an {@link IView}
  */
 public interface IViewBinder<VM extends IViewModel, V extends IView<VM>> {
     /**

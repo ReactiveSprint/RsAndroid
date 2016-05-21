@@ -1,5 +1,6 @@
 package io.reactivesprint.views;
 
+import io.reactivesprint.viewmodels.IViewModel;
 import rx.Observable;
 import rx.functions.Func1;
 
@@ -7,6 +8,8 @@ import static io.reactivesprint.Preconditions.checkNotNull;
 
 /**
  * Created by Ahmad Baraka on 5/21/16.
+ * <p/>
+ * Provides when to start and stop binding of {@link IViewModel} to views.
  */
 public abstract class LifecycleProvider<E> {
     public static <E> LifecycleProvider<E> from(final Observable<E> lifecycle, final E startEvent, final E stopEvent) {

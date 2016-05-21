@@ -14,6 +14,9 @@ import static io.reactivesprint.views.Views.setTitle;
 
 /**
  * Created by Ahmad Baraka on 5/21/16.
+ * <p/>
+ * Implementation of {@link IViewBinder} which uses {@link LifecycleProvider} to
+ * start and stop binding.
  */
 public class ViewBinder<VM extends IViewModel, V extends IView<VM>> implements IViewBinder<VM, V> {
     //region Fields

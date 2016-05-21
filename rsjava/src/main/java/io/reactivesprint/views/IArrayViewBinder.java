@@ -6,6 +6,8 @@ import rx.Subscription;
 
 /**
  * Created by Ahmad Baraka on 5/21/16.
+ * <p/>
+ * Subclass of {@link IViewBinder} which binds an {@link IArrayViewModel} to an {@link IArrayView}
  */
 public interface IArrayViewBinder<VM extends IViewModel, AVM extends IArrayViewModel<?>, V extends IArrayView<VM, AVM>>
         extends IViewBinder<VM, V> {

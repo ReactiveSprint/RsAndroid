@@ -6,6 +6,8 @@ import rx.Subscription;
 
 /**
  * Created by Ahmad Baraka on 5/21/16.
+ * <p/>
+ * Subclass of {@link IArrayViewBinder} which binds an {@link IFetchedArrayViewModel} to an {@link IFetchedArrayView}
  */
 public interface IFetchedArrayViewBinder
         <VM extends IViewModel, AVM extends IFetchedArrayViewModel<?, ?, ?, ?>, V extends IFetchedArrayView<VM, AVM>>
