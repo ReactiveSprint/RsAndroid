@@ -16,7 +16,7 @@ import static io.reactivesprint.Preconditions.checkNotNull;
  * Implementation of {@link BaseAdapter} with an {@link IAndroidViewHolder}
  * <p/>
  * You don't need to override this class,
- * instead you can use {@code onCreateViewHolder} to create an {@link IAndroidViewHolder} as needed.
+ * instead you can use {@link ViewHolderCreator} to create an {@link IAndroidViewHolder} as needed.
  */
 public class RsBaseAdapter<E extends IAndroidViewModel, AVM extends IArrayViewModel<E> & IAndroidViewModel> extends BaseAdapter {
     //region Fields
@@ -25,13 +25,25 @@ public class RsBaseAdapter<E extends IAndroidViewModel, AVM extends IArrayViewMo
     private final AVM arrayViewModel;
 
     @NonNull
-    private final Func2<Integer, ViewGroup, IAndroidViewHolder<E>> onCreateViewHolder;
+    private final ViewHolderCreator<E> onCreateViewHolder;
 
     //endregion
 
     //region Constructors
 
-    public RsBaseAdapter(@NonNull AVM arrayViewModel, @NonNull Func2<Integer, ViewGroup, IAndroidViewHolder<E>> onCreateViewHolder) {
+    /**
+     * Creates an instance which uses {@link ViewHolder}.
+     */
+    public RsBaseAdapter(@NonNull AVM arrayViewModel) {
+        this(arrayViewModel, new ViewHolderCreator<E>() {
+            @Override
+            public IAndroidViewHolder<E> call(Integer integer, ViewGroup viewGroup) {
+                return new ViewHolder<>(viewGroup.getContext());
+            }
+        });
+    }
+
+    public RsBaseAdapter(@NonNull AVM arrayViewModel, @NonNull ViewHolderCreator<E> onCreateViewHolder) {
         checkNotNull(arrayViewModel, "arrayViewModel");
         checkNotNull(onCreateViewHolder, "onCreateViewHolder");
         this.arrayViewModel = arrayViewModel;
@@ -84,6 +96,13 @@ public class RsBaseAdapter<E extends IAndroidViewModel, AVM extends IArrayViewMo
 
     public void onBindViewHolder(@NonNull IAndroidViewHolder<E> viewHolder, int position) {
         viewHolder.setViewModel(getItem(position));
+    }
+
+    //endregion
+
+    //region ViewHolderCreator
+
+    public interface ViewHolderCreator<E extends IAndroidViewModel> extends Func2<Integer, ViewGroup, IAndroidViewHolder<E>> {
     }
 
     //endregion
