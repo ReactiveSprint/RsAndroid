@@ -31,6 +31,9 @@ ext {
     targetSdkVersion = compileSdkVersion
     buildToolsVersion = '23.0.2'
 
+    rsJava = 'com.github.reactivesprint:rsjava:0.2.1'
+    rsAndroid = 'com.github.reactivesprint:rsandroid:0.2.3'
+
     // Define all dependencies in the base project, to unify & make it easy to update
     rxJava = 'io.reactivex:rxjava:1.1.2'
     javaTuples = 'org.javatuples:javatuples:1.2'
@@ -42,4 +45,5 @@ ext {
     dexmaker = 'com.google.dexmaker:dexmaker:1.1'
     dexmakerMockito = 'com.google.dexmaker:dexmaker-mockito:1.1'
     supportAnnotations = 'com.android.support:support-annotations:23.3.0'
+    recyclerView = 'com.android.support:recyclerview-v7:23.4.0'
 }
