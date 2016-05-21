@@ -20,6 +20,14 @@ public class FetchedArrayViewBinder<VM extends IViewModel, AVM extends IFetchedA
 
         AVM arrayViewModel = getView().getArrayViewModel();
 
+        if (arrayViewModel == null) {
+            return null;
+        }
+
+        if (subscription == null) {
+            subscription = new SubscriptionList();
+        }
+
         subscription.add(bindRefreshing(arrayViewModel));
         subscription.add(bindFetchingNextPage(arrayViewModel));
 

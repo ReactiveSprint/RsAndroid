@@ -46,7 +46,10 @@ public class ViewBinder<VM extends IViewModel, V extends IView<VM>> implements I
                 .subscribe(new Action1<Object>() {
                     @Override
                     public void call(Object event) {
-                        subscriptionList.add(bindViewModel());
+                        Subscription subscription = bindViewModel();
+                        if (subscription != null) {
+                            subscriptionList.add(subscription);
+                        }
                     }
                 });
     }
@@ -58,7 +61,9 @@ public class ViewBinder<VM extends IViewModel, V extends IView<VM>> implements I
     protected SubscriptionList bindViewModel() {
         VM viewModel = view.getViewModel();
 
-        //FIXME: Handle Null
+        if (viewModel == null) {
+            return null;
+        }
 
         SubscriptionList subscription = new SubscriptionList();
 

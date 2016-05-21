@@ -20,6 +20,14 @@ public class ArrayViewBinder<VM extends IViewModel, AVM extends IArrayViewModel<
 
         AVM arrayViewModel = getView().getArrayViewModel();
 
+        if (arrayViewModel == null) {
+            return null;
+        }
+
+        if (subscription == null) {
+            subscription = new SubscriptionList();
+        }
+
         subscription.add(bindCount(arrayViewModel));
         subscription.add(bindLocalizedEmptyMessage(arrayViewModel));
         subscription.add(bindLocalizedEmptyMessageVisibility(arrayViewModel));
