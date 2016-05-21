@@ -24,6 +24,7 @@ public abstract class ArrayFragmentActivity<VM extends IAndroidViewModel, AVM ex
         }
         bindCount(arrayViewModel);
         bindLocalizedEmptyMessage(arrayViewModel);
+        bindLocalizedEmptyMessageVisibility(arrayViewModel);
     }
 
     @Override
@@ -34,5 +35,10 @@ public abstract class ArrayFragmentActivity<VM extends IAndroidViewModel, AVM ex
     @Override
     public void bindLocalizedEmptyMessage(AVM arrayViewModel) {
         AndroidViewControllers.bindLocalizedEmptyMessage(this, arrayViewModel);
+    }
+
+    @Override
+    public void bindLocalizedEmptyMessageVisibility(AVM arrayViewModel) {
+        AndroidViewControllers.bindLocalizedEmptyMessageVisibility(this, arrayViewModel);
     }
 }

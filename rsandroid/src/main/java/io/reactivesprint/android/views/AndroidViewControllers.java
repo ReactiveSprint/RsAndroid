@@ -1,7 +1,6 @@
 package io.reactivesprint.android.views;
 
 import android.app.Activity;
-import android.app.Fragment;
 import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
@@ -23,6 +22,7 @@ import static io.reactivesprint.views.ViewControllers.presentFetchingNextPage;
 import static io.reactivesprint.views.ViewControllers.presentLoading;
 import static io.reactivesprint.views.ViewControllers.presentRefreshing;
 import static io.reactivesprint.views.ViewControllers.setLocalizedEmptyMessage;
+import static io.reactivesprint.views.ViewControllers.setLocalizedEmptyMessageVisibility;
 import static io.reactivesprint.views.ViewControllers.setTitle;
 
 /**
@@ -103,6 +103,13 @@ public final class AndroidViewControllers {
 
     public static <VM extends IAndroidViewModel,
             E extends IAndroidViewModel,
+            AVM extends IArrayViewModel<E> & IAndroidViewModel,
+            A extends IActivity<VM> & IArrayViewController<VM, AVM>> Subscription bindLocalizedEmptyMessageVisibility(final A activity, AVM arrayViewModel) {
+        return bind(activity, arrayViewModel.empty().getObservable(), setLocalizedEmptyMessageVisibility(activity));
+    }
+
+    public static <VM extends IAndroidViewModel,
+            E extends IAndroidViewModel,
             P, FI, FO,
             AVM extends IFetchedArrayViewModel<E, P, FI, FO> & IAndroidViewModel,
             A extends IActivity<VM> & IFetchedArrayViewController<VM, AVM>> Subscription bindRefreshing(final A activity, AVM arrayViewModel) {
@@ -150,6 +157,13 @@ public final class AndroidViewControllers {
             AVM extends IArrayViewModel<E> & IAndroidViewModel,
             F extends IFragment<VM> & IArrayViewController<VM, AVM>> Subscription bindLocalizedEmptyMessage(final F fragment, AVM arrayViewModel) {
         return bind(fragment, arrayViewModel.localizedEmptyMessage().getObservable(), setLocalizedEmptyMessage(fragment));
+    }
+
+    public static <VM extends IAndroidViewModel,
+            E extends IAndroidViewModel,
+            AVM extends IArrayViewModel<E> & IAndroidViewModel,
+            F extends IFragment<VM> & IArrayViewController<VM, AVM>> Subscription bindLocalizedEmptyMessageVisibility(final F fragment, AVM arrayViewModel) {
+        return bind(fragment, arrayViewModel.empty().getObservable(), setLocalizedEmptyMessageVisibility(fragment));
     }
 
     public static <VM extends IAndroidViewModel,

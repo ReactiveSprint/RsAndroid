@@ -150,6 +150,31 @@ public class AndroidViewControllersTest extends AndroidTestCase {
         verifyNoMoreInteractions(activity);
     }
 
+    public void testBindLocalizedEmptyMessageVisibilityActivity() throws Exception {
+        AndroidFetchedArrayViewModel<AndroidViewModel, Integer> arrayViewModel = new TestAndroidFetchedArrayViewModel(getContext()) {
+            @Override
+            protected Observable<Pair<Integer, Collection<AndroidViewModel>>> onFetch(Integer page) {
+                subject = PublishSubject.create();
+                return subject;
+            }
+        };
+
+        TestFetchedArrayActivity activity = mockActivity(TestFetchedArrayActivity.class);
+
+        Subscription subscription = AndroidViewControllers.bindLocalizedEmptyMessageVisibility(activity, arrayViewModel);
+        arrayViewModel.getRefreshCommand().apply().subscribe();
+        subject.onCompleted();
+
+        verify(activity).lifecycle();
+        verify(activity).setLocalizedEmptyMessageVisibility(true);
+
+        subscription.unsubscribe();
+        arrayViewModel.getRefreshCommand().apply().subscribe();
+        subject.onNext(new Pair<Integer, Collection<AndroidViewModel>>(0, generateViewModels(3)));
+        subject.onCompleted();
+        verifyNoMoreInteractions(activity);
+    }
+
     public void testBindRefreshingActivity() throws Exception {
         AndroidFetchedArrayViewModel<AndroidViewModel, Integer> arrayViewModel = new TestAndroidFetchedArrayViewModel(getContext()) {
             @Override
@@ -279,6 +304,31 @@ public class AndroidViewControllersTest extends AndroidTestCase {
 
         subscription.unsubscribe();
         arrayViewModel.localizedEmptyMessage().setValue("NotSent");
+        verifyNoMoreInteractions(fragment);
+    }
+
+    public void testBindLocalizedEmptyMessageVisibilityFragment() throws Exception {
+        AndroidFetchedArrayViewModel<AndroidViewModel, Integer> arrayViewModel = new TestAndroidFetchedArrayViewModel(getContext()) {
+            @Override
+            protected Observable<Pair<Integer, Collection<AndroidViewModel>>> onFetch(Integer page) {
+                subject = PublishSubject.create();
+                return subject;
+            }
+        };
+
+        TestFetchedArrayFragment fragment = mockFragment(TestFetchedArrayFragment.class);
+
+        Subscription subscription = AndroidViewControllers.bindLocalizedEmptyMessageVisibility(fragment, arrayViewModel);
+        arrayViewModel.getRefreshCommand().apply().subscribe();
+        subject.onCompleted();
+
+        verify(fragment).lifecycle();
+        verify(fragment).setLocalizedEmptyMessageVisibility(true);
+
+        subscription.unsubscribe();
+        arrayViewModel.getRefreshCommand().apply().subscribe();
+        subject.onNext(new Pair<Integer, Collection<AndroidViewModel>>(0, generateViewModels(3)));
+        subject.onCompleted();
         verifyNoMoreInteractions(fragment);
     }
 

@@ -12,6 +12,18 @@ public abstract class ArrayFragment<VM extends IAndroidViewModel, AVM extends IA
     }
 
     @Override
+    public void onStart() {
+        super.onStart();
+        AVM arrayViewModel = getArrayViewModel();
+        if (arrayViewModel == null) {
+            return;
+        }
+        bindCount(arrayViewModel);
+        bindLocalizedEmptyMessage(arrayViewModel);
+        bindLocalizedEmptyMessageVisibility(arrayViewModel);
+    }
+
+    @Override
     public void bindCount(AVM arrayViewModel) {
         AndroidViewControllers.bindCount(this, arrayViewModel);
     }
@@ -19,5 +31,10 @@ public abstract class ArrayFragment<VM extends IAndroidViewModel, AVM extends IA
     @Override
     public void bindLocalizedEmptyMessage(AVM arrayViewModel) {
         AndroidViewControllers.bindLocalizedEmptyMessage(this, arrayViewModel);
+    }
+
+    @Override
+    public void bindLocalizedEmptyMessageVisibility(AVM arrayViewModel) {
+        AndroidViewControllers.bindLocalizedEmptyMessageVisibility(this, arrayViewModel);
     }
 }
