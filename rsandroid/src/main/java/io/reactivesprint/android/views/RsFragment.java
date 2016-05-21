@@ -9,49 +9,28 @@ import com.trello.rxlifecycle.components.RxFragment;
 
 import io.reactivesprint.android.viewmodels.IAndroidViewModel;
 import io.reactivesprint.viewmodels.IViewModelException;
-import rx.functions.Action1;
-import rx.functions.Func1;
+import io.reactivesprint.views.IView;
+import io.reactivesprint.views.IViewBinder;
+import io.reactivesprint.views.ViewBinder;
 
 @TargetApi(Build.VERSION_CODES.HONEYCOMB)
-public class RsFragment<VM extends IAndroidViewModel> extends RxFragment implements IFragment<VM> {
+public class RsFragment<VM extends IAndroidViewModel> extends RxFragment implements IView<VM> {
     //region Fields
 
     private VM viewModel;
+    private IViewBinder<VM, ? extends IView<VM>> viewBinder;
 
     //endregion
 
     public RsFragment() {
-        lifecycle().filter(new Func1<FragmentEvent, Boolean>() {
-            @Override
-            public Boolean call(FragmentEvent fragmentEvent) {
-                return FragmentEvent.START == fragmentEvent;
-            }
-        }).compose(this.<FragmentEvent>bindUntilEvent(FragmentEvent.STOP)).subscribe(new Action1<FragmentEvent>() {
-            @Override
-            public void call(FragmentEvent fragmentEvent) {
-                VM viewModel = getViewModel();
-                if (viewModel == null) {
-                    return;
-                }
-                bindActive(viewModel);
-                bindTitle(viewModel);
-                bindLoading(viewModel);
-                bindErrors(viewModel);
-            }
-        });
-
-        lifecycle().filter(new Func1<FragmentEvent, Boolean>() {
-            @Override
-            public Boolean call(FragmentEvent fragmentEvent) {
-                return FragmentEvent.DESTROY == fragmentEvent;
-            }
-        }).subscribe(new Action1<FragmentEvent>() {
-            @Override
-            public void call(FragmentEvent fragmentEvent) {
-                viewModel = null;
-            }
-        });
+        viewBinder = onCreateViewBinder();
     }
+
+    protected IViewBinder<VM, ? extends IView<VM>> onCreateViewBinder() {
+        return new ViewBinder<>(this, AndroidLifecycleProvider.from(this, FragmentEvent.START));
+    }
+
+    //TODO: Handle Destory
 
     //region LifeCycle
 
@@ -59,10 +38,10 @@ public class RsFragment<VM extends IAndroidViewModel> extends RxFragment impleme
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
 
-        VM viewModel = AndroidViewControllers.getViewModelFromBundle(savedInstanceState);
+        VM viewModel = AndroidViews.getViewModelFromBundle(savedInstanceState);
 
         if (viewModel == null) {
-            viewModel = AndroidViewControllers.getViewModelFromBundle(getArguments());
+            viewModel = AndroidViews.getViewModelFromBundle(getArguments());
         }
 
         if (viewModel != null && !viewModel.equals(getViewModel())) {
@@ -74,37 +53,16 @@ public class RsFragment<VM extends IAndroidViewModel> extends RxFragment impleme
     @Override
     public void onSaveInstanceState(Bundle outState) {
         super.onSaveInstanceState(outState);
-        AndroidViewControllers.onSaveInstanceState(viewModel, outState);
-    }
-
-    //endregion
-
-    //region Binding
-
-    @Override
-    public void bindActive(VM viewModel) {
-
-    }
-
-    @Override
-    public void bindTitle(VM viewModel) {
-        AndroidViewControllers.bindTitle(this, viewModel);
-    }
-
-    @Override
-    public void bindLoading(VM viewModel) {
-        AndroidViewControllers.bindLoading(this, viewModel);
-    }
-
-
-    @Override
-    public void bindErrors(VM viewModel) {
-        AndroidViewControllers.bindErrors(this, viewModel);
+        AndroidViews.onSaveInstanceState(viewModel, outState);
     }
 
     //endregion
 
     //region Properties
+
+    public IViewBinder<VM, ? extends IView<VM>> getViewBinder() {
+        return viewBinder;
+    }
 
     @Override
     public VM getViewModel() {

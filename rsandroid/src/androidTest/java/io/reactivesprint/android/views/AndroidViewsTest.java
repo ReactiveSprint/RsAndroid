@@ -76,7 +76,7 @@ public class AndroidViewsTest extends AndroidTestCase {
 
     public void testBindTitleActivity() throws Exception {
         IActivity<AndroidViewModel> activity = mockActivity(IActivity.class);
-        Subscription subscription = AndroidViewControllers.bindTitle(activity, viewModel);
+        Subscription subscription = AndroidViews.bindTitle(activity, viewModel);
         viewModel.title().setValue("Test");
         verify(activity).lifecycle();
         verify(activity).setTitle(null);
@@ -91,7 +91,7 @@ public class AndroidViewsTest extends AndroidTestCase {
         PublishSubject<Boolean> loadingSubject = PublishSubject.create();
         IActivity<AndroidViewModel> activity = mockActivity(IActivity.class);
         viewModel.bindLoading(loadingSubject);
-        Subscription subscription = AndroidViewControllers.bindLoading(activity, viewModel);
+        Subscription subscription = AndroidViews.bindLoading(activity, viewModel);
 
         loadingSubject.onNext(true);
         verify(activity).lifecycle();
@@ -106,7 +106,7 @@ public class AndroidViewsTest extends AndroidTestCase {
     public void testBindErrorsActivity() throws Exception {
         PublishSubject<IViewModelException> errorsSubject = PublishSubject.create();
         IActivity<AndroidViewModel> activity = mockActivity(IActivity.class);
-        Subscription subscription = AndroidViewControllers.bindErrors(activity, viewModel);
+        Subscription subscription = AndroidViews.bindErrors(activity, viewModel);
         viewModel.bindErrors(errorsSubject);
         ViewModelException exception = new ViewModelException("TestException");
 
@@ -124,7 +124,7 @@ public class AndroidViewsTest extends AndroidTestCase {
         TestAndroidArrayViewModel arrayViewModel = new TestAndroidArrayViewModel(getContext(), generateViewModels(3));
         TestArrayActivity activity = mockActivity(TestArrayActivity.class);
 
-        Subscription subscription = AndroidViewControllers.bindCount(activity, arrayViewModel);
+        Subscription subscription = AndroidViews.bindCount(activity, arrayViewModel);
 
         verify(activity).lifecycle();
         verify(activity).onDataSetChanged();
@@ -138,7 +138,7 @@ public class AndroidViewsTest extends AndroidTestCase {
         TestAndroidArrayViewModel arrayViewModel = new TestAndroidArrayViewModel(getContext(), generateViewModels(3));
         TestArrayActivity activity = mockActivity(TestArrayActivity.class);
 
-        Subscription subscription = AndroidViewControllers.bindLocalizedEmptyMessage(activity, arrayViewModel);
+        Subscription subscription = AndroidViews.bindLocalizedEmptyMessage(activity, arrayViewModel);
 
         arrayViewModel.localizedEmptyMessage().setValue("TestEmptyMessage");
         verify(activity).lifecycle();
@@ -161,7 +161,7 @@ public class AndroidViewsTest extends AndroidTestCase {
 
         TestFetchedArrayActivity activity = mockActivity(TestFetchedArrayActivity.class);
 
-        Subscription subscription = AndroidViewControllers.bindLocalizedEmptyMessageVisibility(activity, arrayViewModel);
+        Subscription subscription = AndroidViews.bindLocalizedEmptyMessageVisibility(activity, arrayViewModel);
         arrayViewModel.getRefreshCommand().apply().subscribe();
         subject.onCompleted();
 
@@ -186,7 +186,7 @@ public class AndroidViewsTest extends AndroidTestCase {
 
         TestFetchedArrayActivity activity = mockActivity(TestFetchedArrayActivity.class);
 
-        Subscription subscription = AndroidViewControllers.bindRefreshing(activity, arrayViewModel);
+        Subscription subscription = AndroidViews.bindRefreshing(activity, arrayViewModel);
         arrayViewModel.getRefreshCommand().apply().subscribe();
 
         verify(activity).lifecycle();
@@ -210,7 +210,7 @@ public class AndroidViewsTest extends AndroidTestCase {
 
         TestFetchedArrayActivity activity = mockActivity(TestFetchedArrayActivity.class);
 
-        Subscription subscription = AndroidViewControllers.bindFetchingNextPage(activity, arrayViewModel);
+        Subscription subscription = AndroidViews.bindFetchingNextPage(activity, arrayViewModel);
         arrayViewModel.getRefreshCommand().apply().subscribe();
         subject.onNext(new Pair<Integer, Collection<AndroidViewModel>>(1, generateViewModels(4)));
         subject.onCompleted();
@@ -234,7 +234,7 @@ public class AndroidViewsTest extends AndroidTestCase {
 
     public void testBindTitleFragment() throws Exception {
         IFragment<AndroidViewModel> fragment = mockFragment(IFragment.class);
-        Subscription subscription = AndroidViewControllers.bindTitle(fragment, viewModel);
+        Subscription subscription = AndroidViews.bindTitle(fragment, viewModel);
         viewModel.title().setValue("Test");
         verify(fragment).lifecycle();
         verify(fragment).setTitle(null);
@@ -249,7 +249,7 @@ public class AndroidViewsTest extends AndroidTestCase {
         PublishSubject<Boolean> loadingSubject = PublishSubject.create();
         IFragment<AndroidViewModel> fragment = mockFragment(IFragment.class);
         viewModel.bindLoading(loadingSubject);
-        Subscription subscription = AndroidViewControllers.bindLoading(fragment, viewModel);
+        Subscription subscription = AndroidViews.bindLoading(fragment, viewModel);
 
         loadingSubject.onNext(true);
         verify(fragment).lifecycle();
@@ -265,7 +265,7 @@ public class AndroidViewsTest extends AndroidTestCase {
         PublishSubject<IViewModelException> errorsSubject = PublishSubject.create();
         IFragment<AndroidViewModel> fragment = mockFragment(IFragment.class);
         viewModel.bindErrors(errorsSubject);
-        Subscription subscription = AndroidViewControllers.bindErrors(fragment, viewModel);
+        Subscription subscription = AndroidViews.bindErrors(fragment, viewModel);
         ViewModelException exception = new ViewModelException("TestException");
 
         errorsSubject.onNext(exception);
@@ -281,7 +281,7 @@ public class AndroidViewsTest extends AndroidTestCase {
         TestAndroidArrayViewModel arrayViewModel = new TestAndroidArrayViewModel(getContext(), generateViewModels(3));
         TestArrayFragment fragment = mockFragment(TestArrayFragment.class);
 
-        Subscription subscription = AndroidViewControllers.bindCount(fragment, arrayViewModel);
+        Subscription subscription = AndroidViews.bindCount(fragment, arrayViewModel);
 
         verify(fragment).lifecycle();
         verify(fragment).onDataSetChanged();
@@ -295,7 +295,7 @@ public class AndroidViewsTest extends AndroidTestCase {
         TestAndroidArrayViewModel arrayViewModel = new TestAndroidArrayViewModel(getContext(), generateViewModels(3));
         TestArrayFragment fragment = mockFragment(TestArrayFragment.class);
 
-        Subscription subscription = AndroidViewControllers.bindLocalizedEmptyMessage(fragment, arrayViewModel);
+        Subscription subscription = AndroidViews.bindLocalizedEmptyMessage(fragment, arrayViewModel);
 
         arrayViewModel.localizedEmptyMessage().setValue("TestEmptyMessage");
         verify(fragment).lifecycle();
@@ -318,7 +318,7 @@ public class AndroidViewsTest extends AndroidTestCase {
 
         TestFetchedArrayFragment fragment = mockFragment(TestFetchedArrayFragment.class);
 
-        Subscription subscription = AndroidViewControllers.bindLocalizedEmptyMessageVisibility(fragment, arrayViewModel);
+        Subscription subscription = AndroidViews.bindLocalizedEmptyMessageVisibility(fragment, arrayViewModel);
         arrayViewModel.getRefreshCommand().apply().subscribe();
         subject.onCompleted();
 
@@ -343,7 +343,7 @@ public class AndroidViewsTest extends AndroidTestCase {
 
         TestFetchedArrayFragment fragment = mockFragment(TestFetchedArrayFragment.class);
 
-        Subscription subscription = AndroidViewControllers.bindRefreshing(fragment, arrayViewModel);
+        Subscription subscription = AndroidViews.bindRefreshing(fragment, arrayViewModel);
         arrayViewModel.getRefreshCommand().apply().subscribe();
 
         verify(fragment).lifecycle();
@@ -367,7 +367,7 @@ public class AndroidViewsTest extends AndroidTestCase {
 
         TestFetchedArrayFragment fragment = mockFragment(TestFetchedArrayFragment.class);
 
-        Subscription subscription = AndroidViewControllers.bindFetchingNextPage(fragment, arrayViewModel);
+        Subscription subscription = AndroidViews.bindFetchingNextPage(fragment, arrayViewModel);
         arrayViewModel.getRefreshCommand().apply().subscribe();
         subject.onNext(new Pair<Integer, Collection<AndroidViewModel>>(1, generateViewModels(4)));
         subject.onCompleted();

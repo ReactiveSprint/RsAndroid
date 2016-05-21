@@ -11,7 +11,7 @@ public class FetchedRecyclerFragment<VM extends IAndroidViewModel, AVM extends I
         implements IFetchedArrayView<VM, AVM> {
     @Override
     public void bindRefreshing(AVM arrayViewModel) {
-        AndroidViewControllers.bindRefreshing(this, arrayViewModel);
+        AndroidViews.bindRefreshing(this, arrayViewModel);
     }
 
     @Override
@@ -21,7 +21,7 @@ public class FetchedRecyclerFragment<VM extends IAndroidViewModel, AVM extends I
 
     @Override
     public void bindFetchingNextPage(AVM arrayViewModel) {
-        AndroidViewControllers.bindFetchingNextPage(this, arrayViewModel);
+        AndroidViews.bindFetchingNextPage(this, arrayViewModel);
     }
 
     @Override

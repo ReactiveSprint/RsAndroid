@@ -2,17 +2,30 @@ package io.reactivesprint.android.views;
 
 import android.os.Bundle;
 
+import com.trello.rxlifecycle.ActivityEvent;
 import com.trello.rxlifecycle.components.RxActivity;
 
 import io.reactivesprint.android.viewmodels.IAndroidViewModel;
 import io.reactivesprint.viewmodels.IViewModelException;
+import io.reactivesprint.views.IView;
+import io.reactivesprint.views.IViewBinder;
+import io.reactivesprint.views.ViewBinder;
 
-public class RsActivity<VM extends IAndroidViewModel> extends RxActivity implements IActivity<VM> {
+public class RsActivity<VM extends IAndroidViewModel> extends RxActivity implements IView<VM> {
     //region Fields
 
     private VM viewModel;
+    private IViewBinder<VM, ? extends IView<VM>> viewBinder;
 
     //endregion
+
+    public RsActivity() {
+        viewBinder = onCreateViewBinder();
+    }
+
+    protected IViewBinder<VM, ? extends IView<VM>> onCreateViewBinder() {
+        return new ViewBinder<>(this, AndroidLifecycleProvider.from(this, ActivityEvent.START));
+    }
 
     //region LifeCycle
 
@@ -20,10 +33,10 @@ public class RsActivity<VM extends IAndroidViewModel> extends RxActivity impleme
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
 
-        VM viewModel = AndroidViewControllers.getViewModelFromBundle(savedInstanceState);
+        VM viewModel = AndroidViews.getViewModelFromBundle(savedInstanceState);
 
         if (viewModel == null && getIntent() != null) {
-            viewModel = AndroidViewControllers.getViewModelFromBundle(getIntent().getExtras());
+            viewModel = AndroidViews.getViewModelFromBundle(getIntent().getExtras());
         }
 
         if (viewModel != null && !viewModel.equals(getViewModel())) {
@@ -33,57 +46,18 @@ public class RsActivity<VM extends IAndroidViewModel> extends RxActivity impleme
     }
 
     @Override
-    protected void onStart() {
-        super.onStart();
-        VM viewModel = getViewModel();
-        if (viewModel == null) {
-            return;
-        }
-        bindActive(viewModel);
-        bindTitle(viewModel);
-        bindLoading(viewModel);
-        bindErrors(viewModel);
-    }
-
-    @Override
-    protected void onDestroy() {
-        super.onDestroy();
-        viewModel = null;
-    }
-
-    @Override
     protected void onSaveInstanceState(Bundle outState) {
         super.onSaveInstanceState(outState);
-        AndroidViewControllers.onSaveInstanceState(viewModel, outState);
-    }
-
-    //endregion
-
-    //region Binding
-
-    @Override
-    public void bindActive(VM viewModel) {
-
-    }
-
-    @Override
-    public void bindTitle(VM viewModel) {
-        AndroidViewControllers.bindTitle(this, viewModel);
-    }
-
-    @Override
-    public void bindLoading(VM viewModel) {
-        AndroidViewControllers.bindLoading(this, viewModel);
-    }
-
-    @Override
-    public void bindErrors(VM viewModel) {
-        AndroidViewControllers.bindErrors(this, viewModel);
+        AndroidViews.onSaveInstanceState(viewModel, outState);
     }
 
     //endregion
 
     //region Properties
+
+    public IViewBinder<VM, ? extends IView<VM>> getViewBinder() {
+        return viewBinder;
+    }
 
     @Override
     public VM getViewModel() {

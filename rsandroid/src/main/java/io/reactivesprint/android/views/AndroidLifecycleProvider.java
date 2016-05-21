@@ -7,6 +7,8 @@ import com.trello.rxlifecycle.ActivityLifecycleProvider;
 import com.trello.rxlifecycle.FragmentEvent;
 import com.trello.rxlifecycle.FragmentLifecycleProvider;
 
+import io.reactivesprint.android.viewmodels.IAndroidViewModel;
+import io.reactivesprint.viewmodels.IViewModel;
 import io.reactivesprint.views.LifecycleProvider;
 import rx.Observable;
 import rx.functions.Func1;
@@ -62,6 +64,26 @@ public final class AndroidLifecycleProvider {
             @Override
             public <T> Observable.Transformer<T, T> bindToLifecycle() {
                 return lifecycleProvider.bindToLifecycle();
+            }
+        };
+    }
+
+    public static <VM extends IViewModel & IAndroidViewModel> LifecycleProvider<VM> from(@NonNull final IAndroidViewHolder<VM> viewHolder) {
+        checkNotNull(viewHolder, "viewHolder");
+        return new LifecycleProvider<VM>() {
+            @Override
+            public Observable<VM> onStartBinding() {
+                return viewHolder.onViewRecycled();
+            }
+
+            @Override
+            public <T> Observable.Transformer<T, T> bindToLifecycle() {
+                return new Observable.Transformer<T, T>() {
+                    @Override
+                    public Observable<T> call(Observable<T> source) {
+                        return source.takeUntil(viewHolder.onViewRecycled());
+                    }
+                };
             }
         };
     }

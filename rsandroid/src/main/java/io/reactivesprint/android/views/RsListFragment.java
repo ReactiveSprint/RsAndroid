@@ -14,21 +14,34 @@ import com.trello.rxlifecycle.RxLifecycle;
 import io.reactivesprint.android.viewmodels.IAndroidViewModel;
 import io.reactivesprint.viewmodels.IArrayViewModel;
 import io.reactivesprint.views.IArrayView;
+import io.reactivesprint.views.IView;
+import io.reactivesprint.views.IViewBinder;
+import io.reactivesprint.views.ViewBinder;
 import rx.Observable;
 import rx.subjects.BehaviorSubject;
 
 /**
  * Created by Ahmad Baraka on 5/21/16.
  */
-public abstract class RsListFragment<VM extends IAndroidViewModel, AVM extends IArrayViewModel & IAndroidViewModel> extends ListFragment
-        implements FragmentLifecycleProvider, IFragment<VM>, IArrayView<VM, AVM> {
+public abstract class RsListFragment<VM extends IAndroidViewModel, AVM extends IArrayViewModel<?> & IAndroidViewModel> extends ListFragment
+        implements FragmentLifecycleProvider, IView<VM>, IArrayView<VM, AVM> {
     //region Fields
 
     private VM viewModel;
 
+    private IViewBinder<VM, ? extends IView<VM>> viewBinder;
+
     private final BehaviorSubject<FragmentEvent> lifecycleSubject = BehaviorSubject.create();
 
     //endregion
+
+    public RsListFragment() {
+        viewBinder = onCreateViewBinder();
+    }
+
+    protected IViewBinder<VM, ? extends IView<VM>> onCreateViewBinder() {
+        return new ViewBinder<>(this, AndroidLifecycleProvider.from(this, FragmentEvent.START));
+    }
 
     //region LifeCycle
 
@@ -126,14 +139,6 @@ public abstract class RsListFragment<VM extends IAndroidViewModel, AVM extends I
     public final <T> Observable.Transformer<T, T> bindToLifecycle() {
         return RxLifecycle.bindFragment(lifecycleSubject);
     }
-
-    //endregion
-
-    //region IViewController
-
-    //endregion
-
-    //region IArrayViewController
 
     //endregion
 }

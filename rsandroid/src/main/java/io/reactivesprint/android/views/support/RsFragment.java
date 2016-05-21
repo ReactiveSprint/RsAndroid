@@ -2,22 +2,35 @@ package io.reactivesprint.android.views.support;
 
 import android.os.Bundle;
 
+import com.trello.rxlifecycle.FragmentEvent;
 import com.trello.rxlifecycle.components.support.RxFragment;
 
 import io.reactivesprint.android.viewmodels.IAndroidViewModel;
-import io.reactivesprint.android.views.AndroidViewControllers;
-import io.reactivesprint.android.views.IFragment;
+import io.reactivesprint.android.views.AndroidLifecycleProvider;
+import io.reactivesprint.android.views.AndroidViews;
 import io.reactivesprint.viewmodels.IViewModelException;
+import io.reactivesprint.views.IView;
+import io.reactivesprint.views.IViewBinder;
+import io.reactivesprint.views.ViewBinder;
 
 /**
  * Created by Ahmad Baraka on 4/25/16.
  */
-public class RsFragment<VM extends IAndroidViewModel> extends RxFragment implements IFragment<VM> {
+public class RsFragment<VM extends IAndroidViewModel> extends RxFragment implements IView<VM> {
     //region Fields
 
     private VM viewModel;
+    private IViewBinder<VM, ? extends IView<VM>> viewBinder;
 
     //endregion
+
+    public RsFragment() {
+        viewBinder = onCreateViewBinder();
+    }
+
+    protected IViewBinder<VM, ? extends IView<VM>> onCreateViewBinder() {
+        return new ViewBinder<>(this, AndroidLifecycleProvider.from(this, FragmentEvent.START));
+    }
 
     //region LifeCycle
 
@@ -25,10 +38,10 @@ public class RsFragment<VM extends IAndroidViewModel> extends RxFragment impleme
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
 
-        VM viewModel = AndroidViewControllers.getViewModelFromBundle(savedInstanceState);
+        VM viewModel = AndroidViews.getViewModelFromBundle(savedInstanceState);
 
         if (viewModel == null) {
-            viewModel = AndroidViewControllers.getViewModelFromBundle(getArguments());
+            viewModel = AndroidViews.getViewModelFromBundle(getArguments());
         }
 
         if (viewModel != null && !viewModel.equals(getViewModel())) {
@@ -38,58 +51,16 @@ public class RsFragment<VM extends IAndroidViewModel> extends RxFragment impleme
     }
 
     @Override
-    public void onStart() {
-        super.onStart();
-        VM viewModel = getViewModel();
-        if (viewModel == null) {
-            return;
-        }
-        bindActive(viewModel);
-        bindTitle(viewModel);
-        bindLoading(viewModel);
-        bindErrors(viewModel);
-    }
-
-    @Override
     public void onSaveInstanceState(Bundle outState) {
         super.onSaveInstanceState(outState);
-        AndroidViewControllers.onSaveInstanceState(viewModel, outState);
+        AndroidViews.onSaveInstanceState(viewModel, outState);
     }
-
-    @Override
-    public void onDestroy() {
-        super.onDestroy();
-        viewModel = null;
-    }
-
-    //endregion
-
-    //region Binding
-
-    @Override
-    public void bindActive(VM viewModel) {
-
-    }
-
-    @Override
-    public void bindTitle(VM viewModel) {
-        AndroidViewControllers.bindTitle(this, viewModel);
-    }
-
-    @Override
-    public void bindLoading(VM viewModel) {
-        AndroidViewControllers.bindLoading(this, viewModel);
-    }
-
-
-    @Override
-    public void bindErrors(VM viewModel) {
-        AndroidViewControllers.bindErrors(this, viewModel);
-    }
-
-    //endregion
 
     //region Properties
+
+    public IViewBinder<VM, ? extends IView<VM>> getViewBinder() {
+        return viewBinder;
+    }
 
     @Override
     public VM getViewModel() {

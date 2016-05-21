@@ -7,7 +7,7 @@ import android.view.View;
 
 import io.reactivesprint.android.R;
 import io.reactivesprint.android.viewmodels.IAndroidViewModel;
-import io.reactivesprint.android.views.AndroidViewControllers;
+import io.reactivesprint.android.views.AndroidViews;
 import io.reactivesprint.viewmodels.IFetchedArrayViewModel;
 import io.reactivesprint.views.IFetchedArrayView;
 
@@ -44,7 +44,7 @@ public class FetchedRecyclerFragment<VM extends IAndroidViewModel, AVM extends I
 
     @Override
     public void bindRefreshing(AVM arrayViewModel) {
-        AndroidViewControllers.bindRefreshing(this, arrayViewModel);
+        AndroidViews.bindRefreshing(this, arrayViewModel);
     }
 
     @Override
@@ -56,7 +56,7 @@ public class FetchedRecyclerFragment<VM extends IAndroidViewModel, AVM extends I
 
     @Override
     public void bindFetchingNextPage(AVM arrayViewModel) {
-        AndroidViewControllers.bindFetchingNextPage(this, arrayViewModel);
+        AndroidViews.bindFetchingNextPage(this, arrayViewModel);
     }
 
     @Override

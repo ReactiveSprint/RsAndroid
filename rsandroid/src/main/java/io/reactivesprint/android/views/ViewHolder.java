@@ -5,14 +5,15 @@ import android.support.annotation.NonNull;
 import android.view.View;
 import android.widget.TextView;
 
-import com.jakewharton.rxbinding.widget.RxTextView;
-
 import io.reactivesprint.android.R;
 import io.reactivesprint.android.viewmodels.IAndroidViewModel;
 import io.reactivesprint.rx.IMutableProperty;
 import io.reactivesprint.rx.MutableProperty;
+import io.reactivesprint.viewmodels.IViewModelException;
+import io.reactivesprint.views.IView;
+import io.reactivesprint.views.IViewBinder;
+import io.reactivesprint.views.ViewBinder;
 import rx.Observable;
-import rx.functions.Func1;
 
 import static io.reactivesprint.Preconditions.checkNotNull;
 
@@ -24,6 +25,8 @@ public class ViewHolder<VM extends IAndroidViewModel> implements IAndroidViewHol
 
     @NonNull
     private final View view;
+
+    private IViewBinder<VM, ? extends IView<VM>> viewBinder;
 
     private TextView titleTextView;
 
@@ -57,7 +60,12 @@ public class ViewHolder<VM extends IAndroidViewModel> implements IAndroidViewHol
         checkNotNull(view, "view");
         this.view = view;
         onViewCreated(view);
+        viewBinder = onCreateViewBinder();
     }
+
+    //endregion
+
+    //region Lifecycle
 
     /**
      * You may override this method and use {@link View#findViewById(int)}.
@@ -77,22 +85,16 @@ public class ViewHolder<VM extends IAndroidViewModel> implements IAndroidViewHol
         titleTextView = (TextView) titleView;
     }
 
+    protected IViewBinder<VM, ? extends IView<VM>> onCreateViewBinder() {
+        return new ViewBinder<>(this, AndroidLifecycleProvider.from(this));
+    }
+
     //endregion
 
     //region Properties
 
     public void setViewModel(VM viewModel) {
         this.viewModel.setValue(viewModel);
-
-        if (viewModel == null) {
-            return;
-        }
-
-        if (titleTextView != null) {
-            viewModel.title().getObservable()
-                    .takeUntil(getUntilObservable())
-                    .subscribe(RxTextView.text(titleTextView));
-        }
     }
 
     public VM getViewModel() {
@@ -109,21 +111,34 @@ public class ViewHolder<VM extends IAndroidViewModel> implements IAndroidViewHol
         return titleTextView;
     }
 
-    public Observable<Void> getUntilObservable() {
-        return viewModel.getObservable().map(new Func1<VM, Void>() {
-            @Override
-            public Void call(VM vm) {
-                return null;
-            }
-        });
+    public IViewBinder<VM, ? extends IView<VM>> getViewBinder() {
+        return viewBinder;
+    }
+
+    @NonNull
+    @Override
+    public Observable<VM> onViewRecycled() {
+        return viewModel.getObservable();
     }
 
     //endregion
 
-    //region Binding
+    //region IView
 
     @Override
-    public void bindActive(VM viewModel) {
+    public void setTitle(CharSequence title) {
+        if (getTitleTextView() != null) {
+            getTitleTextView().setText(title);
+        }
+    }
+
+    @Override
+    public void presentLoading(boolean loading) {
+
+    }
+
+    @Override
+    public void presentError(IViewModelException error) {
 
     }
 
