@@ -4,6 +4,7 @@ import io.reactivesprint.viewmodels.IViewModel;
 import io.reactivesprint.viewmodels.IViewModelException;
 import rx.Observable;
 import rx.Subscription;
+import rx.functions.Action0;
 import rx.functions.Action1;
 import rx.internal.util.SubscriptionList;
 
@@ -23,6 +24,7 @@ public class ViewBinder<VM extends IViewModel, V extends IView<VM>> implements I
 
     private final V view;
     private final LifecycleProvider<?> lifecycleProvider;
+    private final SubscriptionList subscriptionList = new SubscriptionList();
 
     //endregion
 
@@ -35,10 +37,16 @@ public class ViewBinder<VM extends IViewModel, V extends IView<VM>> implements I
         this.lifecycleProvider = lifecycleProvider;
 
         lifecycleProvider.onStartBinding()
+                .doAfterTerminate(new Action0() {
+                    @Override
+                    public void call() {
+                        subscriptionList.unsubscribe();
+                    }
+                })
                 .subscribe(new Action1<Object>() {
                     @Override
                     public void call(Object event) {
-                        bindViewModel();
+                        subscriptionList.add(bindViewModel());
                     }
                 });
     }
