@@ -2,6 +2,7 @@ package io.reactivesprint.views;
 
 import io.reactivesprint.viewmodels.IFetchedArrayViewModel;
 import io.reactivesprint.viewmodels.IViewModel;
+import rx.Subscription;
 
 /**
  * Created by Ahmad Baraka on 5/21/16.
@@ -12,10 +13,10 @@ public interface IFetchedArrayViewBinder
     /**
      * Binds {@link IFetchedArrayViewModel#refreshing()} to {@link IFetchedArrayView#presentRefreshing(boolean)}
      */
-    void bindRefreshing(AVM arrayViewModel);
+    Subscription bindRefreshing(AVM arrayViewModel);
 
     /**
      * Binds {@link IFetchedArrayViewModel#fetchingNextPage()} to {@link IFetchedArrayView#presentFetchingNextPage(boolean)}
      */
-    void bindFetchingNextPage(AVM arrayViewModel);
+    Subscription bindFetchingNextPage(AVM arrayViewModel);
 }

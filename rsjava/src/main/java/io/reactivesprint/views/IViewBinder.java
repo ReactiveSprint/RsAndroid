@@ -2,6 +2,7 @@ package io.reactivesprint.views;
 
 import io.reactivesprint.viewmodels.IViewModel;
 import io.reactivesprint.viewmodels.IViewModelException;
+import rx.Subscription;
 
 /**
  * Created by Ahmad Baraka on 5/21/16.
@@ -15,20 +16,20 @@ public interface IViewBinder<VM extends IViewModel, V extends IView<VM>> {
     /**
      * Binds {@link IViewModel#active()} property to {@link }
      */
-    void bindActive(VM viewModel);
+    Subscription bindActive(VM viewModel);
 
     /**
      * Binds {@link IViewModel#title()} to the receiver title.
      */
-    void bindTitle(VM viewModel);
+    Subscription bindTitle(VM viewModel);
 
     /**
      * Binds {@link IViewModel#loading()} to {@link IView#presentLoading(boolean)}
      */
-    void bindLoading(VM viewModel);
+    Subscription bindLoading(VM viewModel);
 
     /**
      * Binds {@link IViewModel#errors()} to {@link IView#presentError(IViewModelException)}
      */
-    void bindErrors(VM viewModel);
+    Subscription bindErrors(VM viewModel);
 }
