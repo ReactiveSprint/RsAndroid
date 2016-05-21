@@ -8,7 +8,7 @@ import io.reactivesprint.viewmodels.IViewModel;
  * Represents a View Controller that wraps {@link IFetchedArrayViewModel}
  */
 public interface IFetchedArrayView
-        <VM extends IViewModel, AVM extends IFetchedArrayViewModel>
+        <VM extends IViewModel, AVM extends IFetchedArrayViewModel<?, ?, ?, ?>>
         extends IArrayView<VM, AVM> {
 
     /**

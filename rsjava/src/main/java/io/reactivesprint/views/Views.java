@@ -76,7 +76,7 @@ public final class Views {
      * so when this is used with {@link rx.Observable}, unsubscribe
      * to free this reference.
      */
-    public static <VM extends IViewModel, AVM extends IArrayViewModel> Action1<Integer> onDataSetChanged(final IArrayView<VM, AVM> view) {
+    public static <VM extends IViewModel, AVM extends IArrayViewModel<?>> Action1<Integer> onDataSetChanged(final IArrayView<VM, AVM> view) {
         checkNotNull(view, "view");
         return new Action1<Integer>() {
             @Override
@@ -93,7 +93,7 @@ public final class Views {
      * so when this is used with {@link rx.Observable}, unsubscribe
      * to free this reference.
      */
-    public static <VM extends IViewModel, AVM extends IArrayViewModel> Action1<CharSequence> setLocalizedEmptyMessage(final IArrayView<VM, AVM> view) {
+    public static <VM extends IViewModel, AVM extends IArrayViewModel<?>> Action1<CharSequence> setLocalizedEmptyMessage(final IArrayView<VM, AVM> view) {
         checkNotNull(view, "view");
         return new Action1<CharSequence>() {
             @Override
@@ -110,7 +110,7 @@ public final class Views {
      * so when this is used with {@link rx.Observable}, unsubscribe
      * to free this reference.
      */
-    public static <VM extends IViewModel, AVM extends IArrayViewModel> Action1<Boolean> setLocalizedEmptyMessageVisibility(final IArrayView<VM, AVM> view) {
+    public static <VM extends IViewModel, AVM extends IArrayViewModel<?>> Action1<Boolean> setLocalizedEmptyMessageVisibility(final IArrayView<VM, AVM> view) {
         checkNotNull(view, "view");
         return new Action1<Boolean>() {
             @Override
@@ -127,7 +127,7 @@ public final class Views {
      * so when this is used with {@link rx.Observable}, unsubscribe
      * to free this reference.
      */
-    public static <VM extends IViewModel, AVM extends IFetchedArrayViewModel> Action1<Boolean> presentRefreshing(final IFetchedArrayView<VM, AVM> view) {
+    public static <VM extends IViewModel, AVM extends IFetchedArrayViewModel<?, ?, ?, ?>> Action1<Boolean> presentRefreshing(final IFetchedArrayView<VM, AVM> view) {
         checkNotNull(view, "view");
         return new Action1<Boolean>() {
             @Override
@@ -144,7 +144,7 @@ public final class Views {
      * so when this is used with {@link rx.Observable}, unsubscribe
      * to free this reference.
      */
-    public static <VM extends IViewModel, AVM extends IFetchedArrayViewModel> Action1<Boolean> presentFetchingNextPage(final IFetchedArrayView<VM, AVM> view) {
+    public static <VM extends IViewModel, AVM extends IFetchedArrayViewModel<?, ?, ?, ?>> Action1<Boolean> presentFetchingNextPage(final IFetchedArrayView<VM, AVM> view) {
         checkNotNull(view, "view");
         return new Action1<Boolean>() {
             @Override

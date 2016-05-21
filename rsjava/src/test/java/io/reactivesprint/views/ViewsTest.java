@@ -17,20 +17,20 @@ import static org.mockito.Mockito.verify;
 public class ViewsTest extends TestCase {
 
     public void testSetTitle() throws Exception {
-        IViewController<ViewModel> viewController = mock(IViewController.class);
+        IView<ViewModel> viewController = mock(IView.class);
         Views.setTitle(viewController).call("Test");
         verify(viewController).setTitle("Test");
     }
 
     public void testPresentLoading() throws Exception {
-        IViewController<ViewModel> viewController = mock(IViewController.class);
+        IView<ViewModel> viewController = mock(IView.class);
         Views.presentLoading(viewController).call(true);
         verify(viewController).presentLoading(true);
     }
 
     @SuppressWarnings("ThrowableInstanceNeverThrown")
     public void testPresentError() throws Exception {
-        IViewController<ViewModel> viewController = mock(IViewController.class);
+        IView<ViewModel> viewController = mock(IView.class);
         ViewModelException viewModelException = new ViewModelException("TestException");
         Views.presentError(viewController).call(viewModelException);
         verify(viewController).presentError(viewModelException);

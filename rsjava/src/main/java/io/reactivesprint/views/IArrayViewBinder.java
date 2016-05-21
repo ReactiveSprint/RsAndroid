@@ -7,7 +7,7 @@ import rx.Subscription;
 /**
  * Created by Ahmad Baraka on 5/21/16.
  */
-public interface IArrayViewBinder<VM extends IViewModel, AVM extends IArrayViewModel, V extends IArrayView<VM, AVM>>
+public interface IArrayViewBinder<VM extends IViewModel, AVM extends IArrayViewModel<?>, V extends IArrayView<VM, AVM>>
         extends IViewBinder<VM, V> {
     /**
      * Binds {@link IArrayViewModel#count()} to {@link IArrayView#onDataSetChanged()}

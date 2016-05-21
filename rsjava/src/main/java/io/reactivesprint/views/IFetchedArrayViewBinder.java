@@ -8,7 +8,7 @@ import rx.Subscription;
  * Created by Ahmad Baraka on 5/21/16.
  */
 public interface IFetchedArrayViewBinder
-        <VM extends IViewModel, AVM extends IFetchedArrayViewModel, V extends IFetchedArrayView<VM, AVM>>
+        <VM extends IViewModel, AVM extends IFetchedArrayViewModel<?, ?, ?, ?>, V extends IFetchedArrayView<VM, AVM>>
         extends IArrayViewBinder<VM, AVM, V> {
     /**
      * Binds {@link IFetchedArrayViewModel#refreshing()} to {@link IFetchedArrayView#presentRefreshing(boolean)}
