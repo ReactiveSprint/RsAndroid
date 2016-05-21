@@ -4,10 +4,13 @@ import android.annotation.TargetApi;
 import android.os.Build;
 import android.os.Bundle;
 
+import com.trello.rxlifecycle.FragmentEvent;
 import com.trello.rxlifecycle.components.RxFragment;
 
 import io.reactivesprint.android.viewmodels.IAndroidViewModel;
 import io.reactivesprint.viewmodels.IViewModelException;
+import rx.functions.Action1;
+import rx.functions.Func1;
 
 @TargetApi(Build.VERSION_CODES.HONEYCOMB)
 public class RsFragment<VM extends IAndroidViewModel> extends RxFragment implements IFragment<VM> {
@@ -16,6 +19,39 @@ public class RsFragment<VM extends IAndroidViewModel> extends RxFragment impleme
     private VM viewModel;
 
     //endregion
+
+    public RsFragment() {
+        lifecycle().filter(new Func1<FragmentEvent, Boolean>() {
+            @Override
+            public Boolean call(FragmentEvent fragmentEvent) {
+                return FragmentEvent.START == fragmentEvent;
+            }
+        }).compose(this.<FragmentEvent>bindUntilEvent(FragmentEvent.STOP)).subscribe(new Action1<FragmentEvent>() {
+            @Override
+            public void call(FragmentEvent fragmentEvent) {
+                VM viewModel = getViewModel();
+                if (viewModel == null) {
+                    return;
+                }
+                bindActive(viewModel);
+                bindTitle(viewModel);
+                bindLoading(viewModel);
+                bindErrors(viewModel);
+            }
+        });
+
+        lifecycle().filter(new Func1<FragmentEvent, Boolean>() {
+            @Override
+            public Boolean call(FragmentEvent fragmentEvent) {
+                return FragmentEvent.DESTROY == fragmentEvent;
+            }
+        }).subscribe(new Action1<FragmentEvent>() {
+            @Override
+            public void call(FragmentEvent fragmentEvent) {
+                viewModel = null;
+            }
+        });
+    }
 
     //region LifeCycle
 
@@ -36,28 +72,9 @@ public class RsFragment<VM extends IAndroidViewModel> extends RxFragment impleme
     }
 
     @Override
-    public void onStart() {
-        super.onStart();
-        VM viewModel = getViewModel();
-        if (viewModel == null) {
-            return;
-        }
-        bindActive(viewModel);
-        bindTitle(viewModel);
-        bindLoading(viewModel);
-        bindErrors(viewModel);
-    }
-
-    @Override
     public void onSaveInstanceState(Bundle outState) {
         super.onSaveInstanceState(outState);
         AndroidViewControllers.onSaveInstanceState(viewModel, outState);
-    }
-
-    @Override
-    public void onDestroy() {
-        super.onDestroy();
-        viewModel = null;
     }
 
     //endregion
