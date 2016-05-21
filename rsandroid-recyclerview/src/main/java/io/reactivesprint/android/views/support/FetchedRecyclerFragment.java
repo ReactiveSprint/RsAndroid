@@ -9,13 +9,13 @@ import io.reactivesprint.android.R;
 import io.reactivesprint.android.viewmodels.IAndroidViewModel;
 import io.reactivesprint.android.views.AndroidViewControllers;
 import io.reactivesprint.viewmodels.IFetchedArrayViewModel;
-import io.reactivesprint.views.IFetchedArrayViewController;
+import io.reactivesprint.views.IFetchedArrayView;
 
 /**
  * Created by Ahmad Baraka on 5/20/16.
  */
 public class FetchedRecyclerFragment<VM extends IAndroidViewModel, AVM extends IFetchedArrayViewModel & IAndroidViewModel> extends RecyclerFragment<VM, AVM>
-        implements IFetchedArrayViewController<VM, AVM>, SwipeRefreshLayout.OnRefreshListener {
+        implements IFetchedArrayView<VM, AVM>, SwipeRefreshLayout.OnRefreshListener {
 
     @Nullable
     protected SwipeRefreshLayout refreshLayout;

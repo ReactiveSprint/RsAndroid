@@ -3,13 +3,13 @@ package io.reactivesprint.android.views.support;
 import io.reactivesprint.android.viewmodels.IAndroidViewModel;
 import io.reactivesprint.android.views.AndroidViewControllers;
 import io.reactivesprint.viewmodels.IFetchedArrayViewModel;
-import io.reactivesprint.views.IFetchedArrayViewController;
+import io.reactivesprint.views.IFetchedArrayView;
 
 /**
  * Created by Ahmad Baraka on 5/21/16.
  */
 public abstract class FetchedArrayFragment<VM extends IAndroidViewModel, AVM extends IFetchedArrayViewModel & IAndroidViewModel> extends ArrayFragment<VM, AVM> implements
-        IFetchedArrayViewController<VM, AVM> {
+        IFetchedArrayView<VM, AVM> {
     @Override
     public void onStart() {
         super.onStart();

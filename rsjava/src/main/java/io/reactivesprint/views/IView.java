@@ -1,6 +1,7 @@
 package io.reactivesprint.views;
 
 import io.reactivesprint.viewmodels.IViewModel;
+import io.reactivesprint.viewmodels.IViewModelException;
 
 /**
  * Created by Ahmad Baraka on 4/6/16.
@@ -13,7 +14,17 @@ public interface IView<VM extends IViewModel> {
     VM getViewModel();
 
     /**
-     * Binds {@link IViewModel#active()} property from the receiver.
+     * Sets Title of View Controller.
      */
-    void bindActive(VM viewModel);
+    void setTitle(CharSequence title);
+
+    /**
+     * Shows or hides a view that represents loading.
+     */
+    void presentLoading(boolean loading);
+
+    /**
+     * Presents `error`
+     */
+    void presentError(IViewModelException error);
 }

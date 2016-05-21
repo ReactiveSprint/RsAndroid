@@ -13,7 +13,7 @@ import com.trello.rxlifecycle.RxLifecycle;
 
 import io.reactivesprint.android.viewmodels.IAndroidViewModel;
 import io.reactivesprint.viewmodels.IArrayViewModel;
-import io.reactivesprint.views.IArrayViewController;
+import io.reactivesprint.views.IArrayView;
 import rx.Observable;
 import rx.subjects.BehaviorSubject;
 
@@ -21,7 +21,7 @@ import rx.subjects.BehaviorSubject;
  * Created by Ahmad Baraka on 5/21/16.
  */
 public abstract class RsListFragment<VM extends IAndroidViewModel, AVM extends IArrayViewModel & IAndroidViewModel> extends ListFragment
-        implements FragmentLifecycleProvider, IFragment<VM>, IArrayViewController<VM, AVM> {
+        implements FragmentLifecycleProvider, IFragment<VM>, IArrayView<VM, AVM> {
     //region Fields
 
     private VM viewModel;

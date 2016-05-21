@@ -2,13 +2,13 @@ package io.reactivesprint.android.views;
 
 import io.reactivesprint.android.viewmodels.IAndroidViewModel;
 import io.reactivesprint.viewmodels.IFetchedArrayViewModel;
-import io.reactivesprint.views.IFetchedArrayViewController;
+import io.reactivesprint.views.IFetchedArrayView;
 
 /**
  * Created by Ahmad Baraka on 5/20/16.
  */
 public class FetchedRecyclerFragment<VM extends IAndroidViewModel, AVM extends IFetchedArrayViewModel & IAndroidViewModel> extends RecyclerFragment<VM, AVM>
-        implements IFetchedArrayViewController<VM, AVM> {
+        implements IFetchedArrayView<VM, AVM> {
     @Override
     public void bindRefreshing(AVM arrayViewModel) {
         AndroidViewControllers.bindRefreshing(this, arrayViewModel);

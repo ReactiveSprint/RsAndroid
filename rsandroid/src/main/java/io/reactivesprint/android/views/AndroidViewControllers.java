@@ -10,24 +10,25 @@ import com.trello.rxlifecycle.RxLifecycle;
 import io.reactivesprint.android.viewmodels.IAndroidViewModel;
 import io.reactivesprint.viewmodels.IArrayViewModel;
 import io.reactivesprint.viewmodels.IFetchedArrayViewModel;
-import io.reactivesprint.views.IArrayViewController;
-import io.reactivesprint.views.IFetchedArrayViewController;
+import io.reactivesprint.views.IArrayView;
+import io.reactivesprint.views.IFetchedArrayView;
+import io.reactivesprint.views.Views;
 import rx.Observable;
 import rx.Subscription;
 import rx.functions.Action1;
 
-import static io.reactivesprint.views.ViewControllers.onDataSetChanged;
-import static io.reactivesprint.views.ViewControllers.presentError;
-import static io.reactivesprint.views.ViewControllers.presentFetchingNextPage;
-import static io.reactivesprint.views.ViewControllers.presentLoading;
-import static io.reactivesprint.views.ViewControllers.presentRefreshing;
-import static io.reactivesprint.views.ViewControllers.setLocalizedEmptyMessage;
-import static io.reactivesprint.views.ViewControllers.setLocalizedEmptyMessageVisibility;
-import static io.reactivesprint.views.ViewControllers.setTitle;
+import static io.reactivesprint.views.Views.onDataSetChanged;
+import static io.reactivesprint.views.Views.presentError;
+import static io.reactivesprint.views.Views.presentFetchingNextPage;
+import static io.reactivesprint.views.Views.presentLoading;
+import static io.reactivesprint.views.Views.presentRefreshing;
+import static io.reactivesprint.views.Views.setLocalizedEmptyMessage;
+import static io.reactivesprint.views.Views.setLocalizedEmptyMessageVisibility;
+import static io.reactivesprint.views.Views.setTitle;
 
 /**
  * Created by Ahmad Baraka on 4/6/16.
- * "Extension" Methods to bind {@link io.reactivesprint.views.ViewControllers}
+ * "Extension" Methods to bind {@link Views}
  */
 public final class AndroidViewControllers {
     public static final String VIEWMODEL_KEY = AndroidViewControllers.class.getPackage().getName() + ".VIEWMODEL";
@@ -90,21 +91,21 @@ public final class AndroidViewControllers {
     public static <VM extends IAndroidViewModel,
             E extends IAndroidViewModel,
             AVM extends IArrayViewModel<E> & IAndroidViewModel,
-            A extends IActivity<VM> & IArrayViewController<VM, AVM>> Subscription bindCount(final A activity, AVM arrayViewModel) {
+            A extends IActivity<VM> & IArrayView<VM, AVM>> Subscription bindCount(final A activity, AVM arrayViewModel) {
         return bind(activity, arrayViewModel.count().getObservable(), onDataSetChanged(activity));
     }
 
     public static <VM extends IAndroidViewModel,
             E extends IAndroidViewModel,
             AVM extends IArrayViewModel<E> & IAndroidViewModel,
-            A extends IActivity<VM> & IArrayViewController<VM, AVM>> Subscription bindLocalizedEmptyMessage(final A activity, AVM arrayViewModel) {
+            A extends IActivity<VM> & IArrayView<VM, AVM>> Subscription bindLocalizedEmptyMessage(final A activity, AVM arrayViewModel) {
         return bind(activity, arrayViewModel.localizedEmptyMessage().getObservable(), setLocalizedEmptyMessage(activity));
     }
 
     public static <VM extends IAndroidViewModel,
             E extends IAndroidViewModel,
             AVM extends IArrayViewModel<E> & IAndroidViewModel,
-            A extends IActivity<VM> & IArrayViewController<VM, AVM>> Subscription bindLocalizedEmptyMessageVisibility(final A activity, AVM arrayViewModel) {
+            A extends IActivity<VM> & IArrayView<VM, AVM>> Subscription bindLocalizedEmptyMessageVisibility(final A activity, AVM arrayViewModel) {
         return bind(activity, arrayViewModel.empty().getObservable(), setLocalizedEmptyMessageVisibility(activity));
     }
 
@@ -112,7 +113,7 @@ public final class AndroidViewControllers {
             E extends IAndroidViewModel,
             P, FI, FO,
             AVM extends IFetchedArrayViewModel<E, P, FI, FO> & IAndroidViewModel,
-            A extends IActivity<VM> & IFetchedArrayViewController<VM, AVM>> Subscription bindRefreshing(final A activity, AVM arrayViewModel) {
+            A extends IActivity<VM> & IFetchedArrayView<VM, AVM>> Subscription bindRefreshing(final A activity, AVM arrayViewModel) {
         return bind(activity, arrayViewModel.refreshing().getObservable(), presentRefreshing(activity));
     }
 
@@ -120,7 +121,7 @@ public final class AndroidViewControllers {
             E extends IAndroidViewModel,
             P, FI, FO,
             AVM extends IFetchedArrayViewModel<E, P, FI, FO> & IAndroidViewModel,
-            A extends IActivity<VM> & IFetchedArrayViewController<VM, AVM>> Subscription bindFetchingNextPage(final A activity, AVM arrayViewModel) {
+            A extends IActivity<VM> & IFetchedArrayView<VM, AVM>> Subscription bindFetchingNextPage(final A activity, AVM arrayViewModel) {
         return bind(activity, arrayViewModel.refreshing().getObservable(), presentFetchingNextPage(activity));
     }
 
@@ -148,21 +149,21 @@ public final class AndroidViewControllers {
     public static <VM extends IAndroidViewModel,
             E extends IAndroidViewModel,
             AVM extends IArrayViewModel<E> & IAndroidViewModel,
-            F extends IFragment<VM> & IArrayViewController<VM, AVM>> Subscription bindCount(final F fragment, AVM arrayViewModel) {
+            F extends IFragment<VM> & IArrayView<VM, AVM>> Subscription bindCount(final F fragment, AVM arrayViewModel) {
         return bind(fragment, arrayViewModel.count().getObservable(), onDataSetChanged(fragment));
     }
 
     public static <VM extends IAndroidViewModel,
             E extends IAndroidViewModel,
             AVM extends IArrayViewModel<E> & IAndroidViewModel,
-            F extends IFragment<VM> & IArrayViewController<VM, AVM>> Subscription bindLocalizedEmptyMessage(final F fragment, AVM arrayViewModel) {
+            F extends IFragment<VM> & IArrayView<VM, AVM>> Subscription bindLocalizedEmptyMessage(final F fragment, AVM arrayViewModel) {
         return bind(fragment, arrayViewModel.localizedEmptyMessage().getObservable(), setLocalizedEmptyMessage(fragment));
     }
 
     public static <VM extends IAndroidViewModel,
             E extends IAndroidViewModel,
             AVM extends IArrayViewModel<E> & IAndroidViewModel,
-            F extends IFragment<VM> & IArrayViewController<VM, AVM>> Subscription bindLocalizedEmptyMessageVisibility(final F fragment, AVM arrayViewModel) {
+            F extends IFragment<VM> & IArrayView<VM, AVM>> Subscription bindLocalizedEmptyMessageVisibility(final F fragment, AVM arrayViewModel) {
         return bind(fragment, arrayViewModel.empty().getObservable(), setLocalizedEmptyMessageVisibility(fragment));
     }
 
@@ -170,7 +171,7 @@ public final class AndroidViewControllers {
             E extends IAndroidViewModel,
             P, FI, FO,
             AVM extends IFetchedArrayViewModel<E, P, FI, FO> & IAndroidViewModel,
-            F extends IFragment<VM> & IFetchedArrayViewController<VM, AVM>> Subscription bindRefreshing(final F fragment, AVM arrayViewModel) {
+            F extends IFragment<VM> & IFetchedArrayView<VM, AVM>> Subscription bindRefreshing(final F fragment, AVM arrayViewModel) {
         return bind(fragment, arrayViewModel.refreshing().getObservable(), presentRefreshing(fragment));
     }
 
@@ -178,7 +179,7 @@ public final class AndroidViewControllers {
             E extends IAndroidViewModel,
             P, FI, FO,
             AVM extends IFetchedArrayViewModel<E, P, FI, FO> & IAndroidViewModel,
-            F extends IFragment<VM> & IFetchedArrayViewController<VM, AVM>> Subscription bindFetchingNextPage(final F fragment, AVM arrayViewModel) {
+            F extends IFragment<VM> & IFetchedArrayView<VM, AVM>> Subscription bindFetchingNextPage(final F fragment, AVM arrayViewModel) {
         return bind(fragment, arrayViewModel.refreshing().getObservable(), presentFetchingNextPage(fragment));
     }
 

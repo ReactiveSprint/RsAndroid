@@ -16,8 +16,8 @@ import io.reactivesprint.android.viewmodels.TestAndroidFetchedArrayViewModel;
 import io.reactivesprint.rx.Pair;
 import io.reactivesprint.viewmodels.IViewModelException;
 import io.reactivesprint.viewmodels.ViewModelException;
-import io.reactivesprint.views.IArrayViewController;
-import io.reactivesprint.views.IFetchedArrayViewController;
+import io.reactivesprint.views.IArrayView;
+import io.reactivesprint.views.IFetchedArrayView;
 import rx.Observable;
 import rx.Subscriber;
 import rx.Subscription;
@@ -33,7 +33,7 @@ import static org.mockito.Mockito.when;
  * Created by Ahmad Baraka on 4/8/Fragment6.
  */
 @SuppressWarnings("unchecked")
-public class AndroidViewControllersTest extends AndroidTestCase {
+public class AndroidViewsTest extends AndroidTestCase {
     AndroidViewModel viewModel;
     Observable<ActivityEvent> activityEventObservable;
     Observable<FragmentEvent> fragmentEventObservable;
@@ -410,18 +410,18 @@ public class AndroidViewControllersTest extends AndroidTestCase {
     //region Test Interfaces
     /// Interfaces for generic insanity
 
-    private interface TestArrayActivity extends IActivity<AndroidViewModel>, IArrayViewController<AndroidViewModel, TestAndroidArrayViewModel> {
+    private interface TestArrayActivity extends IActivity<AndroidViewModel>, IArrayView<AndroidViewModel, TestAndroidArrayViewModel> {
     }
 
-    private interface TestArrayFragment extends IFragment<AndroidViewModel>, IArrayViewController<AndroidViewModel, TestAndroidArrayViewModel> {
+    private interface TestArrayFragment extends IFragment<AndroidViewModel>, IArrayView<AndroidViewModel, TestAndroidArrayViewModel> {
     }
 
     private interface TestFetchedArrayActivity extends IActivity<AndroidViewModel>,
-            IFetchedArrayViewController<AndroidViewModel, AndroidFetchedArrayViewModel<AndroidViewModel, Integer>> {
+            IFetchedArrayView<AndroidViewModel, AndroidFetchedArrayViewModel<AndroidViewModel, Integer>> {
     }
 
     private interface TestFetchedArrayFragment extends IFragment<AndroidViewModel>,
-            IFetchedArrayViewController<AndroidViewModel, AndroidFetchedArrayViewModel<AndroidViewModel, Integer>> {
+            IFetchedArrayView<AndroidViewModel, AndroidFetchedArrayViewModel<AndroidViewModel, Integer>> {
     }
 
     //endregion

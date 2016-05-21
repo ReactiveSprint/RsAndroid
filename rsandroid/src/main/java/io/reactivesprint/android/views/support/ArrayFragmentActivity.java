@@ -3,12 +3,12 @@ package io.reactivesprint.android.views.support;
 import io.reactivesprint.android.viewmodels.IAndroidViewModel;
 import io.reactivesprint.android.views.AndroidViewControllers;
 import io.reactivesprint.viewmodels.IArrayViewModel;
-import io.reactivesprint.views.IArrayViewController;
+import io.reactivesprint.views.IArrayView;
 
 /**
  * Created by Ahmad Baraka on 4/25/16.
  */
-public abstract class ArrayFragmentActivity<VM extends IAndroidViewModel, AVM extends IArrayViewModel & IAndroidViewModel> extends RsFragmentActivity<VM> implements IArrayViewController<VM, AVM> {
+public abstract class ArrayFragmentActivity<VM extends IAndroidViewModel, AVM extends IArrayViewModel & IAndroidViewModel> extends RsFragmentActivity<VM> implements IArrayView<VM, AVM> {
     @Override
     public AVM getArrayViewModel() {
         //noinspection unchecked
