@@ -11,13 +11,15 @@ import io.reactivesprint.android.R;
 import io.reactivesprint.android.viewmodels.IAndroidViewModel;
 import io.reactivesprint.rx.IMutableProperty;
 import io.reactivesprint.rx.MutableProperty;
-import io.reactivesprint.views.IViewHolder;
 import rx.Observable;
 import rx.functions.Func1;
 
 import static io.reactivesprint.Preconditions.checkNotNull;
 
-public class ViewHolder<VM extends IAndroidViewModel> implements IViewHolder<VM> {
+/**
+ * Implementation of {@link IAndroidViewHolder}
+ */
+public class ViewHolder<VM extends IAndroidViewModel> implements IAndroidViewHolder<VM> {
     //region Fields
 
     @NonNull
@@ -38,18 +40,41 @@ public class ViewHolder<VM extends IAndroidViewModel> implements IViewHolder<VM>
         return textView;
     }
 
+    /**
+     * Creates an instance with a {@link #getTitleTextView()}
+     */
     public ViewHolder(@NonNull Context context) {
         this(createTextView(context));
     }
 
+    /**
+     * Creates an instance with {@code view}
+     *
+     * @param view View used in this receiver.
+     *             Your view may contain a {@link TextView} with id {@code R.id.title}
+     */
     public ViewHolder(@NonNull View view) {
         checkNotNull(view, "view");
         this.view = view;
         onViewCreated(view);
     }
 
+    /**
+     * You may override this method and use {@link View#findViewById(int)}.
+     */
     protected void onViewCreated(View view) {
-        titleTextView = (TextView) view.findViewById(R.id.title);
+        View titleView = view.findViewById(R.id.title);
+
+        if (titleView == null) {
+            return;
+        }
+
+        if (!(titleView instanceof TextView)) {
+            throw new RuntimeException("title is expected to be TextView but was "
+                    + titleView.getClass().getName() + " instead.");
+        }
+
+        titleTextView = (TextView) titleView;
     }
 
     //endregion
@@ -75,6 +100,7 @@ public class ViewHolder<VM extends IAndroidViewModel> implements IViewHolder<VM>
     }
 
     @NonNull
+    @Override
     public final View getView() {
         return view;
     }
