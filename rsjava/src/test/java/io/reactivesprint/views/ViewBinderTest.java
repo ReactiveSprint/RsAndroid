@@ -2,7 +2,9 @@ package io.reactivesprint.views;
 
 import junit.framework.TestCase;
 
+import io.reactivesprint.viewmodels.IViewModelException;
 import io.reactivesprint.viewmodels.ViewModel;
+import io.reactivesprint.viewmodels.ViewModelException;
 import rx.subjects.BehaviorSubject;
 import rx.subjects.PublishSubject;
 
@@ -78,6 +80,20 @@ public class ViewBinderTest extends TestCase {
     }
 
     public void testBindErrors() throws Exception {
+        PublishSubject<IViewModelException> errorsSubject = PublishSubject.create();
+        viewModel.bindErrors(errorsSubject);
+        ViewModelException exception = new ViewModelException("TestException");
 
+        lifecycleSubject.onNext(1);
+        errorsSubject.onNext(exception);
+
+        verify(view).setTitle(null);
+        verify(view).presentLoading(false);
+        verify(view).getViewModel();
+        verify(view).presentError(exception);
+
+        lifecycleSubject.onNext(3);
+        errorsSubject.onNext(new ViewModelException("Error"));
+        verifyNoMoreInteractions(view);
     }
 }
