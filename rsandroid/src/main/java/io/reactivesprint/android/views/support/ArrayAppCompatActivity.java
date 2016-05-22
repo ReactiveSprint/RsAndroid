@@ -20,4 +20,10 @@ public abstract class ArrayAppCompatActivity<VM extends IAndroidViewModel, AVM e
     protected IViewBinder<VM, ? extends IView<VM>> onCreateViewBinder() {
         return new ArrayViewBinder<>(this, AndroidLifecycleProvider.from(this, ActivityEvent.START));
     }
+
+    @SuppressWarnings("unchecked")
+    @Override
+    public AVM getArrayViewModel() {
+        return (AVM) getViewModel();
+    }
 }

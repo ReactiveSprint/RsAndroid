@@ -11,6 +11,13 @@ import io.reactivesprint.views.IViewBinder;
 
 public abstract class ArrayFragment<VM extends IAndroidViewModel, AVM extends IArrayViewModel<?> & IAndroidViewModel>
         extends RsFragment<VM> implements IArrayView<VM, AVM> {
+
+    @SuppressWarnings("unchecked")
+    @Override
+    public AVM getArrayViewModel() {
+        return (AVM) getViewModel();
+    }
+
     @Override
     protected IViewBinder<VM, ? extends IView<VM>> onCreateViewBinder() {
         return new ArrayViewBinder<>(this, AndroidLifecycleProvider.from(this, FragmentEvent.START));

@@ -1,11 +1,11 @@
 package io.reactivesprint.android.views.support;
 
-import android.app.ListFragment;
 import android.content.Context;
 import android.os.Bundle;
 import android.support.annotation.CallSuper;
 import android.support.annotation.CheckResult;
 import android.support.annotation.NonNull;
+import android.support.v4.app.ListFragment;
 import android.view.View;
 import android.widget.BaseAdapter;
 import android.widget.ListAdapter;
