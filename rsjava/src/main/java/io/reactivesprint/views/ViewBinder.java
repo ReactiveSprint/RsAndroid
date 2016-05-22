@@ -22,9 +22,10 @@ import static io.reactivesprint.views.Views.setTitle;
 public class ViewBinder<VM extends IViewModel, V extends IView<VM>> implements IViewBinder<VM, V> {
     //region Fields
 
+    private final Object lock = new Object();
     private final V view;
     private final LifecycleProvider<?> lifecycleProvider;
-    private final SubscriptionList subscriptionList = new SubscriptionList();
+    private SubscriptionList subscriptionList;
 
     //endregion
 
@@ -40,15 +41,27 @@ public class ViewBinder<VM extends IViewModel, V extends IView<VM>> implements I
                 .doAfterTerminate(new Action0() {
                     @Override
                     public void call() {
-                        subscriptionList.unsubscribe();
+                        synchronized (lock) {
+                            if (subscriptionList != null) {
+                                subscriptionList.unsubscribe();
+                            }
+                        }
                     }
                 })
                 .subscribe(new Action1<Object>() {
                     @Override
                     public void call(Object event) {
+                        synchronized (lock) {
+                            if (subscriptionList != null) {
+                                subscriptionList.unsubscribe();
+                            }
+                            subscriptionList = new SubscriptionList();
+                        }
                         Subscription subscription = bindViewModel();
                         if (subscription != null) {
-                            subscriptionList.add(subscription);
+                            synchronized (lock) {
+                                subscriptionList.add(subscription);
+                            }
                         }
                     }
                 });
