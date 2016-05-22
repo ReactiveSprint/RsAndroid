@@ -7,6 +7,8 @@ import android.support.annotation.CallSuper;
 import android.support.annotation.CheckResult;
 import android.support.annotation.NonNull;
 import android.view.View;
+import android.widget.BaseAdapter;
+import android.widget.ListAdapter;
 
 import com.trello.rxlifecycle.FragmentEvent;
 import com.trello.rxlifecycle.FragmentLifecycleProvider;
@@ -21,6 +23,8 @@ import io.reactivesprint.views.IViewBinder;
 import io.reactivesprint.views.ViewBinder;
 import rx.Observable;
 import rx.subjects.BehaviorSubject;
+
+import static io.reactivesprint.Preconditions.checkNotNullAndInstanceOf;
 
 /**
  * Created by Ahmad Baraka on 5/21/16.
@@ -195,6 +199,20 @@ public class RsListFragment<VM extends IAndroidViewModel, AVM extends IArrayView
 
     //region IArrayView
 
+    @Override
+    public void setListAdapter(ListAdapter adapter) {
+        if (adapter != null) {
+            checkNotNullAndInstanceOf(adapter, BaseAdapter.class, "adapter");
+        }
+        super.setListAdapter(adapter);
+    }
+
+    @SuppressWarnings("unchecked")
+    @Override
+    public BaseAdapter getListAdapter() {
+        return (BaseAdapter) super.getListAdapter();
+    }
+
     @SuppressWarnings("unchecked")
     @Override
     public AVM getArrayViewModel() {
@@ -203,16 +221,16 @@ public class RsListFragment<VM extends IAndroidViewModel, AVM extends IArrayView
 
     @Override
     public void onDataSetChanged() {
+        getListAdapter().notifyDataSetChanged();
     }
 
     @Override
     public void setLocalizedEmptyMessage(CharSequence localizedEmptyMessage) {
-
+        setEmptyText(localizedEmptyMessage);
     }
 
     @Override
     public void setLocalizedEmptyMessageVisibility(boolean visibility) {
-
     }
 
     //endregion

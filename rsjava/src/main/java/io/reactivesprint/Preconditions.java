@@ -46,4 +46,19 @@ public final class Preconditions {
 
         return objects;
     }
+
+    public static <T> T checkNotNullAndInstanceOf(T object, Class<?> aClass, String name) {
+        return checkNotNullAndInstanceOfWithMessage(object, aClass, name + " must be instance of " + aClass.getName());
+    }
+
+    public static <T> T checkNotNullAndInstanceOfWithMessage(T object, Class<?> aClass, String message) {
+        checkNotNull(object, message);
+
+        if (!object.getClass().isAssignableFrom(aClass)) {
+            throw new IllegalArgumentException(message);
+        }
+
+        return object;
+    }
+
 }
