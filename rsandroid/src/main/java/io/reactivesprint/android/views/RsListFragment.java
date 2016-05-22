@@ -1,6 +1,7 @@
 package io.reactivesprint.android.views;
 
 import android.app.ListFragment;
+import android.content.Context;
 import android.os.Bundle;
 import android.support.annotation.CallSuper;
 import android.support.annotation.CheckResult;
@@ -13,6 +14,7 @@ import com.trello.rxlifecycle.RxLifecycle;
 
 import io.reactivesprint.android.viewmodels.IAndroidViewModel;
 import io.reactivesprint.viewmodels.IArrayViewModel;
+import io.reactivesprint.viewmodels.IViewModelException;
 import io.reactivesprint.views.IArrayView;
 import io.reactivesprint.views.IView;
 import io.reactivesprint.views.IViewBinder;
@@ -23,7 +25,7 @@ import rx.subjects.BehaviorSubject;
 /**
  * Created by Ahmad Baraka on 5/21/16.
  */
-public abstract class RsListFragment<VM extends IAndroidViewModel, AVM extends IArrayViewModel<?> & IAndroidViewModel> extends ListFragment
+public class RsListFragment<VM extends IAndroidViewModel, AVM extends IArrayViewModel<?> & IAndroidViewModel> extends ListFragment
         implements FragmentLifecycleProvider, IView<VM>, IArrayView<VM, AVM> {
     //region Fields
 
@@ -47,8 +49,8 @@ public abstract class RsListFragment<VM extends IAndroidViewModel, AVM extends I
 
     @Override
     @CallSuper
-    public void onAttach(android.app.Activity activity) {
-        super.onAttach(activity);
+    public void onAttach(Context context) {
+        super.onAttach(context);
         lifecycleSubject.onNext(FragmentEvent.ATTACH);
     }
 
@@ -57,6 +59,17 @@ public abstract class RsListFragment<VM extends IAndroidViewModel, AVM extends I
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         lifecycleSubject.onNext(FragmentEvent.CREATE);
+
+        VM viewModel = AndroidViews.getViewModelFromBundle(savedInstanceState);
+
+        if (viewModel == null) {
+            viewModel = AndroidViews.getViewModelFromBundle(getArguments());
+        }
+
+        if (viewModel != null && !viewModel.equals(getViewModel())) {
+            viewModel.setContext(getActivity().getApplicationContext());
+            setViewModel(viewModel);
+        }
     }
 
     @Override
@@ -138,6 +151,68 @@ public abstract class RsListFragment<VM extends IAndroidViewModel, AVM extends I
     @CheckResult
     public final <T> Observable.Transformer<T, T> bindToLifecycle() {
         return RxLifecycle.bindFragment(lifecycleSubject);
+    }
+
+    //endregion
+
+    //region Properties
+
+    public IViewBinder<VM, ? extends IView<VM>> getViewBinder() {
+        return viewBinder;
+    }
+
+    @Override
+    public VM getViewModel() {
+        return viewModel;
+    }
+
+    protected void setViewModel(VM viewModel) {
+        this.viewModel = viewModel;
+    }
+
+    //endregion
+
+    //region IView
+
+    @Override
+    public void setTitle(CharSequence title) {
+        if (getActivity() == null) {
+            return;
+        }
+        getActivity().setTitle(title);
+    }
+
+    @Override
+    public void presentLoading(boolean loading) {
+
+    }
+
+    @Override
+    public void presentError(IViewModelException error) {
+    }
+
+    //endregion
+
+    //region IArrayView
+
+    @SuppressWarnings("unchecked")
+    @Override
+    public AVM getArrayViewModel() {
+        return (AVM) viewModel;
+    }
+
+    @Override
+    public void onDataSetChanged() {
+    }
+
+    @Override
+    public void setLocalizedEmptyMessage(CharSequence localizedEmptyMessage) {
+
+    }
+
+    @Override
+    public void setLocalizedEmptyMessageVisibility(boolean visibility) {
+
     }
 
     //endregion
