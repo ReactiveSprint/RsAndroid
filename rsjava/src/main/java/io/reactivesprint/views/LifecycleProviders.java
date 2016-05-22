@@ -21,12 +21,14 @@ public final class LifecycleProviders {
         return new ILifecycleProvider<E>() {
             @Override
             public Observable<E> onStartBinding() {
-                return lifecycle.filter(new Func1<E, Boolean>() {
-                    @Override
-                    public Boolean call(E e) {
-                        return startEvent.equals(e);
-                    }
-                });
+                return lifecycle
+                        .distinctUntilChanged()
+                        .filter(new Func1<E, Boolean>() {
+                            @Override
+                            public Boolean call(E e) {
+                                return startEvent.equals(e);
+                            }
+                        });
             }
 
             @Override
