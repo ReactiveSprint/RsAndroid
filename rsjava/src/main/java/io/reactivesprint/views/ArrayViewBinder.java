@@ -10,7 +10,7 @@ import rx.internal.util.SubscriptionList;
  */
 public class ArrayViewBinder<VM extends IViewModel, AVM extends IArrayViewModel<?>, V extends IArrayView<VM, AVM>>
         extends ViewBinder<VM, V> implements IArrayViewBinder<VM, AVM, V> {
-    public ArrayViewBinder(V view, LifecycleProvider<?> lifecycleProvider) {
+    public ArrayViewBinder(V view, ILifecycleProvider<?> lifecycleProvider) {
         super(view, lifecycleProvider);
     }
 

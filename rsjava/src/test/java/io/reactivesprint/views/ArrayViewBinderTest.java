@@ -22,7 +22,7 @@ public class ArrayViewBinderTest extends TestCase {
     IArrayView<ViewModel, TestArrayViewModel> view;
     IArrayViewBinder<ViewModel, TestArrayViewModel, IArrayView<ViewModel, TestArrayViewModel>> viewBinder;
     BehaviorSubject<Integer> lifecycleSubject;
-    LifecycleProvider<Integer> lifecycleProvider;
+    ILifecycleProvider<Integer> lifecycleProvider;
 
     @Override
     protected void setUp() throws Exception {
@@ -33,7 +33,7 @@ public class ArrayViewBinderTest extends TestCase {
         when(view.getArrayViewModel()).thenReturn(viewModel);
         lifecycleSubject = BehaviorSubject.create(0);
         //binding starts when 1 is sent, and stops when 3 is sent
-        lifecycleProvider = LifecycleProvider.from(lifecycleSubject, 1, 3);
+        lifecycleProvider = LifecycleProviders.from(lifecycleSubject, 1, 3);
         viewBinder = new ArrayViewBinder<>(view, lifecycleProvider);
     }
 

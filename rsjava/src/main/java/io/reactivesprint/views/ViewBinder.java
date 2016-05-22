@@ -16,7 +16,7 @@ import static io.reactivesprint.views.Views.setTitle;
 /**
  * Created by Ahmad Baraka on 5/21/16.
  * <p/>
- * Implementation of {@link IViewBinder} which uses {@link LifecycleProvider} to
+ * Implementation of {@link IViewBinder} which uses {@link ILifecycleProvider} to
  * start and stop binding.
  */
 public class ViewBinder<VM extends IViewModel, V extends IView<VM>> implements IViewBinder<VM, V> {
@@ -24,14 +24,14 @@ public class ViewBinder<VM extends IViewModel, V extends IView<VM>> implements I
 
     private final Object lock = new Object();
     private final V view;
-    private final LifecycleProvider<?> lifecycleProvider;
+    private final ILifecycleProvider<?> lifecycleProvider;
     private SubscriptionList subscriptionList;
 
     //endregion
 
     //region Constructors
 
-    public ViewBinder(V view, LifecycleProvider<?> lifecycleProvider) {
+    public ViewBinder(V view, ILifecycleProvider<?> lifecycleProvider) {
         checkNotNull(view, "view");
         checkNotNull(lifecycleProvider, "lifecycleProvider");
         this.view = view;
@@ -101,7 +101,7 @@ public class ViewBinder<VM extends IViewModel, V extends IView<VM>> implements I
     }
 
 
-    public LifecycleProvider<?> getLifecycleProvider() {
+    public ILifecycleProvider<?> getLifecycleProvider() {
         return lifecycleProvider;
     }
 

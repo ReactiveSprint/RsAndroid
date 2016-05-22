@@ -9,7 +9,7 @@ import com.trello.rxlifecycle.FragmentLifecycleProvider;
 
 import io.reactivesprint.android.viewmodels.IAndroidViewModel;
 import io.reactivesprint.viewmodels.IViewModel;
-import io.reactivesprint.views.LifecycleProvider;
+import io.reactivesprint.views.ILifecycleProvider;
 import rx.Observable;
 import rx.functions.Func1;
 
@@ -18,16 +18,16 @@ import static io.reactivesprint.Preconditions.checkNotNull;
 /**
  * Created by Ahmad Baraka on 5/21/16.
  * <p/>
- * Utility class for creating {@link LifecycleProvider}
+ * Utility class for creating {@link ILifecycleProvider}
  */
 public final class AndroidLifecycleProvider {
     private AndroidLifecycleProvider() {
     }
 
-    public static LifecycleProvider<ActivityEvent> from(@NonNull final ActivityLifecycleProvider lifecycleProvider, @NonNull final ActivityEvent startEvent) {
+    public static ILifecycleProvider<ActivityEvent> from(@NonNull final ActivityLifecycleProvider lifecycleProvider, @NonNull final ActivityEvent startEvent) {
         checkNotNull(lifecycleProvider, "lifecycleProvider");
         checkNotNull(startEvent, "startEvent");
-        return new LifecycleProvider<ActivityEvent>() {
+        return new ILifecycleProvider<ActivityEvent>() {
             @Override
             public Observable<ActivityEvent> onStartBinding() {
                 return lifecycleProvider.lifecycle()
@@ -46,10 +46,10 @@ public final class AndroidLifecycleProvider {
         };
     }
 
-    public static LifecycleProvider<FragmentEvent> from(@NonNull final FragmentLifecycleProvider lifecycleProvider, @NonNull final FragmentEvent startEvent) {
+    public static ILifecycleProvider<FragmentEvent> from(@NonNull final FragmentLifecycleProvider lifecycleProvider, @NonNull final FragmentEvent startEvent) {
         checkNotNull(lifecycleProvider, "lifecycleProvider");
         checkNotNull(startEvent, "startEvent");
-        return new LifecycleProvider<FragmentEvent>() {
+        return new ILifecycleProvider<FragmentEvent>() {
             @Override
             public Observable<FragmentEvent> onStartBinding() {
                 return lifecycleProvider.lifecycle()
@@ -68,9 +68,9 @@ public final class AndroidLifecycleProvider {
         };
     }
 
-    public static <VM extends IViewModel & IAndroidViewModel> LifecycleProvider<VM> from(@NonNull final IAndroidViewHolder<VM> viewHolder) {
+    public static <VM extends IViewModel & IAndroidViewModel> ILifecycleProvider<VM> from(@NonNull final IAndroidViewHolder<VM> viewHolder) {
         checkNotNull(viewHolder, "viewHolder");
-        return new LifecycleProvider<VM>() {
+        return new ILifecycleProvider<VM>() {
             @Override
             public Observable<VM> onStartBinding() {
                 return viewHolder.onViewRecycled();
