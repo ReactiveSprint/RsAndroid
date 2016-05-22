@@ -4,6 +4,7 @@ import junit.framework.TestCase;
 
 import io.reactivesprint.viewmodels.ViewModel;
 import rx.subjects.BehaviorSubject;
+import rx.subjects.PublishSubject;
 
 import static org.mockito.Mockito.mock;
 import static org.mockito.Mockito.times;
@@ -60,7 +61,20 @@ public class ViewBinderTest extends TestCase {
     }
 
     public void testBindLoading() throws Exception {
+        PublishSubject<Boolean> loadingSubject = PublishSubject.create();
+        viewModel.bindLoading(loadingSubject);
 
+        lifecycleSubject.onNext(1);
+        verify(view).presentLoading(false);
+        verify(view).getViewModel();
+        verify(view).setTitle(null);
+
+        loadingSubject.onNext(true);
+        verify(view).presentLoading(true);
+
+        lifecycleSubject.onNext(3);
+        loadingSubject.onNext(false);
+        verifyNoMoreInteractions(view);
     }
 
     public void testBindErrors() throws Exception {
