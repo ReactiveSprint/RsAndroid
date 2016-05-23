@@ -12,24 +12,30 @@ import android.widget.TextView;
 
 import io.reactivesprint.android.R;
 import io.reactivesprint.android.viewmodels.IAndroidViewModel;
+import io.reactivesprint.android.views.RsRecyclerAdapter;
 import io.reactivesprint.viewmodels.IArrayViewModel;
 
-import static io.reactivesprint.Preconditions.checkNotNull;
+import static io.reactivesprint.Preconditions.checkNotNullWithMessage;
 
 /**
  * Created by Ahmad Baraka on 5/20/16.
  */
-public class RecyclerFragment<VM extends IAndroidViewModel, AVM extends IArrayViewModel & IAndroidViewModel> extends ArrayFragment<VM, AVM> {
+public class RecyclerFragment<VM extends IAndroidViewModel, AVM extends IArrayViewModel<? extends IAndroidViewModel> & IAndroidViewModel> extends ArrayFragment<VM, AVM> {
+    //region Fields
+
     protected RecyclerView recyclerView;
-    @Nullable
-    protected View emptyMessageView;
+    protected View emptyView;
+
+    //endregion
+
+    //region Create View
 
     @Nullable
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         View root = inflater.inflate(R.layout.recycler, container, false);
         recyclerView = (RecyclerView) root.findViewById(android.R.id.list);
-        emptyMessageView = root.findViewById(R.id.empty_message);
+        emptyView = root.findViewById(android.R.id.empty);
         return root;
     }
 
@@ -37,24 +43,25 @@ public class RecyclerFragment<VM extends IAndroidViewModel, AVM extends IArrayVi
     public void onViewCreated(View view, Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
 
-        checkNotNull(recyclerView, "recyclerView");
+        checkNotNullWithMessage(recyclerView, "recyclerView must be inflated in your layout.");
 
         RecyclerView.LayoutManager layoutManager = onCreateLayoutManager();
-        checkNotNull(layoutManager, "layoutManager");
         recyclerView.setLayoutManager(layoutManager);
 
         RecyclerView.Adapter adapter = onCreateAdapter(layoutManager);
         recyclerView.setAdapter(adapter);
     }
 
+    //endregion
+
     @NonNull
     protected RecyclerView.LayoutManager onCreateLayoutManager() {
-        return new LinearLayoutManager(getContext());
+        return new LinearLayoutManager(getActivity());
     }
 
     @NonNull
     protected RecyclerView.Adapter onCreateAdapter(RecyclerView.LayoutManager layoutManger) {
-        return null;
+        return RsRecyclerAdapter.create(getArrayViewModel());
     }
 
     @Override
@@ -64,19 +71,16 @@ public class RecyclerFragment<VM extends IAndroidViewModel, AVM extends IArrayVi
 
     @Override
     public void setLocalizedEmptyMessage(CharSequence localizedEmptyMessage) {
-        if (emptyMessageView instanceof TextView) {
-            ((TextView) emptyMessageView).setText(localizedEmptyMessage);
+        if (emptyView instanceof TextView) {
+            ((TextView) emptyView).setText(localizedEmptyMessage);
         }
     }
 
     @Override
     public void setLocalizedEmptyMessageVisibility(boolean visibility) {
-        if (emptyMessageView != null) {
-            if (visibility) {
-                emptyMessageView.setVisibility(View.VISIBLE);
-            } else {
-                emptyMessageView.setVisibility(View.GONE);
-            }
+        if (emptyView == null) {
+            return;
         }
+        emptyView.setVisibility(visibility ? View.VISIBLE : View.GONE);
     }
 }
