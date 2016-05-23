@@ -1,4 +1,4 @@
-package io.reactivesprint.android.views;
+package io.reactivesprint.android.recyclerview;
 
 import android.support.annotation.NonNull;
 import android.support.v7.widget.RecyclerView;

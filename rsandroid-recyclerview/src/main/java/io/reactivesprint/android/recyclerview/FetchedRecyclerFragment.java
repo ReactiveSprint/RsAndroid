@@ -1,4 +1,4 @@
-package io.reactivesprint.android.views.support;
+package io.reactivesprint.android.recyclerview;
 
 import com.trello.rxlifecycle.FragmentEvent;
 

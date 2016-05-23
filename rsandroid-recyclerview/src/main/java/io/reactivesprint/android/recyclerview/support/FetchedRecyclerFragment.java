@@ -1,8 +1,9 @@
-package io.reactivesprint.android.views;
+package io.reactivesprint.android.recyclerview.support;
 
 import com.trello.rxlifecycle.FragmentEvent;
 
 import io.reactivesprint.android.viewmodels.IAndroidViewModel;
+import io.reactivesprint.android.views.AndroidLifecycleProvider;
 import io.reactivesprint.viewmodels.IFetchedArrayViewModel;
 import io.reactivesprint.views.FetchedArrayViewBinder;
 import io.reactivesprint.views.IFetchedArrayView;

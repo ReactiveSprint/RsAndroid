@@ -1,4 +1,4 @@
-package io.reactivesprint.android.views;
+package io.reactivesprint.android.recyclerview.support;
 
 import android.os.Bundle;
 import android.support.annotation.NonNull;
@@ -10,8 +10,10 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.TextView;
 
-import io.reactivesprint.android.R;
+import io.reactivesprint.android.recyclerview.R;
+import io.reactivesprint.android.recyclerview.RsRecyclerAdapter;
 import io.reactivesprint.android.viewmodels.IAndroidViewModel;
+import io.reactivesprint.android.views.support.ArrayFragment;
 import io.reactivesprint.viewmodels.IArrayViewModel;
 
 import static io.reactivesprint.Preconditions.checkNotNullWithMessage;

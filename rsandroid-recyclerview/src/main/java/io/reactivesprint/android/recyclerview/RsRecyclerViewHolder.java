@@ -1,4 +1,4 @@
-package io.reactivesprint.android.views;
+package io.reactivesprint.android.recyclerview;
 
 import android.content.Context;
 import android.support.annotation.NonNull;
@@ -7,10 +7,11 @@ import android.view.View;
 import android.widget.TextView;
 
 import io.reactivesprint.android.viewmodels.IAndroidViewModel;
+import io.reactivesprint.android.views.AndroidLifecycleProvider;
+import io.reactivesprint.android.views.IAndroidViewHolder;
 import io.reactivesprint.rx.IMutableProperty;
 import io.reactivesprint.rx.MutableProperty;
 import io.reactivesprint.viewmodels.IViewModelException;
-import io.reactivesprint.views.IView;
 import io.reactivesprint.views.IViewBinder;
 import io.reactivesprint.views.ViewBinder;
 import rx.Observable;
