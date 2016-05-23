@@ -23,8 +23,8 @@ import static org.mockito.Mockito.when;
  */
 public class FetchedArrayViewBinderTest extends TestCase {
     FetchedArrayViewModel<ViewModel, Integer> viewModel;
-    IFetchedArrayView<ViewModel, FetchedArrayViewModel<ViewModel, Integer>> view;
-    IFetchedArrayViewBinder<ViewModel, FetchedArrayViewModel<ViewModel, Integer>> viewBinder;
+    IFetchedArrayView<ViewModel, ViewModel,FetchedArrayViewModel<ViewModel, Integer>> view;
+    IFetchedArrayViewBinder<ViewModel, ViewModel,FetchedArrayViewModel<ViewModel, Integer>> viewBinder;
     BehaviorSubject<Integer> lifecycleSubject;
     ILifecycleProvider<Integer> lifecycleProvider;
     PublishSubject<Pair<Integer, Collection<ViewModel>>> viewModelsSubject;
