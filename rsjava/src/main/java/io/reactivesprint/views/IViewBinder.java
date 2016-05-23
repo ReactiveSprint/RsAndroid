@@ -9,11 +9,11 @@ import rx.Subscription;
  * <p/>
  * Represents a helper object which binds {@link IViewModel} to an {@link IView}
  */
-public interface IViewBinder<VM extends IViewModel, V extends IView<VM>> {
+public interface IViewBinder<VM extends IViewModel> {
     /**
      * @return wrapped {@link IView}
      */
-    V getView();
+    IView<VM> getView();
 
     /**
      * Binds {@link IViewModel#active()} property to {@link }

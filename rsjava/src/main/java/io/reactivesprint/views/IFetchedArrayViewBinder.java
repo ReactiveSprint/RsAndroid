@@ -10,8 +10,8 @@ import rx.Subscription;
  * Subclass of {@link IArrayViewBinder} which binds an {@link IFetchedArrayViewModel} to an {@link IFetchedArrayView}
  */
 public interface IFetchedArrayViewBinder
-        <VM extends IViewModel, AVM extends IFetchedArrayViewModel<? extends IViewModel, ?, ?, ?>, V extends IFetchedArrayView<VM, AVM>>
-        extends IArrayViewBinder<VM, AVM, V> {
+        <VM extends IViewModel, AVM extends IFetchedArrayViewModel<? extends IViewModel, ?, ?, ?>>
+        extends IArrayViewBinder<VM, AVM> {
     /**
      * Binds {@link IFetchedArrayViewModel#refreshing()} to {@link IFetchedArrayView#presentRefreshing(boolean)}
      */

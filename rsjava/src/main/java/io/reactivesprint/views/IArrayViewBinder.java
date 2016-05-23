@@ -9,8 +9,13 @@ import rx.Subscription;
  * <p/>
  * Subclass of {@link IViewBinder} which binds an {@link IArrayViewModel} to an {@link IArrayView}
  */
-public interface IArrayViewBinder<VM extends IViewModel, AVM extends IArrayViewModel<? extends IViewModel>, V extends IArrayView<VM, AVM>>
-        extends IViewBinder<VM, V> {
+public interface IArrayViewBinder<VM extends IViewModel, AVM extends IArrayViewModel<? extends IViewModel>>
+        extends IViewBinder<VM> {
+    /**
+     * @return wrapped {@link IArrayView}
+     */
+    IArrayView<VM, AVM> getView();
+
     /**
      * Binds {@link IArrayViewModel#count()} to {@link IArrayView#onDataSetChanged()}
      */

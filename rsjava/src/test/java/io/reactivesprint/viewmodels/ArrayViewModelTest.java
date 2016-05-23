@@ -3,6 +3,7 @@ package io.reactivesprint.viewmodels;
 import junit.framework.TestCase;
 
 import java.util.ArrayList;
+import java.util.Collection;
 import java.util.Collections;
 import java.util.List;
 
@@ -20,7 +21,7 @@ public class ArrayViewModelTest extends TestCase {
     @Override
     protected void setUp() throws Exception {
         super.setUp();
-        viewModels = generateViewModels(3);
+        viewModels = new ArrayList<>(generateViewModels(3));
         mutableArrayViewModel = null;
     }
 
@@ -54,11 +55,11 @@ public class ArrayViewModelTest extends TestCase {
 
     //region Helpers
 
-    public static List<ViewModel> generateViewModels(int count) {
+    public static Collection<ViewModel> generateViewModels(int count) {
         return generateViewModels(count, 0);
     }
 
-    public static List<ViewModel> generateViewModels(int count, int start) {
+    public static Collection<ViewModel> generateViewModels(int count, int start) {
         List<ViewModel> viewModels = new ArrayList<>(count);
 
         for (int i = 1; i <= count; i++) {

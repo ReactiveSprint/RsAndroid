@@ -16,17 +16,17 @@ import static org.mockito.Mockito.when;
 /**
  * Created by Ahmad Baraka on 5/22/16.
  */
-@SuppressWarnings("unchecked")
 public class ArrayViewBinderTest extends TestCase {
     TestArrayViewModel viewModel;
     IArrayView<ViewModel, TestArrayViewModel> view;
-    IArrayViewBinder<ViewModel, TestArrayViewModel, IArrayView<ViewModel, TestArrayViewModel>> viewBinder;
+    IArrayViewBinder<ViewModel, TestArrayViewModel> viewBinder;
     BehaviorSubject<Integer> lifecycleSubject;
     ILifecycleProvider<Integer> lifecycleProvider;
 
     @Override
     protected void setUp() throws Exception {
         super.setUp();
+        //noinspection unchecked
         view = mock(IArrayView.class);
         viewModel = new TestArrayViewModel(generateViewModels(3));
         viewModel.localizedEmptyMessage().setValue("Test");

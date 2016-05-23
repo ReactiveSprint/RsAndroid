@@ -2,8 +2,11 @@ package io.reactivesprint.views;
 
 import junit.framework.TestCase;
 
+import java.util.Collection;
+
 import io.reactivesprint.rx.Pair;
 import io.reactivesprint.viewmodels.FetchedArrayViewModel;
+import io.reactivesprint.viewmodels.ViewModel;
 import rx.Observable;
 import rx.subjects.BehaviorSubject;
 import rx.subjects.PublishSubject;
@@ -18,22 +21,22 @@ import static org.mockito.Mockito.when;
 /**
  * Created by Ahmad Baraka on 5/22/16.
  */
-@SuppressWarnings("unchecked")
 public class FetchedArrayViewBinderTest extends TestCase {
-    FetchedArrayViewModel viewModel;
-    IFetchedArrayView view;
-    IFetchedArrayViewBinder viewBinder;
+    FetchedArrayViewModel<ViewModel, Integer> viewModel;
+    IFetchedArrayView<ViewModel, FetchedArrayViewModel<ViewModel, Integer>> view;
+    IFetchedArrayViewBinder<ViewModel, FetchedArrayViewModel<ViewModel, Integer>> viewBinder;
     BehaviorSubject<Integer> lifecycleSubject;
     ILifecycleProvider<Integer> lifecycleProvider;
-    PublishSubject<Pair> viewModelsSubject;
+    PublishSubject<Pair<Integer, Collection<ViewModel>>> viewModelsSubject;
 
     @Override
     protected void setUp() throws Exception {
         super.setUp();
+        //noinspection unchecked
         view = mock(IFetchedArrayView.class);
-        viewModel = new FetchedArrayViewModel() {
+        viewModel = new FetchedArrayViewModel<ViewModel, Integer>() {
             @Override
-            protected Observable<Pair> onFetch(Object page) {
+            protected Observable<Pair<Integer, Collection<ViewModel>>> onFetch(Integer page) {
                 viewModelsSubject = PublishSubject.create();
                 return viewModelsSubject;
             }
@@ -42,6 +45,7 @@ public class FetchedArrayViewBinderTest extends TestCase {
         lifecycleSubject = BehaviorSubject.create(0);
         //binding starts when 1 is sent, and stops when 3 is sent
         lifecycleProvider = LifecycleProviders.from(lifecycleSubject, 1, 3);
+        //noinspection unchecked
         viewBinder = new FetchedArrayViewBinder(view, lifecycleProvider);
     }
 
@@ -57,7 +61,7 @@ public class FetchedArrayViewBinderTest extends TestCase {
         verify(view).presentFetchingNextPage(false);
 
         viewModel.getRefreshCommand().apply().subscribe();
-        viewModelsSubject.onNext(new Pair(1, generateViewModels(3)));
+        viewModelsSubject.onNext(new Pair<>(1, generateViewModels(3)));
         viewModelsSubject.onCompleted();
 
         verify(view).presentRefreshing(true);
@@ -67,7 +71,7 @@ public class FetchedArrayViewBinderTest extends TestCase {
         verify(view, times(2)).presentFetchingNextPage(false);
 
         viewModel.getFetchCommand().apply().subscribe();
-        viewModelsSubject.onNext(new Pair(1, generateViewModels(3)));
+        viewModelsSubject.onNext(new Pair<>(1, generateViewModels(3)));
         viewModelsSubject.onCompleted();
 
         //FIXME: Refresh and fetch commands re-set values

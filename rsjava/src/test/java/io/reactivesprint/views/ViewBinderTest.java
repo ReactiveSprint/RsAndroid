@@ -17,17 +17,17 @@ import static org.mockito.Mockito.when;
 /**
  * Created by Ahmad Baraka on 5/22/16.
  */
-@SuppressWarnings("unchecked")
 public class ViewBinderTest extends TestCase {
     ViewModel viewModel;
     IView<ViewModel> view;
-    IViewBinder<ViewModel, IView<ViewModel>> viewBinder;
+    IViewBinder<ViewModel> viewBinder;
     BehaviorSubject<Integer> lifecycleSubject;
     ILifecycleProvider<Integer> lifecycleProvider;
 
     @Override
     protected void setUp() throws Exception {
         super.setUp();
+        //noinspection unchecked
         view = mock(IView.class);
         viewModel = new ViewModel();
         when(view.getViewModel()).thenReturn(viewModel);
