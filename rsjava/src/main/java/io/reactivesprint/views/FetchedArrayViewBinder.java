@@ -8,7 +8,7 @@ import rx.internal.util.SubscriptionList;
 /**
  * Created by Ahmad Baraka on 5/21/16.
  */
-public class FetchedArrayViewBinder<VM extends IViewModel, AVM extends IFetchedArrayViewModel<?, ?, ?, ?>, V extends IFetchedArrayView<VM, AVM>>
+public class FetchedArrayViewBinder<VM extends IViewModel, AVM extends IFetchedArrayViewModel<? extends IViewModel, ?, ?, ?>, V extends IFetchedArrayView<VM, AVM>>
         extends ArrayViewBinder<VM, AVM, V> implements IFetchedArrayViewBinder<VM, AVM, V> {
     public FetchedArrayViewBinder(V view, ILifecycleProvider<?> lifecycleProvider) {
         super(view, lifecycleProvider);
