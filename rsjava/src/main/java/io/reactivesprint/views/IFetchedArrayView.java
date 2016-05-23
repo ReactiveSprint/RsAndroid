@@ -11,11 +11,6 @@ public interface IFetchedArrayView
         <VM extends IViewModel, AVM extends IFetchedArrayViewModel<? extends IViewModel, ?, ?, ?>>
         extends IArrayView<VM, AVM> {
     /**
-     * @return wrapped {@link IFetchedArrayView}
-     */
-    IFetchedArrayView<VM, AVM> getView();
-
-    /**
      * Shows or hides a view representing "refreshing."
      */
     void presentRefreshing(boolean refreshing);

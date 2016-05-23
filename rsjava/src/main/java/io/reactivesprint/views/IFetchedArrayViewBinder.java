@@ -13,6 +13,11 @@ public interface IFetchedArrayViewBinder
         <VM extends IViewModel, AVM extends IFetchedArrayViewModel<? extends IViewModel, ?, ?, ?>>
         extends IArrayViewBinder<VM, AVM> {
     /**
+     * @return wrapped {@link IFetchedArrayView}
+     */
+    IFetchedArrayView<VM, AVM> getView();
+
+    /**
      * Binds {@link IFetchedArrayViewModel#refreshing()} to {@link IFetchedArrayView#presentRefreshing(boolean)}
      */
     Subscription bindRefreshing(AVM arrayViewModel);
