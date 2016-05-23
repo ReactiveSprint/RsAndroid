@@ -9,7 +9,7 @@ import io.reactivesprint.views.IArrayView;
 import io.reactivesprint.views.IView;
 import io.reactivesprint.views.IViewBinder;
 
-public abstract class ArrayActivity<VM extends IAndroidViewModel, AVM extends IArrayViewModel<?> & IAndroidViewModel>
+public abstract class ArrayActivity<VM extends IAndroidViewModel, AVM extends IArrayViewModel<? extends IAndroidViewModel> & IAndroidViewModel>
         extends RsActivity<VM>
         implements IArrayView<VM, AVM> {
     @Override

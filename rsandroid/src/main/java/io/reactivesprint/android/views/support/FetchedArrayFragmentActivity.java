@@ -13,7 +13,7 @@ import io.reactivesprint.views.IViewBinder;
 /**
  * Created by Ahmad Baraka on 5/21/16.
  */
-public abstract class FetchedArrayFragmentActivity<VM extends IAndroidViewModel, AVM extends IFetchedArrayViewModel<?, ?, ?, ?> & IAndroidViewModel>
+public abstract class FetchedArrayFragmentActivity<VM extends IAndroidViewModel, AVM extends IFetchedArrayViewModel<? extends IAndroidViewModel, ?, ?, ?> & IAndroidViewModel>
         extends ArrayFragmentActivity<VM, AVM>
         implements IFetchedArrayView<VM, AVM> {
     @Override
