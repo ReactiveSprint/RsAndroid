@@ -15,7 +15,7 @@ import com.trello.rxlifecycle.FragmentEvent;
 import io.reactivesprint.android.recyclerview.R;
 import io.reactivesprint.android.recyclerview.RsRecyclerAdapter;
 import io.reactivesprint.android.viewmodels.IAndroidViewModel;
-import io.reactivesprint.android.views.AndroidLifecycleProvider;
+import io.reactivesprint.android.views.AndroidLifecycleProviders;
 import io.reactivesprint.android.views.RsFragment;
 import io.reactivesprint.viewmodels.IArrayViewModel;
 import io.reactivesprint.views.ArrayViewBinder;
@@ -41,7 +41,7 @@ public class RecyclerFragment<E extends IAndroidViewModel, VM extends IArrayView
 
     @Override
     protected IViewBinder<VM> onCreateViewBinder() {
-        return new ArrayViewBinder<>(this, AndroidLifecycleProvider.from(this, FragmentEvent.START));
+        return new ArrayViewBinder<>(this, AndroidLifecycleProviders.from(this, FragmentEvent.START));
     }
 
     @Nullable

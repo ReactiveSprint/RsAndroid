@@ -10,7 +10,6 @@ import io.reactivesprint.android.viewmodels.IAndroidViewModel;
 import io.reactivesprint.rx.IMutableProperty;
 import io.reactivesprint.rx.MutableProperty;
 import io.reactivesprint.viewmodels.IViewModelException;
-import io.reactivesprint.views.IView;
 import io.reactivesprint.views.IViewBinder;
 import io.reactivesprint.views.ViewBinder;
 import rx.Observable;
@@ -86,7 +85,7 @@ public class ViewHolder<VM extends IAndroidViewModel> implements IAndroidViewHol
     }
 
     protected IViewBinder<VM> onCreateViewBinder() {
-        return new ViewBinder<>(this, AndroidLifecycleProvider.from(this));
+        return new ViewBinder<>(this, AndroidLifecycleProviders.from(this));
     }
 
     //endregion

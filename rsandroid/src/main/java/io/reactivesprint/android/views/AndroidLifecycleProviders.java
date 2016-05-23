@@ -20,8 +20,8 @@ import static io.reactivesprint.Preconditions.checkNotNull;
  * <p/>
  * Utility class for creating {@link ILifecycleProvider}
  */
-public final class AndroidLifecycleProvider {
-    private AndroidLifecycleProvider() {
+public final class AndroidLifecycleProviders {
+    private AndroidLifecycleProviders() {
     }
 
     public static ILifecycleProvider<ActivityEvent> from(@NonNull final ActivityLifecycleProvider lifecycleProvider, @NonNull final ActivityEvent startEvent) {

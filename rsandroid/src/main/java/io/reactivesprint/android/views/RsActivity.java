@@ -24,7 +24,7 @@ public class RsActivity<VM extends IAndroidViewModel> extends RxActivity impleme
     }
 
     protected IViewBinder<VM> onCreateViewBinder() {
-        return new ViewBinder<>(this, AndroidLifecycleProvider.from(this, ActivityEvent.START));
+        return new ViewBinder<>(this, AndroidLifecycleProviders.from(this, ActivityEvent.START));
     }
 
     //region LifeCycle

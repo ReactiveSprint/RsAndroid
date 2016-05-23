@@ -6,7 +6,7 @@ import com.trello.rxlifecycle.ActivityEvent;
 import com.trello.rxlifecycle.components.support.RxAppCompatActivity;
 
 import io.reactivesprint.android.viewmodels.IAndroidViewModel;
-import io.reactivesprint.android.views.AndroidLifecycleProvider;
+import io.reactivesprint.android.views.AndroidLifecycleProviders;
 import io.reactivesprint.android.views.AndroidViews;
 import io.reactivesprint.viewmodels.IViewModelException;
 import io.reactivesprint.views.IView;
@@ -29,7 +29,7 @@ public class RsAppCompatActivity<VM extends IAndroidViewModel> extends RxAppComp
     }
 
     protected IViewBinder<VM> onCreateViewBinder() {
-        return new ViewBinder<>(this, AndroidLifecycleProvider.from(this, ActivityEvent.START));
+        return new ViewBinder<>(this, AndroidLifecycleProviders.from(this, ActivityEvent.START));
     }
 
     //region LifeCycle

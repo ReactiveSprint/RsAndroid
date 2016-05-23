@@ -15,7 +15,7 @@ import com.trello.rxlifecycle.FragmentLifecycleProvider;
 import com.trello.rxlifecycle.RxLifecycle;
 
 import io.reactivesprint.android.viewmodels.IAndroidViewModel;
-import io.reactivesprint.android.views.AndroidLifecycleProvider;
+import io.reactivesprint.android.views.AndroidLifecycleProviders;
 import io.reactivesprint.android.views.AndroidViews;
 import io.reactivesprint.viewmodels.IArrayViewModel;
 import io.reactivesprint.viewmodels.IViewModelException;
@@ -48,7 +48,7 @@ public class RsListFragment<E extends IAndroidViewModel, VM extends IArrayViewMo
     }
 
     protected IViewBinder<VM> onCreateViewBinder() {
-        return new ViewBinder<>(this, AndroidLifecycleProvider.from(this, FragmentEvent.START));
+        return new ViewBinder<>(this, AndroidLifecycleProviders.from(this, FragmentEvent.START));
     }
 
     //region LifeCycle

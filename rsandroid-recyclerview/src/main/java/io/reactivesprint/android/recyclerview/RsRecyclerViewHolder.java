@@ -7,7 +7,7 @@ import android.view.View;
 import android.widget.TextView;
 
 import io.reactivesprint.android.viewmodels.IAndroidViewModel;
-import io.reactivesprint.android.views.AndroidLifecycleProvider;
+import io.reactivesprint.android.views.AndroidLifecycleProviders;
 import io.reactivesprint.android.views.IAndroidViewHolder;
 import io.reactivesprint.rx.IMutableProperty;
 import io.reactivesprint.rx.MutableProperty;
@@ -84,7 +84,7 @@ public class RsRecyclerViewHolder<VM extends IAndroidViewModel>
     }
 
     protected IViewBinder<VM> onCreateViewBinder() {
-        return new ViewBinder<>(this, AndroidLifecycleProvider.from(this));
+        return new ViewBinder<>(this, AndroidLifecycleProviders.from(this));
     }
 
     //endregion

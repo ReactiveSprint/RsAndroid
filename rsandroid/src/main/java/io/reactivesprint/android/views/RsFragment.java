@@ -27,7 +27,7 @@ public class RsFragment<VM extends IAndroidViewModel> extends RxFragment impleme
     }
 
     protected IViewBinder<VM> onCreateViewBinder() {
-        return new ViewBinder<>(this, AndroidLifecycleProvider.from(this, FragmentEvent.START));
+        return new ViewBinder<>(this, AndroidLifecycleProviders.from(this, FragmentEvent.START));
     }
 
     //TODO: Handle Destory

@@ -46,7 +46,7 @@ public class RsListFragment<E extends IAndroidViewModel, VM extends IArrayViewMo
     }
 
     protected IViewBinder<VM> onCreateViewBinder() {
-        return new ViewBinder<>(this, AndroidLifecycleProvider.from(this, FragmentEvent.START));
+        return new ViewBinder<>(this, AndroidLifecycleProviders.from(this, FragmentEvent.START));
     }
 
     //region LifeCycle

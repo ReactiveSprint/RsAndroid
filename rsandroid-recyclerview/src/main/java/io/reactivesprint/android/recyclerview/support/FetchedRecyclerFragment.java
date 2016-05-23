@@ -3,7 +3,7 @@ package io.reactivesprint.android.recyclerview.support;
 import com.trello.rxlifecycle.FragmentEvent;
 
 import io.reactivesprint.android.viewmodels.IAndroidViewModel;
-import io.reactivesprint.android.views.AndroidLifecycleProvider;
+import io.reactivesprint.android.views.AndroidLifecycleProviders;
 import io.reactivesprint.viewmodels.IFetchedArrayViewModel;
 import io.reactivesprint.views.FetchedArrayViewBinder;
 import io.reactivesprint.views.IFetchedArrayView;
@@ -17,7 +17,7 @@ public class FetchedRecyclerFragment<E extends IAndroidViewModel, VM extends IFe
         implements IFetchedArrayView<E, VM> {
     @Override
     protected IViewBinder<VM> onCreateViewBinder() {
-        return new FetchedArrayViewBinder<>(this, AndroidLifecycleProvider.from(this, FragmentEvent.START));
+        return new FetchedArrayViewBinder<>(this, AndroidLifecycleProviders.from(this, FragmentEvent.START));
     }
 
     @Override
