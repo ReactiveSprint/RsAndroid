@@ -17,6 +17,7 @@ import static io.reactivesprint.Preconditions.checkNotNull;
  * <p/>
  * You don't need to override this class,
  * instead you can use {@link ViewHolderCreator} to create an {@link IAndroidViewHolder} as needed.
+ * TODO: Support {@link #getViewTypeCount()}
  */
 public class RsBaseAdapter<E extends IAndroidViewModel, VM extends IArrayViewModel<E> & IAndroidViewModel> extends BaseAdapter {
     //region Fields
