@@ -18,8 +18,8 @@ import static org.mockito.Mockito.when;
  */
 public class ArrayViewBinderTest extends TestCase {
     TestArrayViewModel viewModel;
-    IArrayView<ViewModel, TestArrayViewModel> view;
-    IArrayViewBinder<ViewModel, TestArrayViewModel> viewBinder;
+    IArrayView<ViewModel, ViewModel, TestArrayViewModel> view;
+    IArrayViewBinder<ViewModel, ViewModel, TestArrayViewModel> viewBinder;
     BehaviorSubject<Integer> lifecycleSubject;
     ILifecycleProvider<Integer> lifecycleProvider;
 
