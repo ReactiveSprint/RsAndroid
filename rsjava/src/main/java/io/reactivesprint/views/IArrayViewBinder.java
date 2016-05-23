@@ -9,25 +9,25 @@ import rx.Subscription;
  * <p/>
  * Subclass of {@link IViewBinder} which binds an {@link IArrayViewModel} to an {@link IArrayView}
  */
-public interface IArrayViewBinder<VM extends IViewModel, E extends IViewModel, AVM extends IArrayViewModel<E>>
+public interface IArrayViewBinder<E extends IViewModel, VM extends IArrayViewModel<E>>
         extends IViewBinder<VM> {
     /**
      * @return wrapped {@link IArrayView}
      */
-    IArrayView<VM, E, AVM> getView();
+    IArrayView<E, VM> getView();
 
     /**
      * Binds {@link IArrayViewModel#count()} to {@link IArrayView#onDataSetChanged()}
      */
-    Subscription bindCount(AVM arrayViewModel);
+    Subscription bindCount(VM arrayViewModel);
 
     /**
      * Binds {@link IArrayViewModel#localizedEmptyMessage()} to {@link IArrayView#setLocalizedEmptyMessage(CharSequence)}
      */
-    Subscription bindLocalizedEmptyMessage(AVM arrayViewModel);
+    Subscription bindLocalizedEmptyMessage(VM arrayViewModel);
 
     /**
      * Bind {@link IArrayViewModel#localizedEmptyMessage()} to {@link IArrayView#setLocalizedEmptyMessageVisibility(boolean)}
      */
-    Subscription bindLocalizedEmptyMessageVisibility(AVM arrayViewModel);
+    Subscription bindLocalizedEmptyMessageVisibility(VM arrayViewModel);
 }

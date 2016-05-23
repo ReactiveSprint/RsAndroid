@@ -38,31 +38,31 @@ public class ViewsTest extends TestCase {
     }
 
     public void testOnDataSetChanged() throws Exception {
-        IArrayView<ViewModel, ViewModel, MutableArrayViewModel<ViewModel>> viewController = mock(IArrayView.class);
+        IArrayView<ViewModel, MutableArrayViewModel<ViewModel>> viewController = mock(IArrayView.class);
         Views.onDataSetChanged(viewController).call(0);
         verify(viewController).onDataSetChanged();
     }
 
     public void testSetLocalizedEmptyMessage() throws Exception {
-        IArrayView<ViewModel, ViewModel, MutableArrayViewModel<ViewModel>> viewController = mock(IArrayView.class);
+        IArrayView<ViewModel, MutableArrayViewModel<ViewModel>> viewController = mock(IArrayView.class);
         Views.setLocalizedEmptyMessage(viewController).call("Test");
         verify(viewController).setLocalizedEmptyMessage("Test");
     }
 
     public void testSetLocalizedEmptyMessageVisibility() throws Exception {
-        IArrayView<ViewModel, ViewModel, MutableArrayViewModel<ViewModel>> viewController = mock(IArrayView.class);
+        IArrayView<ViewModel, MutableArrayViewModel<ViewModel>> viewController = mock(IArrayView.class);
         Views.setLocalizedEmptyMessageVisibility(viewController).call(true);
         verify(viewController).setLocalizedEmptyMessageVisibility(true);
     }
 
     public void testPresentRefreshing() throws Exception {
-        IFetchedArrayView<ViewModel, ViewModel, FetchedArrayViewModel<ViewModel, Integer>> viewController = mock(IFetchedArrayView.class);
+        IFetchedArrayView<ViewModel, FetchedArrayViewModel<ViewModel, Integer>> viewController = mock(IFetchedArrayView.class);
         Views.presentRefreshing(viewController).call(true);
         verify(viewController).presentRefreshing(true);
     }
 
     public void testPresentFetchingNextPage() throws Exception {
-        IFetchedArrayView<ViewModel, ViewModel, FetchedArrayViewModel<ViewModel, Integer>> viewController = mock(IFetchedArrayView.class);
+        IFetchedArrayView<ViewModel, FetchedArrayViewModel<ViewModel, Integer>> viewController = mock(IFetchedArrayView.class);
         Views.presentFetchingNextPage(viewController).call(true);
         verify(viewController).presentFetchingNextPage(true);
     }

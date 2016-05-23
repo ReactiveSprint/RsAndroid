@@ -18,8 +18,8 @@ import static org.mockito.Mockito.when;
  */
 public class ArrayViewBinderTest extends TestCase {
     TestArrayViewModel viewModel;
-    IArrayView<ViewModel, ViewModel, TestArrayViewModel> view;
-    IArrayViewBinder<ViewModel, ViewModel, TestArrayViewModel> viewBinder;
+    IArrayView<ViewModel, TestArrayViewModel> view;
+    IArrayViewBinder<ViewModel, TestArrayViewModel> viewBinder;
     BehaviorSubject<Integer> lifecycleSubject;
     ILifecycleProvider<Integer> lifecycleProvider;
 
@@ -30,7 +30,7 @@ public class ArrayViewBinderTest extends TestCase {
         view = mock(IArrayView.class);
         viewModel = new TestArrayViewModel(generateViewModels(3));
         viewModel.localizedEmptyMessage().setValue("Test");
-        when(view.getArrayViewModel()).thenReturn(viewModel);
+        when(view.getViewModel()).thenReturn(viewModel);
         lifecycleSubject = BehaviorSubject.create(0);
         //binding starts when 1 is sent, and stops when 3 is sent
         lifecycleProvider = LifecycleProviders.from(lifecycleSubject, 1, 3);
@@ -40,8 +40,9 @@ public class ArrayViewBinderTest extends TestCase {
     public void testBindViewModel() throws Exception {
         lifecycleSubject.onNext(1);
 
-        verify(view).getViewModel();
-        verify(view).getArrayViewModel();
+        verify(view, times(2)).getViewModel();
+        verify(view).setTitle(null);
+        verify(view).presentLoading(false);
         verify(view).setLocalizedEmptyMessage("Test");
         verify(view).setLocalizedEmptyMessageVisibility(false);
         verify(view).onDataSetChanged();

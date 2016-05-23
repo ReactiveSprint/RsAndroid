@@ -8,22 +8,22 @@ import rx.internal.util.SubscriptionList;
 /**
  * Created by Ahmad Baraka on 5/21/16.
  */
-public class FetchedArrayViewBinder<VM extends IViewModel, E extends IViewModel, AVM extends IFetchedArrayViewModel<E, ?, ?, ?>>
-        extends ArrayViewBinder<VM, E, AVM> implements IFetchedArrayViewBinder<VM, E, AVM> {
-    public FetchedArrayViewBinder(IFetchedArrayView<VM, E, AVM> view, ILifecycleProvider<?> lifecycleProvider) {
+public class FetchedArrayViewBinder<E extends IViewModel, VM extends IFetchedArrayViewModel<E, ?, ?, ?>>
+        extends ArrayViewBinder<E, VM> implements IFetchedArrayViewBinder<E, VM> {
+    public FetchedArrayViewBinder(IFetchedArrayView<E, VM> view, ILifecycleProvider<?> lifecycleProvider) {
         super(view, lifecycleProvider);
     }
 
     @Override
-    public IFetchedArrayView<VM, E, AVM> getView() {
-        return (IFetchedArrayView<VM, E, AVM>) super.getView();
+    public IFetchedArrayView<E, VM> getView() {
+        return (IFetchedArrayView<E, VM>) super.getView();
     }
 
     @Override
     protected SubscriptionList bindViewModel() {
         SubscriptionList subscription = super.bindViewModel();
 
-        AVM arrayViewModel = getView().getArrayViewModel();
+        VM arrayViewModel = getView().getViewModel();
 
         if (arrayViewModel == null) {
             return null;
@@ -41,14 +41,14 @@ public class FetchedArrayViewBinder<VM extends IViewModel, E extends IViewModel,
 
 
     @Override
-    public Subscription bindRefreshing(AVM arrayViewModel) {
+    public Subscription bindRefreshing(VM arrayViewModel) {
         return arrayViewModel.refreshing().getObservable()
                 .compose(this.<Boolean>bindToLifecycle())
                 .subscribe(Views.presentRefreshing(getView()));
     }
 
     @Override
-    public Subscription bindFetchingNextPage(AVM arrayViewModel) {
+    public Subscription bindFetchingNextPage(VM arrayViewModel) {
         return arrayViewModel.fetchingNextPage().getObservable()
                 .compose(this.<Boolean>bindToLifecycle())
                 .subscribe(Views.presentFetchingNextPage(getView()));

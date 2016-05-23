@@ -10,20 +10,20 @@ import rx.Subscription;
  * Subclass of {@link IArrayViewBinder} which binds an {@link IFetchedArrayViewModel} to an {@link IFetchedArrayView}
  */
 public interface IFetchedArrayViewBinder
-        <VM extends IViewModel, E extends IViewModel, AVM extends IFetchedArrayViewModel<E, ?, ?, ?>>
-        extends IArrayViewBinder<VM, E, AVM> {
+        <E extends IViewModel, VM extends IFetchedArrayViewModel<E, ?, ?, ?>>
+        extends IArrayViewBinder<E, VM> {
     /**
      * @return wrapped {@link IFetchedArrayView}
      */
-    IFetchedArrayView<VM, E, AVM> getView();
+    IFetchedArrayView<E, VM> getView();
 
     /**
      * Binds {@link IFetchedArrayViewModel#refreshing()} to {@link IFetchedArrayView#presentRefreshing(boolean)}
      */
-    Subscription bindRefreshing(AVM arrayViewModel);
+    Subscription bindRefreshing(VM arrayViewModel);
 
     /**
      * Binds {@link IFetchedArrayViewModel#fetchingNextPage()} to {@link IFetchedArrayView#presentFetchingNextPage(boolean)}
      */
-    Subscription bindFetchingNextPage(AVM arrayViewModel);
+    Subscription bindFetchingNextPage(VM arrayViewModel);
 }

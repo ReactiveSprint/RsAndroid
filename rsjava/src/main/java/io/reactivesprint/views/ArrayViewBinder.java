@@ -8,22 +8,22 @@ import rx.internal.util.SubscriptionList;
 /**
  * Created by Ahmad Baraka on 5/21/16.
  */
-public class ArrayViewBinder<VM extends IViewModel, E extends IViewModel, AVM extends IArrayViewModel<E>>
-        extends ViewBinder<VM> implements IArrayViewBinder<VM, E, AVM> {
-    public ArrayViewBinder(IArrayView<VM, E, AVM> view, ILifecycleProvider<?> lifecycleProvider) {
+public class ArrayViewBinder<E extends IViewModel, VM extends IArrayViewModel<E>>
+        extends ViewBinder<VM> implements IArrayViewBinder<E, VM> {
+    public ArrayViewBinder(IArrayView<E, VM> view, ILifecycleProvider<?> lifecycleProvider) {
         super(view, lifecycleProvider);
     }
 
     @Override
-    public IArrayView<VM, E, AVM> getView() {
-        return (IArrayView<VM, E, AVM>) super.getView();
+    public IArrayView<E, VM> getView() {
+        return (IArrayView<E, VM>) super.getView();
     }
 
     @Override
     protected SubscriptionList bindViewModel() {
         SubscriptionList subscription = super.bindViewModel();
 
-        AVM arrayViewModel = getView().getArrayViewModel();
+        VM arrayViewModel = getView().getViewModel();
 
         if (arrayViewModel == null) {
             return null;
@@ -41,21 +41,21 @@ public class ArrayViewBinder<VM extends IViewModel, E extends IViewModel, AVM ex
     }
 
     @Override
-    public Subscription bindCount(AVM arrayViewModel) {
+    public Subscription bindCount(VM arrayViewModel) {
         return arrayViewModel.count().getObservable()
                 .compose(this.<Integer>bindToLifecycle())
                 .subscribe(Views.onDataSetChanged(getView()));
     }
 
     @Override
-    public Subscription bindLocalizedEmptyMessage(AVM arrayViewModel) {
+    public Subscription bindLocalizedEmptyMessage(VM arrayViewModel) {
         return arrayViewModel.localizedEmptyMessage().getObservable()
                 .compose(this.<CharSequence>bindToLifecycle())
                 .subscribe(Views.setLocalizedEmptyMessage(getView()));
     }
 
     @Override
-    public Subscription bindLocalizedEmptyMessageVisibility(AVM arrayViewModel) {
+    public Subscription bindLocalizedEmptyMessageVisibility(VM arrayViewModel) {
         return arrayViewModel.empty().getObservable()
                 .compose(this.<Boolean>bindToLifecycle())
                 .subscribe(Views.setLocalizedEmptyMessageVisibility(getView()));

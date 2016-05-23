@@ -8,8 +8,8 @@ import io.reactivesprint.viewmodels.IViewModel;
  * Represents a View Controller that wraps {@link IFetchedArrayViewModel}
  */
 public interface IFetchedArrayView
-        <VM extends IViewModel, E extends IViewModel, AVM extends IFetchedArrayViewModel<E, ?, ?, ?>>
-        extends IArrayView<VM, E, AVM> {
+        <E extends IViewModel, VM extends IFetchedArrayViewModel<E, ?, ?, ?>>
+        extends IArrayView<E, VM> {
     /**
      * Shows or hides a view representing "refreshing."
      */

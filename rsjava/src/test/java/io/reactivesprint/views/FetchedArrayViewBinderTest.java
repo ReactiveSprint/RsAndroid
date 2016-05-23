@@ -23,8 +23,8 @@ import static org.mockito.Mockito.when;
  */
 public class FetchedArrayViewBinderTest extends TestCase {
     FetchedArrayViewModel<ViewModel, Integer> viewModel;
-    IFetchedArrayView<ViewModel, ViewModel,FetchedArrayViewModel<ViewModel, Integer>> view;
-    IFetchedArrayViewBinder<ViewModel, ViewModel,FetchedArrayViewModel<ViewModel, Integer>> viewBinder;
+    IFetchedArrayView<ViewModel, FetchedArrayViewModel<ViewModel, Integer>> view;
+    IFetchedArrayViewBinder<ViewModel, FetchedArrayViewModel<ViewModel, Integer>> viewBinder;
     BehaviorSubject<Integer> lifecycleSubject;
     ILifecycleProvider<Integer> lifecycleProvider;
     PublishSubject<Pair<Integer, Collection<ViewModel>>> viewModelsSubject;
@@ -41,7 +41,7 @@ public class FetchedArrayViewBinderTest extends TestCase {
                 return viewModelsSubject;
             }
         };
-        when(view.getArrayViewModel()).thenReturn(viewModel);
+        when(view.getViewModel()).thenReturn(viewModel);
         lifecycleSubject = BehaviorSubject.create(0);
         //binding starts when 1 is sent, and stops when 3 is sent
         lifecycleProvider = LifecycleProviders.from(lifecycleSubject, 1, 3);
@@ -52,8 +52,8 @@ public class FetchedArrayViewBinderTest extends TestCase {
     public void testBindViewModel() throws Exception {
         lifecycleSubject.onNext(1);
 
-        verify(view).getViewModel();
-        verify(view, times(2)).getArrayViewModel();
+        verify(view, times(3)).getViewModel();
+        verify(view).setTitle(null);
         verify(view).setLocalizedEmptyMessage(null);
         verify(view).setLocalizedEmptyMessageVisibility(true);
         verify(view).onDataSetChanged();
@@ -86,6 +86,9 @@ public class FetchedArrayViewBinderTest extends TestCase {
         lifecycleSubject.onNext(3);
 
         viewModel.getRefreshCommand().apply().subscribe();
+
+        verify(view, times(2)).presentLoading(true);
+        verify(view, times(3)).presentLoading(false);
 
         verifyNoMoreInteractions(view);
     }
