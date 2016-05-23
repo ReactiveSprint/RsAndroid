@@ -10,11 +10,17 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.TextView;
 
+import com.trello.rxlifecycle.FragmentEvent;
+
 import io.reactivesprint.android.recyclerview.R;
 import io.reactivesprint.android.recyclerview.RsRecyclerAdapter;
 import io.reactivesprint.android.viewmodels.IAndroidViewModel;
-import io.reactivesprint.android.views.support.ArrayFragment;
+import io.reactivesprint.android.views.AndroidLifecycleProvider;
+import io.reactivesprint.android.views.RsFragment;
 import io.reactivesprint.viewmodels.IArrayViewModel;
+import io.reactivesprint.views.ArrayViewBinder;
+import io.reactivesprint.views.IArrayView;
+import io.reactivesprint.views.IViewBinder;
 
 import static io.reactivesprint.Preconditions.checkNotNullWithMessage;
 
@@ -22,7 +28,8 @@ import static io.reactivesprint.Preconditions.checkNotNullWithMessage;
  * Created by Ahmad Baraka on 5/20/16.
  */
 public class RecyclerFragment<E extends IAndroidViewModel, VM extends IArrayViewModel<E> & IAndroidViewModel>
-        extends ArrayFragment<E, VM> {
+        extends RsFragment<VM>
+        implements IArrayView<E, VM> {
     //region Fields
 
     protected RecyclerView recyclerView;
@@ -31,6 +38,11 @@ public class RecyclerFragment<E extends IAndroidViewModel, VM extends IArrayView
     //endregion
 
     //region Create View
+
+    @Override
+    protected IViewBinder<VM> onCreateViewBinder() {
+        return new ArrayViewBinder<>(this, AndroidLifecycleProvider.from(this, FragmentEvent.START));
+    }
 
     @Nullable
     @Override
