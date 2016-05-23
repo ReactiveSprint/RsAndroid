@@ -26,7 +26,7 @@ public class ViewHolder<VM extends IAndroidViewModel> implements IAndroidViewHol
     @NonNull
     private final View view;
 
-    private IViewBinder<VM, ? extends IView<VM>> viewBinder;
+    private IViewBinder<VM> viewBinder;
 
     private TextView titleTextView;
 
@@ -85,7 +85,7 @@ public class ViewHolder<VM extends IAndroidViewModel> implements IAndroidViewHol
         titleTextView = (TextView) titleView;
     }
 
-    protected IViewBinder<VM, ? extends IView<VM>> onCreateViewBinder() {
+    protected IViewBinder<VM> onCreateViewBinder() {
         return new ViewBinder<>(this, AndroidLifecycleProvider.from(this));
     }
 
@@ -111,7 +111,7 @@ public class ViewHolder<VM extends IAndroidViewModel> implements IAndroidViewHol
         return titleTextView;
     }
 
-    public IViewBinder<VM, ? extends IView<VM>> getViewBinder() {
+    public IViewBinder<VM> getViewBinder() {
         return viewBinder;
     }
 

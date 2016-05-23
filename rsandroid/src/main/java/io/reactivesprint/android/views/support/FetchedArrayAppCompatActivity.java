@@ -17,7 +17,7 @@ public abstract class FetchedArrayAppCompatActivity<VM extends IAndroidViewModel
         extends ArrayAppCompatActivity<VM, AVM>
         implements IFetchedArrayView<VM, AVM> {
     @Override
-    protected IViewBinder<VM, ? extends IView<VM>> onCreateViewBinder() {
+    protected IViewBinder<VM> onCreateViewBinder() {
         return new FetchedArrayViewBinder<>(this, AndroidLifecycleProvider.from(this, ActivityEvent.START));
     }
 }

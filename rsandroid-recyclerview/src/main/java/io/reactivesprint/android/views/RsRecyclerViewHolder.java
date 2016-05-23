@@ -24,7 +24,7 @@ public class RsRecyclerViewHolder<VM extends IAndroidViewModel>
         extends RecyclerView.ViewHolder implements IAndroidViewHolder<VM> {
     //region Fields
 
-    private IViewBinder<VM, ? extends IView<VM>> viewBinder;
+    private IViewBinder<VM> viewBinder;
 
     private TextView titleTextView;
 
@@ -82,7 +82,7 @@ public class RsRecyclerViewHolder<VM extends IAndroidViewModel>
         titleTextView = (TextView) titleView;
     }
 
-    protected IViewBinder<VM, ? extends IView<VM>> onCreateViewBinder() {
+    protected IViewBinder<VM> onCreateViewBinder() {
         return new ViewBinder<>(this, AndroidLifecycleProvider.from(this));
     }
 
@@ -108,7 +108,7 @@ public class RsRecyclerViewHolder<VM extends IAndroidViewModel>
         return titleTextView;
     }
 
-    public IViewBinder<VM, ? extends IView<VM>> getViewBinder() {
+    public IViewBinder<VM> getViewBinder() {
         return viewBinder;
     }
 

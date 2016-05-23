@@ -20,7 +20,7 @@ public class RsAppCompatActivity<VM extends IAndroidViewModel> extends RxAppComp
     //region Fields
 
     private VM viewModel;
-    private IViewBinder<VM, ? extends IView<VM>> viewBinder;
+    private IViewBinder<VM> viewBinder;
 
     //endregion
 
@@ -28,7 +28,7 @@ public class RsAppCompatActivity<VM extends IAndroidViewModel> extends RxAppComp
         viewBinder = onCreateViewBinder();
     }
 
-    protected IViewBinder<VM, ? extends IView<VM>> onCreateViewBinder() {
+    protected IViewBinder<VM> onCreateViewBinder() {
         return new ViewBinder<>(this, AndroidLifecycleProvider.from(this, ActivityEvent.START));
     }
 
@@ -60,7 +60,7 @@ public class RsAppCompatActivity<VM extends IAndroidViewModel> extends RxAppComp
 
     //region Properties
 
-    public IViewBinder<VM, ? extends IView<VM>> getViewBinder() {
+    public IViewBinder<VM> getViewBinder() {
         return viewBinder;
     }
 

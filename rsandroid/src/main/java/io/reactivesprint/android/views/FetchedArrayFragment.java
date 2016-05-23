@@ -16,7 +16,7 @@ public abstract class FetchedArrayFragment<VM extends IAndroidViewModel, AVM ext
         extends ArrayFragment<VM, AVM>
         implements IFetchedArrayView<VM, AVM> {
     @Override
-    protected IViewBinder<VM, ? extends IView<VM>> onCreateViewBinder() {
+    protected IViewBinder<VM> onCreateViewBinder() {
         return new FetchedArrayViewBinder<>(this, AndroidLifecycleProvider.from(this, FragmentEvent.START));
     }
 }

@@ -17,7 +17,7 @@ public abstract class ArrayFragmentActivity<VM extends IAndroidViewModel, AVM ex
         extends RsFragmentActivity<VM>
         implements IArrayView<VM, AVM> {
     @Override
-    protected IViewBinder<VM, ? extends IView<VM>> onCreateViewBinder() {
+    protected IViewBinder<VM> onCreateViewBinder() {
         return new ArrayViewBinder<>(this, AndroidLifecycleProvider.from(this, ActivityEvent.START));
     }
 

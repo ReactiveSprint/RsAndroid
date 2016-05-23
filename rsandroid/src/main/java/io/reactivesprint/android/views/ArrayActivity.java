@@ -13,7 +13,7 @@ public abstract class ArrayActivity<VM extends IAndroidViewModel, AVM extends IA
         extends RsActivity<VM>
         implements IArrayView<VM, AVM> {
     @Override
-    protected IViewBinder<VM, ? extends IView<VM>> onCreateViewBinder() {
+    protected IViewBinder<VM> onCreateViewBinder() {
         return new ArrayViewBinder<>(this, AndroidLifecycleProvider.from(this, ActivityEvent.START));
     }
 

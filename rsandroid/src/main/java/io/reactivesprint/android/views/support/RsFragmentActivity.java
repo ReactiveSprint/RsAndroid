@@ -20,7 +20,7 @@ public class RsFragmentActivity<VM extends IAndroidViewModel> extends RxFragment
     //region Fields
 
     private VM viewModel;
-    private IViewBinder<VM, ? extends IView<VM>> viewBinder;
+    private IViewBinder<VM> viewBinder;
 
     //endregion
 
@@ -28,7 +28,7 @@ public class RsFragmentActivity<VM extends IAndroidViewModel> extends RxFragment
         viewBinder = onCreateViewBinder();
     }
 
-    protected IViewBinder<VM, ? extends IView<VM>> onCreateViewBinder() {
+    protected IViewBinder<VM> onCreateViewBinder() {
         viewBinder = new ViewBinder<>(this, AndroidLifecycleProvider.from(this, ActivityEvent.START));
         return viewBinder;
     }
@@ -61,7 +61,7 @@ public class RsFragmentActivity<VM extends IAndroidViewModel> extends RxFragment
 
     //region Properties
 
-    public IViewBinder<VM, ? extends IView<VM>> getViewBinder() {
+    public IViewBinder<VM> getViewBinder() {
         return viewBinder;
     }
 

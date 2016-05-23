@@ -35,7 +35,7 @@ public class RsListFragment<VM extends IAndroidViewModel, AVM extends IArrayView
 
     private VM viewModel;
 
-    private IViewBinder<VM, ? extends IView<VM>> viewBinder;
+    private IViewBinder<VM> viewBinder;
 
     private final BehaviorSubject<FragmentEvent> lifecycleSubject = BehaviorSubject.create();
 
@@ -45,7 +45,7 @@ public class RsListFragment<VM extends IAndroidViewModel, AVM extends IArrayView
         viewBinder = onCreateViewBinder();
     }
 
-    protected IViewBinder<VM, ? extends IView<VM>> onCreateViewBinder() {
+    protected IViewBinder<VM> onCreateViewBinder() {
         return new ViewBinder<>(this, AndroidLifecycleProvider.from(this, FragmentEvent.START));
     }
 
@@ -161,7 +161,7 @@ public class RsListFragment<VM extends IAndroidViewModel, AVM extends IArrayView
 
     //region Properties
 
-    public IViewBinder<VM, ? extends IView<VM>> getViewBinder() {
+    public IViewBinder<VM> getViewBinder() {
         return viewBinder;
     }
 

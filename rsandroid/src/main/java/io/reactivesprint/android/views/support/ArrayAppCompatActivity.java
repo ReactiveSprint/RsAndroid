@@ -7,7 +7,6 @@ import io.reactivesprint.android.views.AndroidLifecycleProvider;
 import io.reactivesprint.viewmodels.IArrayViewModel;
 import io.reactivesprint.views.ArrayViewBinder;
 import io.reactivesprint.views.IArrayView;
-import io.reactivesprint.views.IView;
 import io.reactivesprint.views.IViewBinder;
 
 /**
@@ -17,7 +16,7 @@ public abstract class ArrayAppCompatActivity<VM extends IAndroidViewModel, AVM e
         extends RsAppCompatActivity<VM>
         implements IArrayView<VM, AVM> {
     @Override
-    protected IViewBinder<VM, ? extends IView<VM>> onCreateViewBinder() {
+    protected IViewBinder<VM> onCreateViewBinder() {
         return new ArrayViewBinder<>(this, AndroidLifecycleProvider.from(this, ActivityEvent.START));
     }
 
