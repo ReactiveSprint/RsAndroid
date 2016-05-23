@@ -18,11 +18,11 @@ import static io.reactivesprint.Preconditions.checkNotNull;
  * You don't need to override this class,
  * instead you can use {@link ViewHolderCreator} to create an {@link IAndroidViewHolder} as needed.
  */
-public class RsBaseAdapter<E extends IAndroidViewModel, AVM extends IArrayViewModel<E> & IAndroidViewModel> extends BaseAdapter {
+public class RsBaseAdapter<E extends IAndroidViewModel, VM extends IArrayViewModel<E> & IAndroidViewModel> extends BaseAdapter {
     //region Fields
 
     @NonNull
-    private final AVM arrayViewModel;
+    private final VM arrayViewModel;
 
     @NonNull
     private final ViewHolderCreator<E> onCreateViewHolder;
@@ -34,7 +34,7 @@ public class RsBaseAdapter<E extends IAndroidViewModel, AVM extends IArrayViewMo
     /**
      * Creates an instance which uses {@link ViewHolder}.
      */
-    public RsBaseAdapter(@NonNull AVM arrayViewModel) {
+    public RsBaseAdapter(@NonNull VM arrayViewModel) {
         this(arrayViewModel, new ViewHolderCreator<E>() {
             @Override
             public IAndroidViewHolder<E> call(Integer integer, ViewGroup viewGroup) {
@@ -43,7 +43,7 @@ public class RsBaseAdapter<E extends IAndroidViewModel, AVM extends IArrayViewMo
         });
     }
 
-    public RsBaseAdapter(@NonNull AVM arrayViewModel, @NonNull ViewHolderCreator<E> onCreateViewHolder) {
+    public RsBaseAdapter(@NonNull VM arrayViewModel, @NonNull ViewHolderCreator<E> onCreateViewHolder) {
         checkNotNull(arrayViewModel, "arrayViewModel");
         checkNotNull(onCreateViewHolder, "onCreateViewHolder");
         this.arrayViewModel = arrayViewModel;

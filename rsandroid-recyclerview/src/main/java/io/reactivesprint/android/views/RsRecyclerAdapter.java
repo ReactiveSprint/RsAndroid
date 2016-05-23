@@ -13,12 +13,12 @@ import static io.reactivesprint.Preconditions.checkNotNull;
 /**
  * Created by Ahmad Baraka on 5/22/16.
  */
-public class RsRecyclerAdapter<E extends IAndroidViewModel, AVM extends IArrayViewModel<E> & IAndroidViewModel, VH extends RsRecyclerViewHolder<E>>
+public class RsRecyclerAdapter<E extends IAndroidViewModel, VM extends IArrayViewModel<E> & IAndroidViewModel, VH extends RsRecyclerViewHolder<E>>
         extends RecyclerView.Adapter<VH> {
     //region Fields
 
     @NonNull
-    private final AVM arrayViewModel;
+    private final VM arrayViewModel;
 
     @NonNull
     private final ViewHolderCreator<E, VH> onCreateViewHolder;
@@ -27,8 +27,8 @@ public class RsRecyclerAdapter<E extends IAndroidViewModel, AVM extends IArrayVi
 
     //region Constructors
 
-    public static <E extends IAndroidViewModel, AVM extends IArrayViewModel<E> & IAndroidViewModel>
-    RsRecyclerAdapter<E, AVM, RsRecyclerViewHolder<E>> create(@NonNull AVM arrayViewModel) {
+    public static <E extends IAndroidViewModel, VM extends IArrayViewModel<E> & IAndroidViewModel>
+    RsRecyclerAdapter<E, VM, RsRecyclerViewHolder<E>> create(@NonNull VM arrayViewModel) {
         checkNotNull(arrayViewModel, "arrayViewModel");
         return new RsRecyclerAdapter<>(arrayViewModel, new ViewHolderCreator<E, RsRecyclerViewHolder<E>>() {
             @Override
@@ -38,7 +38,7 @@ public class RsRecyclerAdapter<E extends IAndroidViewModel, AVM extends IArrayVi
         });
     }
 
-    public RsRecyclerAdapter(@NonNull AVM arrayViewModel, @NonNull ViewHolderCreator<E, VH> onCreateViewHolder) {
+    public RsRecyclerAdapter(@NonNull VM arrayViewModel, @NonNull ViewHolderCreator<E, VH> onCreateViewHolder) {
         checkNotNull(arrayViewModel, "arrayViewModel");
         checkNotNull(onCreateViewHolder, "onCreateViewHolder");
         this.arrayViewModel = arrayViewModel;

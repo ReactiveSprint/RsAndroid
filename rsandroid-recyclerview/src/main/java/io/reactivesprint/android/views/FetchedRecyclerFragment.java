@@ -11,9 +11,9 @@ import io.reactivesprint.views.IViewBinder;
 /**
  * Created by Ahmad Baraka on 5/20/16.
  */
-public class FetchedRecyclerFragment<VM extends IAndroidViewModel, E extends IAndroidViewModel, AVM extends IFetchedArrayViewModel<E, ?, ?, ?> & IAndroidViewModel>
-        extends RecyclerFragment<VM, E, AVM>
-        implements IFetchedArrayView<VM, E, AVM> {
+public class FetchedRecyclerFragment<E extends IAndroidViewModel, VM extends IFetchedArrayViewModel<E, ?, ?, ?> & IAndroidViewModel>
+        extends RecyclerFragment<E, VM>
+        implements IFetchedArrayView<E, VM> {
     @Override
     protected IViewBinder<VM> onCreateViewBinder() {
         return new FetchedArrayViewBinder<>(this, AndroidLifecycleProvider.from(this, FragmentEvent.START));

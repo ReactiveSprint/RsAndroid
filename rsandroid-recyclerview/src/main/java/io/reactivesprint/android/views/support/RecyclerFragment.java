@@ -20,8 +20,8 @@ import static io.reactivesprint.Preconditions.checkNotNullWithMessage;
 /**
  * Created by Ahmad Baraka on 5/20/16.
  */
-public class RecyclerFragment<VM extends IAndroidViewModel, E extends IAndroidViewModel, AVM extends IArrayViewModel<E> & IAndroidViewModel>
-        extends ArrayFragment<VM, E, AVM> {
+public class RecyclerFragment<E extends IAndroidViewModel, VM extends IArrayViewModel<E> & IAndroidViewModel>
+        extends ArrayFragment<E, VM> {
     //region Fields
 
     protected RecyclerView recyclerView;
@@ -62,7 +62,7 @@ public class RecyclerFragment<VM extends IAndroidViewModel, E extends IAndroidVi
 
     @NonNull
     protected RecyclerView.Adapter onCreateAdapter(RecyclerView.LayoutManager layoutManger) {
-        return RsRecyclerAdapter.create(getArrayViewModel());
+        return RsRecyclerAdapter.create(getViewModel());
     }
 
     @Override

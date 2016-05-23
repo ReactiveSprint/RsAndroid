@@ -31,8 +31,8 @@ import static io.reactivesprint.Preconditions.checkNotNullAndInstanceOf;
 /**
  * Created by Ahmad Baraka on 5/21/16.
  */
-public class RsListFragment<VM extends IAndroidViewModel, E extends IAndroidViewModel, AVM extends IArrayViewModel<E> & IAndroidViewModel> extends ListFragment
-        implements FragmentLifecycleProvider, IView<VM>, IArrayView<VM, E, AVM> {
+public class RsListFragment<E extends IAndroidViewModel, VM extends IArrayViewModel<E> & IAndroidViewModel> extends ListFragment
+        implements FragmentLifecycleProvider, IView<VM>, IArrayView<E, VM> {
     //region Fields
 
     private VM viewModel;
@@ -213,12 +213,6 @@ public class RsListFragment<VM extends IAndroidViewModel, E extends IAndroidView
     @Override
     public BaseAdapter getListAdapter() {
         return (BaseAdapter) super.getListAdapter();
-    }
-
-    @SuppressWarnings("unchecked")
-    @Override
-    public AVM getArrayViewModel() {
-        return (AVM) viewModel;
     }
 
     @Override
