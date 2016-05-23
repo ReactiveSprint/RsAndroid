@@ -45,17 +45,17 @@ public class RecyclerFragment<E extends IAndroidViewModel, VM extends IArrayView
     @Nullable
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
-        View root = inflater.inflate(R.layout.recycler, container, false);
-        recyclerView = (RecyclerView) root.findViewById(android.R.id.list);
-        emptyView = root.findViewById(android.R.id.empty);
-        return root;
+        return inflater.inflate(R.layout.recycler, container, false);
     }
 
     @Override
     public void onViewCreated(View view, Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
 
-        checkNotNullWithMessage(recyclerView, "recyclerView must be inflated in your layout.");
+        recyclerView = (RecyclerView) view.findViewById(android.R.id.list);
+        emptyView = view.findViewById(android.R.id.empty);
+
+        checkNotNullWithMessage(recyclerView, "recyclerView must be inflated in your layout. Use android.R.id.list as its id.");
 
         RecyclerView.LayoutManager layoutManager = onCreateLayoutManager();
         recyclerView.setLayoutManager(layoutManager);
