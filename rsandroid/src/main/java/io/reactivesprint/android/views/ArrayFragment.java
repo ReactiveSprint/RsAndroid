@@ -6,11 +6,10 @@ import io.reactivesprint.android.viewmodels.IAndroidViewModel;
 import io.reactivesprint.viewmodels.IArrayViewModel;
 import io.reactivesprint.views.ArrayViewBinder;
 import io.reactivesprint.views.IArrayView;
-import io.reactivesprint.views.IView;
 import io.reactivesprint.views.IViewBinder;
 
-public abstract class ArrayFragment<VM extends IAndroidViewModel, AVM extends IArrayViewModel<? extends IAndroidViewModel> & IAndroidViewModel>
-        extends RsFragment<VM> implements IArrayView<VM, AVM> {
+public abstract class ArrayFragment<VM extends IAndroidViewModel, E extends IAndroidViewModel, AVM extends IArrayViewModel<E> & IAndroidViewModel>
+        extends RsFragment<VM> implements IArrayView<VM, E, AVM> {
 
     @SuppressWarnings("unchecked")
     @Override

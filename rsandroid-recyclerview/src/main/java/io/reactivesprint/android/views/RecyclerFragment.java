@@ -19,8 +19,8 @@ import static io.reactivesprint.Preconditions.checkNotNullWithMessage;
 /**
  * Created by Ahmad Baraka on 5/20/16.
  */
-public class RecyclerFragment<VM extends IAndroidViewModel, AVM extends IArrayViewModel<? extends IAndroidViewModel> & IAndroidViewModel>
-        extends ArrayFragment<VM, AVM> {
+public class RecyclerFragment<VM extends IAndroidViewModel, E extends IAndroidViewModel, AVM extends IArrayViewModel<E> & IAndroidViewModel>
+        extends ArrayFragment<VM, E, AVM> {
     //region Fields
 
     protected RecyclerView recyclerView;

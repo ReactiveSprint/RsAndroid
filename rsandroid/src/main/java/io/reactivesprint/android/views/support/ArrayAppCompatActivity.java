@@ -12,9 +12,9 @@ import io.reactivesprint.views.IViewBinder;
 /**
  * Created by Ahmad Baraka on 4/25/16.
  */
-public abstract class ArrayAppCompatActivity<VM extends IAndroidViewModel, AVM extends IArrayViewModel<? extends IAndroidViewModel> & IAndroidViewModel>
+public abstract class ArrayAppCompatActivity<VM extends IAndroidViewModel, E extends IAndroidViewModel, AVM extends IArrayViewModel<E> & IAndroidViewModel>
         extends RsAppCompatActivity<VM>
-        implements IArrayView<VM, AVM> {
+        implements IArrayView<VM, E, AVM> {
     @Override
     protected IViewBinder<VM> onCreateViewBinder() {
         return new ArrayViewBinder<>(this, AndroidLifecycleProvider.from(this, ActivityEvent.START));
