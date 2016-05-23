@@ -8,15 +8,15 @@ import rx.internal.util.SubscriptionList;
 /**
  * Created by Ahmad Baraka on 5/21/16.
  */
-public class ArrayViewBinder<VM extends IViewModel, AVM extends IArrayViewModel<? extends IViewModel>>
-        extends ViewBinder<VM> implements IArrayViewBinder<VM, AVM> {
-    public ArrayViewBinder(IArrayView<VM, AVM> view, ILifecycleProvider<?> lifecycleProvider) {
+public class ArrayViewBinder<VM extends IViewModel, E extends IViewModel, AVM extends IArrayViewModel<E>>
+        extends ViewBinder<VM> implements IArrayViewBinder<VM, E, AVM> {
+    public ArrayViewBinder(IArrayView<VM, E, AVM> view, ILifecycleProvider<?> lifecycleProvider) {
         super(view, lifecycleProvider);
     }
 
     @Override
-    public IArrayView<VM, AVM> getView() {
-        return (IArrayView<VM, AVM>) super.getView();
+    public IArrayView<VM, E, AVM> getView() {
+        return (IArrayView<VM, E, AVM>) super.getView();
     }
 
     @Override
