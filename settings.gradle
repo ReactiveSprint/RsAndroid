@@ -1,2 +1,3 @@
-include ':rsjava', ':rsandroid-recyclerview'
+include ':rsjava'
 include ':rsandroid'
+include ':rsandroid-recyclerview'
