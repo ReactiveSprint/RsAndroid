@@ -31,8 +31,8 @@ ext {
     targetSdkVersion = compileSdkVersion
     buildToolsVersion = '23.0.2'
 
-    rsJava = 'com.github.reactivesprint:rsjava:0.2.1'
-    rsAndroid = 'com.github.reactivesprint:rsandroid:0.2.3'
+    rsJava = 'com.github.reactivesprint:rsjava:0.3.0'
+    rsAndroid = 'com.github.reactivesprint:rsandroid:0.3.1'
 
     // Define all dependencies in the base project, to unify & make it easy to update
     rxJava = 'io.reactivex:rxjava:1.1.2'
