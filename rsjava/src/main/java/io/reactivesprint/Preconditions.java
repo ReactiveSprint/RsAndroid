@@ -54,7 +54,7 @@ public final class Preconditions {
     public static <T> T checkNotNullAndInstanceOfWithMessage(T object, Class<?> aClass, String message) {
         checkNotNull(object, message);
 
-        if (!object.getClass().isAssignableFrom(aClass)) {
+        if (!aClass.isAssignableFrom(object.getClass())) {
             throw new IllegalArgumentException(message);
         }
 
