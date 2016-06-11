@@ -32,4 +32,11 @@ public class ModelViewModel<M extends IModel> extends ViewModel implements IMode
         checkNotNull(model, "model");
         this.model = model;
     }
+
+    @Override
+    public String toString() {
+        return "ModelViewModel{" +
+                "model=" + model +
+                "} " + super.toString();
+    }
 }

@@ -110,4 +110,16 @@ public class ArrayViewModel<E extends IViewModel> extends ViewModel implements I
     }
 
     //endregion
+
+    //region Object
+
+    @Override
+    public String toString() {
+        return "ArrayViewModel{" +
+                "count=" + count.getValue() +
+                ", localizedEmptyMessage=" + localizedEmptyMessage.getValue() +
+                "} " + super.toString();
+    }
+
+    //endregion
 }

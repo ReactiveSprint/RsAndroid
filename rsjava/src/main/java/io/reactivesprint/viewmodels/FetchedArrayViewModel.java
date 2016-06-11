@@ -178,4 +178,15 @@ public abstract class FetchedArrayViewModel<E extends IViewModel, P> extends Arr
     }
 
     //endregion
+
+
+    @Override
+    public String toString() {
+        return "FetchedArrayViewModel{" +
+                "nextPage=" + nextPage +
+                ", refreshing=" + refreshing.getValue() +
+                ", fetchingNextPage=" + fetchingNextPage.getValue() +
+                ", hasNextPage=" + hasNextPage.getValue() +
+                "} " + super.toString();
+    }
 }

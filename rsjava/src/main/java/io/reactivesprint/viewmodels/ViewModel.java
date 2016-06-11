@@ -121,4 +121,18 @@ public class ViewModel implements IViewModel {
     }
 
     //endregion
+
+    //region Object
+
+    @Override
+    public String toString() {
+        return "ViewModel{" +
+                "active=" + active.getValue() +
+                ", title=" + title.getValue() +
+                ", loading=" + loading.getValue() +
+                ", enabled=" + enabled.getValue() +
+                '}';
+    }
+
+    //endregion
 }
