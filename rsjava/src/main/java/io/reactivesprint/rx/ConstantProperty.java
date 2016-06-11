@@ -26,4 +26,11 @@ public final class ConstantProperty<V> implements IProperty<V> {
     public Observable<V> getObservable() {
         return Observable.just(value);
     }
+
+    @Override
+    public String toString() {
+        return "ConstantProperty{" +
+                "value=" + value +
+                '}';
+    }
 }

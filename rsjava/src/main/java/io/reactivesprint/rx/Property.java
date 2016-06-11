@@ -40,4 +40,11 @@ public final class Property<V> implements IProperty<V> {
     public Observable<V> getObservable() {
         return property.getObservable();
     }
+
+    @Override
+    public String toString() {
+        return "Property{" +
+                "property=" + property +
+                '}';
+    }
 }

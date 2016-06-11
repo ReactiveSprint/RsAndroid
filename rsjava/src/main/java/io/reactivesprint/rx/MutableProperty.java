@@ -131,7 +131,14 @@ public final class MutableProperty<V> implements IMutableProperty<V> {
 
     //endregion
 
-    //region Finalize
+    //region Object
+
+    @Override
+    public String toString() {
+        return "MutableProperty{" +
+                "value=" + value +
+                '}';
+    }
 
     @Override
     protected void finalize() throws Throwable {

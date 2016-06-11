@@ -36,4 +36,12 @@ public final class Pair<A, B> {
     public int hashCode() {
         return (value0 == null ? 0 : value0.hashCode()) ^ (value1 == null ? 0 : value1.hashCode());
     }
+
+    @Override
+    public String toString() {
+        return "Pair{" +
+                "value0=" + value0 +
+                ", value1=" + value1 +
+                '}';
+    }
 }
