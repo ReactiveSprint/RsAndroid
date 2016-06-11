@@ -24,17 +24,26 @@ public final class Pair<A, B> {
 
     @Override
     public boolean equals(Object o) {
-        if (!(o instanceof Pair)) {
+        if (this == o) {
+            return true;
+        }
+        if (o == null || getClass() != o.getClass()) {
             return false;
         }
-        Pair<?, ?> p = (Pair<?, ?>) o;
-        return (p.value0 == null ? value0 == null : p.value0.equals(value0))
-                && (p.value1 == null ? value1 == null : p.value1.equals(value1));
+
+        Pair<?, ?> pair = (Pair<?, ?>) o;
+
+        if (value0 != null ? !value0.equals(pair.value0) : pair.value0 != null) {
+            return false;
+        }
+        return value1 != null ? value1.equals(pair.value1) : pair.value1 == null;
     }
 
     @Override
     public int hashCode() {
-        return (value0 == null ? 0 : value0.hashCode()) ^ (value1 == null ? 0 : value1.hashCode());
+        int result = value0 != null ? value0.hashCode() : 0;
+        result = 31 * result + (value1 != null ? value1.hashCode() : 0);
+        return result;
     }
 
     @Override

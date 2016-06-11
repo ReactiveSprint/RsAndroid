@@ -42,6 +42,25 @@ public final class Property<V> implements IProperty<V> {
     }
 
     @Override
+    public boolean equals(Object o) {
+        if (this == o) {
+            return true;
+        }
+        if (o == null || getClass() != o.getClass()) {
+            return false;
+        }
+
+        Property<?> property1 = (Property<?>) o;
+
+        return property.equals(property1.property);
+    }
+
+    @Override
+    public int hashCode() {
+        return property.hashCode();
+    }
+
+    @Override
     public String toString() {
         return "Property{" +
                 "property=" + property +
