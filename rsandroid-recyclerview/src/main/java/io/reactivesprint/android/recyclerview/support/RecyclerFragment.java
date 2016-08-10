@@ -57,6 +57,14 @@ public class RecyclerFragment<E extends IAndroidViewModel, VM extends IArrayView
     public void onViewCreated(View view, Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
 
+        if (recyclerView == null) {
+            recyclerView = (RecyclerView) view.findViewById(android.R.id.list);
+        }
+
+        if (emptyView == null) {
+            emptyView = view.findViewById(android.R.id.empty);
+        }
+
         checkNotNullWithMessage(recyclerView, "recyclerView must be inflated in your layout.");
 
         RecyclerView.LayoutManager layoutManager = onCreateLayoutManager();

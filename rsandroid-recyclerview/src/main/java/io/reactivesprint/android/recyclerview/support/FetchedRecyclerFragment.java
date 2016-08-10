@@ -41,11 +41,11 @@ public class FetchedRecyclerFragment<E extends IAndroidViewModel, VM extends IFe
     @Override
     public void onViewCreated(View view, Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
-        if (refreshView != null) {
+        if (refreshView == null) {
             refreshView = view.findViewById(R.id.refresh);
         }
 
-        if (fetchNextView != null) {
+        if (fetchNextView == null) {
             fetchNextView = view.findViewById(R.id.fetching_next);
         }
 
