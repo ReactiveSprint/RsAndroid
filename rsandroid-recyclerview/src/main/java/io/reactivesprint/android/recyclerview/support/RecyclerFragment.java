@@ -16,7 +16,7 @@ import io.reactivesprint.android.recyclerview.R;
 import io.reactivesprint.android.recyclerview.RsRecyclerAdapter;
 import io.reactivesprint.android.viewmodels.IAndroidViewModel;
 import io.reactivesprint.android.views.AndroidLifecycleProviders;
-import io.reactivesprint.android.views.RsFragment;
+import io.reactivesprint.android.views.support.RsFragment;
 import io.reactivesprint.viewmodels.IArrayViewModel;
 import io.reactivesprint.views.ArrayViewBinder;
 import io.reactivesprint.views.IArrayView;
